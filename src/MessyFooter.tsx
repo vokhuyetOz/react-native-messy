@@ -175,7 +175,7 @@ export function MessyFooter(props: IMessyFooterProps) {
           showImageKeyboard={() => {
             setCustomKeyboard({
               component: 'messy.MessyKeyboardImage',
-              initialProps: { title: 'Keyboard 1 opened by button' },
+              initialProps: {},
             });
           }}
         />
