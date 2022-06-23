@@ -1,6 +1,5 @@
 import React from 'react';
 import { ImageSourcePropType, View } from 'react-native';
-import { useSizes } from '../modules';
 
 import type { IMessyMessageProps } from '../Messy';
 import { MessyMessageContent } from './MessyMessageContent';
