@@ -24,6 +24,7 @@ export interface IMessyProps {
   renderLoading: () => JSX.Element;
   renderAvatar: ({ user }: { user?: IUser }) => JSX.Element;
   renderMessageText: (data: IMessyMessage) => JSX.Element;
+  renderMessageAudio: (data: IMessyMessage) => JSX.Element;
   renderMessageImage: (data: IMessyMessage) => JSX.Element;
   renderMessageDateTime: (data: IMessyMessage) => JSX.Element;
   footerProps: IMessyFooterProps;
@@ -33,8 +34,8 @@ export interface IMessyProps {
 
 export interface IMessyMessageProps extends IMessyProps {
   data: IMessyMessage;
-  preMessage: IMessyMessage;
-  index: number;
+  preMessage?: IMessyMessage;
+  index?: number;
 }
 
 export function Messy(props: IMessyProps) {

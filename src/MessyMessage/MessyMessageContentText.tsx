@@ -56,8 +56,6 @@ export function MessyMessageContentText(props: IMessyMessageProps) {
     false: Colors.message_left.email,
   }[`${user?.id === data?.user?.id}`];
 
-  if (!data.text) return null;
-
   return (
     <ParsedText
       style={{

@@ -151,7 +151,7 @@ const App = () => {
           // Alert.alert(text);
           mess.push({
             user: {
-              id: 2,
+              id: 1,
               userName: 'Demo',
               // avatar: {
               //   uri: 'https://static.remove.bg/remove-bg-web/588fbfdd2324490a4329d4ad22d1bd436e1d384a/assets/start-1abfb4fe2980eabfbbaaa4365a0692539f7cd2725f324f904565a9a744f8e214.jpg',
@@ -166,7 +166,8 @@ const App = () => {
           //send to server by socket
         },
         enableKeyboardImage: true,
-        useSafeArea: true,
+        enableKeyboardAudio: true,
+        useSafeArea: false,
       }}
     />
   );

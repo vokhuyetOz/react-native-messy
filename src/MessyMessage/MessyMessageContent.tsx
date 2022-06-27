@@ -9,6 +9,7 @@ import { MessyMessageContentText } from './MessyMessageContentText';
 
 import type { IMessyMessageProps } from '../Messy';
 import { MessyMessageContentStatus } from './MessyMessageContentStatus';
+import { MessyMessageContentAudio } from './MessyMessageContentAudio';
 
 export function MessyMessageContent(props: IMessyMessageProps) {
   const Colors = useColors();
@@ -75,6 +76,7 @@ export function MessyMessageContent(props: IMessyMessageProps) {
           }}
         >
           <MessyMessageContentText {...props} />
+          <MessyMessageContentAudio {...props} />
           <MessyMessageContentImage {...props} />
         </View>
         <View

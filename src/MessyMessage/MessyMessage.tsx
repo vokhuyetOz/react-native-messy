@@ -10,14 +10,18 @@ export interface IUser {
   userName?: string | null | undefined;
   avatar?: ImageSourcePropType;
 }
-
+export interface IMessyMessageAudio {
+  uri?: string;
+  id?: string;
+}
 export interface IMessyMessage {
   id?: string | number | null | undefined;
   text?: string;
   image?: ImageSourcePropType | ImageSourcePropType[] | undefined | [] | null;
+  audio?: IMessyMessageAudio;
   user?: IUser;
   type?: 'system' | undefined;
-  createdTime: Date | number | string;
+  createdTime?: Date | number | string;
   status?: 'sending' | 'sent' | 'seen';
   seenBy?: IUser[];
 }

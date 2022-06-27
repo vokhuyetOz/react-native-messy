@@ -14,6 +14,7 @@ import { useColors, useSizes } from './modules';
 
 import { MessyKeyboardImage } from './MessyKeyboard/MessyKeyboardImage';
 import type { IMessyMessage } from './MessyMessage';
+import { MessyKeyboardAudio } from './MessyKeyboard/MessyKeyboardAudio';
 
 export interface IMessyFooterProps {
   onScrollToBottom?: () => void;
@@ -21,7 +22,9 @@ export interface IMessyFooterProps {
   onSend: (message?: IMessyMessage) => Promise<void> | void;
   inputProps?: TextInputProps;
   enableKeyboardImage?: boolean;
+  enableKeyboardAudio?: boolean;
   showImageKeyboard?: () => void;
+  showAudioKeyboard?: () => void;
   useSafeArea?: boolean;
   addBottomView?: boolean;
   usesBottomTabs?: boolean;
@@ -35,9 +38,30 @@ function MessyFooterImage(props: IMessyFooterProps) {
   if (!enableKeyboardImage && !MessyKeyboard) return null;
 
   return (
-    <Pressable onPress={showImageKeyboard}>
+    <Pressable
+      onPress={showImageKeyboard}
+      style={{ paddingTop: Sizes.padding / 2 }}
+    >
       <Image
         source={require('./utils/images/image.png')}
+        style={{ width: Sizes.button_image, height: Sizes.button_image }}
+        resizeMode={'contain'}
+      />
+    </Pressable>
+  );
+}
+function MessyFooterAudio(props: IMessyFooterProps) {
+  const Sizes = useSizes();
+  const { enableKeyboardAudio, showAudioKeyboard } = props;
+  if (!enableKeyboardAudio) return null;
+
+  return (
+    <Pressable
+      onPress={showAudioKeyboard}
+      style={{ paddingTop: Sizes.padding / 2, marginLeft: Sizes.padding }}
+    >
+      <Image
+        source={require('./utils/images/microphone.png')}
         style={{ width: Sizes.button_image, height: Sizes.button_image }}
         resizeMode={'contain'}
       />
@@ -51,7 +75,12 @@ function MessyFooterText(props: IMessyFooterProps) {
   if (!enableKeyboardImage && !MessyKeyboard) return null;
 
   return (
-    <Pressable onPress={onPressSendText} style={{ padding: Sizes.padding }}>
+    <Pressable
+      onPress={onPressSendText}
+      style={{
+        paddingLeft: Sizes.padding,
+      }}
+    >
       <Image
         source={require('./utils/images/send.png')}
         style={{ width: Sizes.button_image, height: Sizes.button_image }}
@@ -111,28 +140,38 @@ export function MessyFooter(props: IMessyFooterProps) {
   };
 
   const onKeyboardItemSelected = (componentID: string, data: any) => {
-    console.log('data', data);
+    console.log('data', componentID, data);
     if (componentID === 'messy.MessyKeyboardImage') {
-      if (!data) {
-        return;
-      }
       if (data.errorCode) {
         console.warn(data.errorCode, data.errorMessage);
         return;
       }
-      if (data.assets) {
-        const messsage: IMessyMessage = {
-          createdTime: Date.now(),
-          id: `${Date.now()}`,
-          image: data?.assets,
-          status: 'sending',
-        };
-        if (data.assets.length === 1) {
-          messsage.image = data.assets[0];
-        }
-        onSend?.(messsage);
+      if (!data?.assets) {
         return;
       }
+      const messsage: IMessyMessage = {
+        createdTime: Date.now(),
+        id: `${Date.now()}`,
+        image: data?.assets,
+        status: 'sending',
+      };
+      if (data.assets.length === 1) {
+        messsage.image = data.assets[0];
+      }
+      onSend?.(messsage);
+      return;
+    }
+    if (componentID === 'messy.MessyKeyboardAudio') {
+      if (!data?.audio) {
+        return;
+      }
+      const messsage: IMessyMessage = {
+        createdTime: Date.now(),
+        id: `${Date.now()}`,
+        audio: data.audio,
+        status: 'sending',
+      };
+      onSend?.(messsage);
       return;
     }
   };
@@ -143,43 +182,64 @@ export function MessyFooter(props: IMessyFooterProps) {
     return (
       <View
         style={{
-          flexDirection: 'row',
-          alignItems: 'center',
+          marginHorizontal: Sizes.padding,
           backgroundColor: Colors.background,
         }}
       >
-        <TextInput
-          ref={textInputRef}
+        <View
           style={{
-            flex: 1,
-            minHeight: Sizes.input_height,
-            paddingBottom: Sizes.padding / 2,
-            paddingTop: Sizes.padding * 0.6,
-            color: Colors.primary,
-            paddingHorizontal: Sizes.padding,
-            fontSize: Sizes.message,
-            borderWidth: Sizes.border,
-            borderRadius: Sizes.border_radius,
-            marginHorizontal: Sizes.padding,
-            textAlignVertical: 'center',
+            flexDirection: 'row',
+            alignItems: 'center',
           }}
-          placeholder={inputProps?.placeholder || 'Type your message'}
-          multiline={true}
-          {...inputProps}
-          value={text}
-          onChangeText={setText}
-          onFocus={onKeyboardResigned}
-        />
-        <MessyFooterImage
-          {...props}
-          showImageKeyboard={() => {
-            setCustomKeyboard({
-              component: 'messy.MessyKeyboardImage',
-              initialProps: {},
-            });
+        >
+          <TextInput
+            ref={textInputRef}
+            style={{
+              flex: 1,
+              minHeight: Sizes.input_height,
+              paddingBottom: Sizes.padding / 2,
+              paddingTop: Sizes.padding * 0.6,
+              color: Colors.primary,
+              paddingHorizontal: Sizes.padding,
+              fontSize: Sizes.message,
+              borderWidth: Sizes.border,
+              borderRadius: Sizes.border_radius,
+              textAlignVertical: 'center',
+            }}
+            placeholder={inputProps?.placeholder || 'Type your message'}
+            multiline={true}
+            {...inputProps}
+            value={text}
+            onChangeText={setText}
+            onFocus={onKeyboardResigned}
+          />
+          <MessyFooterText {...props} onPressSendText={onPressSendText} />
+        </View>
+        <View
+          style={{
+            paddingBottom: Sizes.padding,
+            flexDirection: 'row',
           }}
-        />
-        <MessyFooterText {...props} onPressSendText={onPressSendText} />
+        >
+          <MessyFooterImage
+            {...props}
+            showImageKeyboard={() => {
+              setCustomKeyboard({
+                component: 'messy.MessyKeyboardImage',
+                initialProps: {},
+              });
+            }}
+          />
+          <MessyFooterAudio
+            {...props}
+            showAudioKeyboard={() => {
+              setCustomKeyboard({
+                component: 'messy.MessyKeyboardAudio',
+                initialProps: {},
+              });
+            }}
+          />
+        </View>
       </View>
     );
   };
@@ -209,4 +269,8 @@ export function MessyFooter(props: IMessyFooterProps) {
 MessyKeyboard?.KeyboardRegistry?.registerKeyboard?.(
   'messy.MessyKeyboardImage',
   () => MessyKeyboardImage
+);
+MessyKeyboard?.KeyboardRegistry?.registerKeyboard?.(
+  'messy.MessyKeyboardAudio',
+  () => MessyKeyboardAudio
 );

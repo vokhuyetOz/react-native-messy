@@ -116,7 +116,7 @@ const MessyMessageContentStatus = forwardRef<
           height: Sizes.date_time / 1.2,
           marginHorizontal: Sizes.padding,
           marginTop: Sizes.padding / 4,
-          tintColor: Colors.dot,
+          tintColor: Colors.success,
         }}
       />
     );

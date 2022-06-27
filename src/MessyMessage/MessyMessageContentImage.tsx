@@ -23,7 +23,7 @@ export function MessyMessageContentImage(props: IMessyMessageProps) {
   }
   if (Array.isArray(data.image)) {
     let marginTop = Sizes.padding;
-    if (data.text) {
+    if (data.text || data.audio) {
       marginTop = 0;
     }
 
