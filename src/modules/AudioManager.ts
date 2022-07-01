@@ -2,12 +2,15 @@
 //   PlayBackType,
 // } from 'react-native-audio-recorder-player';
 
+import { Platform } from 'react-native';
+
 let audioRecorderPlayer: any;
 let AudioRecorderPlayer: any;
 
 try {
   //@ts-ignore
   AudioRecorderPlayer = require('react-native-audio-recorder-player').default;
+  audioRecorderPlayer = new AudioRecorderPlayer();
 } catch {
   console.warn(
     'react-native-audio-recorder-player not found. Please install it to use this feature.'
@@ -60,6 +63,7 @@ export const startPlayer = async (path?: string, callback: Callback) => {
     status: AudioStatus.STARTED,
   });
   audioRecorderPlayer.addPlayBackListener(async (e: any) => {
+    console.log('addPlayBackListener');
     if (e.currentPosition === e.duration) {
       await stopPlayer();
     } else {
@@ -87,7 +91,31 @@ export const stopPlayer = async () => {
   audioRecorderPlayer?.removePlayBackListener();
   currentPosition = 0;
   currentCallback({ status: AudioStatus.STOPPED });
-  audioRecorderPlayer = undefined;
+  // audioRecorderPlayer = undefined;
   currentPath = undefined;
   currentCallback = () => {};
+};
+
+export const startRecord = async () => {
+  try {
+    if (audioRecorderPlayer && currentPosition !== 0) {
+      await stopPlayer();
+    }
+    if (!audioRecorderPlayer && AudioRecorderPlayer) {
+      audioRecorderPlayer = new AudioRecorderPlayer();
+    }
+    const path = Platform.select({
+      ios: `${Date.now()}-sound.m4a`,
+      android: `${Date.now()}-sound.mp3`,
+    });
+    await audioRecorderPlayer?.startRecorder?.(path);
+  } catch {}
+};
+
+export const stopRecord = async () => {
+  if (!audioRecorderPlayer && AudioRecorderPlayer) {
+    audioRecorderPlayer = new AudioRecorderPlayer();
+  }
+
+  return await audioRecorderPlayer?.stopRecorder?.();
 };

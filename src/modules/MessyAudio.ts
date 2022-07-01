@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
 
 let audioRecorderPlayer: any;
-
+let AudioRecorderPlayer: any;
 try {
   //@ts-ignore
-  const AudioRecorderPlayer =
-    require('react-native-audio-recorder-player').default;
+  AudioRecorderPlayer = require('react-native-audio-recorder-player').default;
   console.log('RecorderPlayer', AudioRecorderPlayer);
   audioRecorderPlayer = new AudioRecorderPlayer();
 } catch {
@@ -59,12 +58,15 @@ type AudioRecorderType = {
 export function useAudioRecorder(): AudioRecorderType {
   const [recordListen, setRecordListen] = useState({});
 
-  useEffect(() => {
-    audioRecorderPlayer?.addRecordBackListener?.(setRecordListen);
-    return () => {
-      audioRecorderPlayer?.removeRecordBackListener?.();
-    };
-  }, []);
+  if (!audioRecorderPlayer) {
+    audioRecorderPlayer = new AudioRecorderPlayer();
+  }
+  // useEffect(() => {
+  //   audioRecorderPlayer?.addRecordBackListener?.(setRecordListen);
+  //   return () => {
+  //     audioRecorderPlayer?.removeRecordBackListener?.();
+  //   };
+  // }, []);
 
   return {
     startRecorder: audioRecorderPlayer?.startRecorder,

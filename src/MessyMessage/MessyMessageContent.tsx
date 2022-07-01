@@ -75,9 +75,9 @@ export function MessyMessageContent(props: IMessyMessageProps) {
             marginHorizontal: Sizes.padding / 2,
           }}
         >
-          <MessyMessageContentText {...props} />
-          <MessyMessageContentAudio {...props} />
-          <MessyMessageContentImage {...props} />
+          {!!data.text && <MessyMessageContentText {...props} />}
+          {!!data.audio && <MessyMessageContentAudio {...props} />}
+          {!!data.image && <MessyMessageContentImage {...props} />}
         </View>
         <View
           style={{

@@ -16,7 +16,9 @@ import {
   AudioStatus,
   pausePlayer,
   startPlayer,
+  startRecord,
   stopPlayer,
+  stopRecord,
   useAudioRecorder,
   useColors,
   useSizes,
@@ -115,23 +117,17 @@ function MessyKeyboardAudioRecord({
   return (
     <Pressable
       onPress={onPress}
-      style={{
-        position: 'absolute',
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: Sizes.image_width_keyboard / 1.5,
-        height: Sizes.image_width_keyboard / 1.5,
-        borderRadius: Sizes.image_width_keyboard / 3,
-        shadowColor: '#000',
-        backgroundColor: 'white',
-        shadowOffset: {
-          width: 0,
-          height: 3,
+      style={[
+        CommonStyle.shadow,
+        {
+          position: 'absolute',
+          justifyContent: 'center',
+          alignItems: 'center',
+          width: Sizes.image_width_keyboard / 1.5,
+          height: Sizes.image_width_keyboard / 1.5,
+          borderRadius: Sizes.image_width_keyboard / 3,
         },
-        shadowOpacity: 0.29,
-        shadowRadius: 4.65,
-        elevation: 7,
-      }}
+      ]}
     >
       <Animated.Image
         source={require('../utils/images/microphone.png')}
@@ -154,18 +150,16 @@ function MessyKeyboardAudioItem(props: IMessyMessageProps) {
       duration: 1,
     },
   });
-  console.log('playListen', playListen);
   const shared = useSharedValue(0);
 
   const animatedStyle = useAnimatedStyle(() => {
     return {
       width: Sizes.image_max_width * shared.value,
       height: Sizes.input_height,
-      backgroundColor: Colors.primary,
+      backgroundColor: Colors.message_right.audio,
       borderRadius: Sizes.border_radius,
     };
   });
-  console.log('shared', shared.value);
   useEffect(() => {
     if (playListen.status === AudioStatus.PLAYING) {
       shared.value = withTiming(
@@ -208,8 +202,7 @@ function MessyKeyboardAudioItem(props: IMessyMessageProps) {
   }
 
   return (
-    <Pressable
-      onPress={onPress}
+    <View
       style={[
         CommonStyle.shadow,
         {
@@ -218,14 +211,16 @@ function MessyKeyboardAudioItem(props: IMessyMessageProps) {
           flexDirection: 'row',
           alignItems: 'center',
           borderRadius: Sizes.border_radius,
-          borderWidth: Sizes.border,
           marginVertical: Sizes.padding,
-          borderColor: Colors.primary,
+          backgroundColor: Colors.primary,
         },
       ]}
     >
       <Animated.View style={animatedStyle} />
-      <View style={{ position: 'absolute', right: Sizes.padding }}>
+      <Pressable
+        onPress={onPress}
+        style={{ position: 'absolute', right: Sizes.padding }}
+      >
         <Image
           source={source}
           style={{
@@ -234,8 +229,8 @@ function MessyKeyboardAudioItem(props: IMessyMessageProps) {
             tintColor: Colors.accent,
           }}
         />
-      </View>
-    </Pressable>
+      </Pressable>
+    </View>
   );
 }
 
@@ -244,12 +239,10 @@ export function MessyKeyboardAudio() {
   const [audio, setAudio] = useState<IMessyMessageAudio>();
   const [recording, setRecording] = useState<boolean>(false);
 
-  const { startRecorder, stopRecorder } = useAudioRecorder();
-
   const onPress = async () => {
     try {
       if (recording) {
-        const result = await stopRecorder?.();
+        const result = await stopRecord?.();
         console.log('result', result);
         if (result) {
           setAudio({ uri: result });
@@ -257,11 +250,7 @@ export function MessyKeyboardAudio() {
         return;
       }
       setAudio(undefined);
-      const path = Platform.select({
-        ios: `${Date.now()}-sound.m4a`,
-        android: `${Date.now()}-sound.mp3`,
-      });
-      startRecorder?.(path);
+      startRecord();
     } catch (error: any) {
       console.warn(error?.message);
     } finally {
