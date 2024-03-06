@@ -4,6 +4,9 @@ const DefaultColors = {
   background: 'white',
   primary: '#F9A825',
   accent: '#D32F2F',
+  shadow: '#000000',
+  placeholder: '#A8ABB2',
+  success: '#43A047',
   message_left: {
     background: '#EEEEEE',
     text: '#000',
@@ -13,16 +16,16 @@ const DefaultColors = {
     audio: 'rgba(0,0,0,0.2)',
   },
   message_right: {
-    background: '#F9A825',
+    background: '#F85767',
     text: 'white',
     link: '#1976D2',
     email: '#2962FF',
     phone: '#D32F2F',
     audio: 'rgba(255,255,255,0.5)',
   },
-  shadow: '#000000',
-  placeholder: 'rgba(0,0,0,0.6)',
-  success: '#43A047',
+  input: {
+    text: '#000000',
+  },
 };
 
 export type IColor = {
@@ -48,6 +51,9 @@ export type IColor = {
     phone: string;
     audio: string;
   };
+  input: {
+    text: string;
+  };
 };
 type Listener = (color: IColor) => void;
 const listeners = new Set<Listener>();
@@ -62,11 +68,16 @@ export const useInitColors = (data: IColor = DefaultColors) => {
   const firstRenderRef = useRef(true);
   initData = data;
   useEffect(() => {
-    if (firstRenderRef.current) {
-      firstRenderRef.current = false;
-    } else {
+    const handleTheme = () => {
+      if (firstRenderRef.current) {
+        firstRenderRef.current = false;
+        return;
+      }
       setTheme(data);
-    }
+    };
+
+    handleTheme();
+
     return () => {
       initData = DefaultColors;
     };
@@ -74,8 +85,7 @@ export const useInitColors = (data: IColor = DefaultColors) => {
 };
 
 export function useColors(): IColor {
-  const [color, setColor]: [IColor, (newColor: IColor) => void] =
-    useState(initData);
+  const [color, setColor] = useState<IColor>(initData);
 
   // Listen for updates
   useEffect(() => {

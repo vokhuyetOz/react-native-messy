@@ -1,6 +1,5 @@
 export const CommonStyle = {
   shadow: {
-    backgroundColor: 'white',
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -8,6 +7,7 @@ export const CommonStyle = {
     },
     shadowOpacity: 0.29,
     shadowRadius: 4.65,
-    elevation: 7,
+    elevation: 4,
+    backgroundColor: 'white',
   },
 };

@@ -11,18 +11,21 @@ export function MessyMessageDateTime(props: IMessyMessageProps) {
   const Colors = useColors();
   const Sizes = useSizes();
 
-  const { renderMessageDateTime, data, preMessage } = props;
-  if (!data?.createdTime) return null;
+  const { renderMessageDateTime, value, preMessage, index } = props;
+  if (!value?.createdTime) return null;
 
   if (typeof renderMessageDateTime === 'function') {
-    return renderMessageDateTime(data);
+    return renderMessageDateTime(value);
   }
-  const currentDate = dayjs(data.createdTime).format('YYYY MMMM DD');
-  const preDate = dayjs(preMessage?.createdTime).format('YYYY MMMM DD');
-  if (preMessage?.createdTime && currentDate === preDate) {
+  const currentDate = dayjs(value.createdTime);
+  let currentDateFormat = currentDate.format('YYYY MMMM DD');
+  const preDateFormat = dayjs(preMessage?.createdTime).format('YYYY MMMM DD');
+  if (preMessage?.createdTime && currentDateFormat === preDateFormat) {
     return null;
   }
-
+  if (index === 0) {
+    currentDateFormat = currentDate.format('YYYY MMMM DD  HH:mm');
+  }
   return (
     <Text
       style={{
@@ -33,7 +36,7 @@ export function MessyMessageDateTime(props: IMessyMessageProps) {
         flex: 1,
       }}
     >
-      {currentDate}
+      {currentDateFormat}
     </Text>
   );
 }

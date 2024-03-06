@@ -1,146 +1,97 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
-import React, { useEffect, useRef } from 'react';
-import { View } from 'react-native';
+import React, { type FC } from 'react';
+import { View, FlatList, type FlatListProps } from 'react-native';
 
-import { FlatList } from 'react-native-bidirectional-infinite-scroll';
+import type { ParseShape } from 'react-native-parsed-text';
 
 import { MessyLoading } from './MessyLoading';
 
-import { IColor, useColors, useInitColors } from './modules';
-import { IMessyFooterProps, MessyFooter } from './MessyFooter';
-import { IMessyMessage, IUser, MessyMessage } from './MessyMessage';
+import {
+  type IColor,
+  useColors,
+  useInitColors,
+  useMessyListRef,
+} from './modules';
+import { type IMessyFooterProps, MessyFooter } from './MessyFooter';
+import { type TMessyMessage, type IUser, MessyMessage } from './MessyMessage';
+import { MessyPropsContext } from './modules/useMessyPropsContext';
 
-import type { ParseShape } from 'react-native-parsed-text';
-import type { LightboxProps } from 'react-native-lightbox-v2';
+type TListProps = Omit<FlatListProps<any>, 'data'> & {};
+type TMessageProps = {
+  hideOwnerAvatar: boolean;
+  hidePartnerAvatar: boolean;
+};
 
-export interface IMessyProps {
-  loading: boolean | undefined;
-  messages: IMessyMessage[] | [] | undefined;
-  user: IUser;
-  theme: IColor;
-  onEndReached: () => Promise<void>;
-  onStartReached: () => Promise<void>;
-  renderLoading: () => JSX.Element;
-  renderAvatar: ({ user }: { user?: IUser }) => JSX.Element;
-  renderMessageText: (data: IMessyMessage) => JSX.Element;
-  renderMessageAudio: (data: IMessyMessage) => JSX.Element;
-  renderMessageImage: (data: IMessyMessage) => JSX.Element;
-  renderMessageDateTime: (data: IMessyMessage) => JSX.Element;
-  footerProps: IMessyFooterProps;
-  imageLightboxProps: LightboxProps;
-  parsedShape: ParseShape[];
-}
+export type IMessyProps = Readonly<{
+  loading?: boolean;
+  messages?: TMessyMessage[];
+  user?: IUser;
+  theme?: IColor;
+  footerProps?: IMessyFooterProps;
+  listProps?: TListProps;
+  messageProps?: TMessageProps;
+  handleLocalMessage?: Function;
+  parsedShape?: ParseShape[];
+  showDateTime?: boolean;
+  renderLoading?: FC<{}>;
+  renderAvatar?: FC<{ user?: IUser }>;
+  renderMessageText?: (data: TMessyMessage) => JSX.Element;
+  renderMessageAudio?: (data: TMessyMessage) => JSX.Element;
+  renderMessageImage?: (data: TMessyMessage) => JSX.Element;
+  renderMessageDateTime?: (data: TMessyMessage) => JSX.Element;
+}>;
 
-export interface IMessyMessageProps extends IMessyProps {
-  data: IMessyMessage;
-  preMessage?: IMessyMessage;
-  index?: number;
-}
+export type IMessyMessageProps = Readonly<
+  Omit<IMessyProps, 'data'> & {
+    value: TMessyMessage;
+    preMessage?: TMessyMessage;
+    index?: number;
+  }
+>;
 
 export function Messy(props: IMessyProps) {
   useInitColors(props.theme);
   const Colors = useColors();
 
-  const flatlistRef: any = useRef();
+  const flatlistRef = useMessyListRef();
 
-  const componentRef = useRef<{
-    keyboard?: NodeJS.Timeout;
-    scrollOffset: number;
-    contentHeight: number;
-  }>({
-    keyboard: undefined,
-    scrollOffset: 0,
-    contentHeight: 0,
-  });
-
-  useEffect(() => {
-    return () => {
-      if (componentRef.current.keyboard) {
-        clearTimeout(componentRef.current.keyboard);
-      }
-    };
-  }, []);
-
-  const { loading, onEndReached, onStartReached, messages = [], user } = props;
-
-  const onScrollToOffset = (offset: number) => {
-    if (componentRef.current.keyboard) {
-      clearTimeout(componentRef.current.keyboard);
-    }
-    componentRef.current.keyboard = setTimeout(() => {
-      // flatlistRef.current?.scrollToEnd?.({});
-      flatlistRef.current?.scrollToOffset?.({
-        offset,
-      });
-    }, 300);
-  };
+  const { loading, messages = [], listProps } = props;
 
   if (loading) {
     return <MessyLoading {...props} />;
   }
 
   return (
-    <>
-      <View style={{ flex: 1, justifyContent: 'flex-end' }}>
+    <MessyPropsContext.Provider value={props}>
+      <View style={{ flex: 1 }}>
         <FlatList
-          // @ts-ignore
           ref={flatlistRef}
+          keyExtractor={(item: TMessyMessage) => `${item.clientId || item.id}`}
           style={{
-            // flex: 1,
             backgroundColor: Colors.background,
+            flex: 1,
           }}
-          onLayout={({ nativeEvent }) => {
-            onScrollToOffset(nativeEvent.layout.height);
+          maintainVisibleContentPosition={{
+            minIndexForVisible: 1,
+            autoscrollToTopThreshold: 1,
           }}
-          onContentSizeChange={(_w, h) => {
-            if (
-              //40 is height of dot icon
-              //prevent scroll when show/hide message status
-              componentRef.current.contentHeight !== 0 &&
-              h < componentRef.current.contentHeight + 40
-            ) {
-              componentRef.current.contentHeight = h;
-              return;
-            }
-            componentRef.current.contentHeight = h;
-            if (
-              componentRef.current.scrollOffset &&
-              messages[messages.length - 1]?.user?.id !== user?.id
-            ) {
-              return;
-            }
-            //bottom of scrollview
-            //extra keyboard
-            onScrollToOffset(h + 500);
-          }}
-          onScroll={({ nativeEvent }) => {
-            componentRef.current.scrollOffset = nativeEvent.contentOffset.y;
-          }}
+          scrollsToTop={false}
           data={messages}
-          showDefaultLoadingIndicators={true}
-          onEndReached={onEndReached}
-          onStartReached={onStartReached}
-          keyExtractor={(item: IMessyMessage) => `${item.id}`}
-          renderItem={({
-            item,
-            index,
-          }: {
-            item: IMessyMessage;
-            index: number;
-          }) => {
+          renderItem={({ item, index }) => {
             return (
               <MessyMessage
                 {...props}
-                data={item}
+                value={item}
                 index={index}
                 preMessage={messages[index - 1]}
               />
             );
           }}
+          {...listProps}
+          inverted
         />
+        <MessyFooter {...props.footerProps} />
       </View>
-      <MessyFooter {...props.footerProps} />
-    </>
+    </MessyPropsContext.Provider>
   );
 }

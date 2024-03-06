@@ -1,21 +1,46 @@
 # react-native-messy
 
-chat UI
+chat ui
+
 
 ## Installation
 
 ```sh
-npm install react-native-messy
+npm install @vokhuyet/react-native-messy
+```
+
+or
+
+```sh
+yarn add @vokhuyet/react-native-messy
 ```
 
 ## Usage
 
 ```js
-import { multiply } from "react-native-messy";
+import { Messy } from '@vokhuyet/react-native-messy';
 
 // ...
+    const [mess, setMess] = useState([]);
 
-const result = await multiply(3, 7);
+    <Messy
+        listProps={{
+            ...FlatlistProps
+        }}
+        messages={mess}
+        user={{ id: 2 }}
+        footerProps={{
+            onSend: async (message) => {
+                mess.unshift(message);
+                setMess([...mess]);
+                // upload image, sent text, emit event...
+                setTimeout(() => {
+                    mess[0].status = 'sent';
+                    setMess([...mess]);
+                }, 2000);
+            },   
+        }}
+    />
 ```
 
 ## Contributing
@@ -25,3 +50,7 @@ See the [contributing guide](CONTRIBUTING.md) to learn how to contribute to the 
 ## License
 
 MIT
+
+---
+
+Made with [create-react-native-library](https://github.com/callstack/react-native-builder-bob)

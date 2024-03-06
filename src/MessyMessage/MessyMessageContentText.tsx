@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import { Linking } from 'react-native';
 
@@ -13,13 +12,13 @@ export function MessyMessageContentText(props: IMessyMessageProps) {
   const Colors = useColors();
   const Sizes = useSizes();
 
-  const { renderMessageText, data, user, parsedShape = [] } = props;
-  if (!data?.text) {
+  const { renderMessageText, value, user, parsedShape = [] } = props;
+  if (!value?.text) {
     return null;
   }
 
   if (typeof renderMessageText === 'function') {
-    return renderMessageText(data);
+    return renderMessageText(value);
   }
 
   const onUrlPress = (url: string) => {
@@ -27,41 +26,50 @@ export function MessyMessageContentText(props: IMessyMessageProps) {
     // react-native-parsed-text recognizes it as a valid url, but Linking fails to open due to the missing scheme.
     if (/^www\./i.test(url)) {
       onUrlPress(`https://${url}`);
-    } else {
-      Linking.openURL(url).catch(() => {});
+      return;
     }
+    Linking.openURL(url).catch(() => {});
   };
-  const onEmailPress = (email: string) =>
+  const onEmailPress = (email: string) => {
     Linking.openURL(`mailto:${email}`).catch((e) => {
       console.log('e', e);
     });
+  };
+
+  const backgroundColor: string = {
+    true: Colors.message_right.background,
+    false: Colors.message_left.background,
+  }[`${user?.id === value?.user?.id}`];
 
   const textColor: string = {
     true: Colors.message_right.text,
     false: Colors.message_left.text,
-  }[`${user?.id === data?.user?.id}`];
+  }[`${user?.id === value?.user?.id}`];
 
   const linkColor: string = {
     true: Colors.message_right.link,
     false: Colors.message_left.link,
-  }[`${user?.id === data?.user?.id}`];
+  }[`${user?.id === value?.user?.id}`];
 
   const phoneColor: string = {
     true: Colors.message_right.phone,
     false: Colors.message_left.phone,
-  }[`${user?.id === data?.user?.id}`];
+  }[`${user?.id === value?.user?.id}`];
 
   const emailColor: string = {
     true: Colors.message_right.email,
     false: Colors.message_left.email,
-  }[`${user?.id === data?.user?.id}`];
+  }[`${user?.id === value?.user?.id}`];
 
   return (
     <ParsedText
       style={{
         color: textColor,
         fontSize: Sizes.message,
-        padding: Sizes.padding,
+        lineHeight: Sizes.message_line_height,
+        paddingHorizontal: Sizes.padding,
+        paddingVertical: Sizes.padding / 2,
+        backgroundColor,
       }}
       parse={[
         {
@@ -85,7 +93,7 @@ export function MessyMessageContentText(props: IMessyMessageProps) {
         ...parsedShape,
       ]}
     >
-      {data?.text}
+      {value?.text}
     </ParsedText>
   );
 }
