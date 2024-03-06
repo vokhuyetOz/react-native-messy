@@ -1,10 +1,10 @@
 {
-  "name": "react-native-messy",
-  "version": "0.1.0",
-  "description": "chat UI",
+  "name": "@vokhuyet/react-native-messy",
+  "version": "0.0.2",
+  "description": "chat ui",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
-  "types": "lib/typescript/index.d.ts",
+  "types": "lib/typescript/src/index.d.ts",
   "react-native": "src/index",
   "source": "src/index",
   "files": [
@@ -13,31 +13,37 @@
     "android",
     "ios",
     "cpp",
-    "react-native-messy.podspec",
-    "!lib/typescript/example",
-    "!android/build",
+    "*.podspec",
     "!ios/build",
+    "!android/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
     "!**/__tests__",
     "!**/__fixtures__",
-    "!**/__mocks__"
+    "!**/__mocks__",
+    "!**/.*"
   ],
   "scripts": {
+    "example": "yarn workspace react-native-messy-example",
     "test": "jest",
-    "typescript": "tsc --noEmit",
+    "typecheck": "tsc --noEmit",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "clean": "del-cli lib",
     "prepare": "bob build",
-    "release": "release-it",
-    "example": "yarn --cwd example",
-    "pods": "cd example && pod-install --quiet",
-    "bootstrap": "yarn example && yarn && yarn pods"
+    "release": "release-it"
   },
   "keywords": [
     "react-native",
     "ios",
     "android"
   ],
-  "repository": "https://github.com/vokhuyetOz/react-native-messy",
-  "author": "Vokhuyet <vokhuyet.ict@gmail.com> (https://github.com/vokhuyetOz)",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vokhuyetOz/react-native-messy.git"
+  },
+  "author": "Vok <vokhuyet.ict@gmail.com> (https://github.com/vokhuyetOz)",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/vokhuyetOz/react-native-messy/issues"
@@ -46,54 +52,69 @@
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
-  "devDependencies": {
-    "@commitlint/config-conventional": "^11.0.0",
-    "@react-native-community/eslint-config": "^2.0.0",
-    "@release-it/conventional-changelog": "^2.0.0",
-    "@types/jest": "^26.0.0",
-    "@types/react": "^18.0.12",
-    "@types/react-native": "^0.67.8",
-    "commitlint": "^11.0.0",
-    "eslint": "^7.2.0",
-    "eslint-config-prettier": "^7.0.0",
-    "eslint-plugin-prettier": "^3.1.3",
-    "husky": "^6.0.0",
-    "jest": "^26.0.1",
-    "pod-install": "^0.1.0",
-    "prettier": "^2.0.5",
-    "react-native-builder-bob": "^0.18.0",
-    "react-native-lightbox-v2": "^0.9.0",
-    "react-native-reanimated": "^2.8.0",
-    "react-native-ui-lib": "^6.17.1",
-    "release-it": "^14.2.2",
-    "typescript": "^4.1.3",
-    "@react-native-community/cameraroll":"^4.1.2",
-    "react-native-image-picker":"^4.8.4",
-    "fbjs":"^3.0.4",
-    "react-native-audio-recorder-player":"^3.5.1"
-  },
   "dependencies": {
-    "@stream-io/flat-list-mvcp": "^0.10.2",
-    "dayjs": "1.11.2",
-    "react-native-bidirectional-infinite-scroll": "0.3.3",
-    "react-native-keyboard-controller": "^1.0.0-beta.0",
-    "react-native-lightbox-v2": "^0.9.0",
-    "react-native-parsed-text": "^0.0.22"
+    "@vokhuyet/native-hooks": "^0.0.2",
+    "dayjs": "^1.11.10",
+    "emojilib": "^3.0.11",
+    "react-native-animated-pagination-dots": "^0.1.73",
+    "react-native-parsed-text": "^0.0.22",
+    "react-native-reanimated-image-viewer": "^1.0.2",
+    "react-native-zoom-reanimated": "https://github.com/kesha-antonov/react-native-zoom-reanimated.git",
+    "unicode-emoji-json": "^0.4.0"
+  },
+  "devDependencies": {
+    "@commitlint/config-conventional": "^17.0.2",
+    "@evilmartians/lefthook": "^1.5.0",
+    "@gorhom/bottom-sheet": "^4.6.1",
+    "@react-native/eslint-config": "^0.72.2",
+    "@release-it/conventional-changelog": "^5.0.0",
+    "@shopify/flash-list": "^1.6.3",
+    "@types/jest": "^28.1.2",
+    "@types/react": "^18.2.61",
+    "@types/react-native": "0.73.0",
+    "commitlint": "^17.0.2",
+    "del-cli": "^5.0.0",
+    "eslint": "^8.4.1",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "fbjs": "^3.0.4",
+    "jest": "^28.1.1",
+    "prettier": "^2.0.5",
+    "react": "18.2.0",
+    "react-native": "0.73.2",
+    "react-native-builder-bob": "^0.20.0",
+    "react-native-gesture-handler": "^2.14.1",
+    "react-native-image-picker": "^4.8.4",
+    "react-native-keyboard-controller": "^1.10.3",
+    "react-native-pager-view": "^6.2.3",
+    "react-native-reanimated": "^3.6.1",
+    "react-native-tab-view": "^3.5.2",
+    "release-it": "^15.0.0",
+    "typescript": "^5.0.2"
+  },
+  "resolutions": {
+    "@types/react": "18.2.61"
   },
   "peerDependencies": {
-    "@stream-io/flat-list-mvcp": "*",
+    "@gorhom/bottom-sheet": "*",
+    "@shopify/flash-list": ">=1.6.3",
     "dayjs": "*",
+    "fbjs": "*",
     "react": "*",
     "react-native": "*",
-    "react-native-bidirectional-infinite-scroll": "*",
+    "react-native-gesture-handler": "*",
+    "react-native-image-picker": "*",
     "react-native-keyboard-controller": "*",
-    "react-native-lightbox-v2": "*",
-    "react-native-parsed-text": "*",
+    "react-native-pager-view": "*",
     "react-native-reanimated": "*",
-    "@react-native-community/cameraroll":"*",
-    "react-native-image-picker":"*",
-    "fbjs":"*",
-    "react-native-audio-recorder-player":"*"
+    "react-native-tab-view": "*"
+  },
+  "workspaces": [
+    "example"
+  ],
+  "packageManager": "yarn@3.6.1",
+  "engines": {
+    "node": ">= 18.0.0"
   },
   "jest": {
     "preset": "react-native",
@@ -127,7 +148,7 @@
   "eslintConfig": {
     "root": true,
     "extends": [
-      "@react-native-community",
+      "@react-native",
       "prettier"
     ],
     "rules": {

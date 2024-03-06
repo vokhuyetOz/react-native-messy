@@ -1,38 +1,38 @@
 {
-  "name": "example",
+  "name": "react-native-messy-example",
   "version": "0.0.1",
-  "private": true,
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
-    "test": "jest",
-    "lint": "eslint ."
+    "build:android": "cd android && ./gradlew assembleDebug --no-daemon --console=plain -PreactNativeArchitectures=arm64-v8a",
+    "build:ios": "cd ios && xcodebuild -workspace MessyExample.xcworkspace -scheme MessyExample -configuration Debug -sdk iphonesimulator CC=clang CPLUSPLUS=clang++ LD=clang LDPLUSPLUS=clang++ GCC_OPTIMIZATION_LEVEL=0 GCC_PRECOMPILE_PREFIX_HEADER=YES ASSETCATALOG_COMPILER_OPTIMIZATION=time DEBUG_INFORMATION_FORMAT=dwarf COMPILER_INDEX_STORE_ENABLE=NO"
   },
   "dependencies": {
-    "@react-native-community/cameraroll": "^4.1.2",
-    "fbjs": "^3.0.4",
-    "react": "17.0.2",
-    "react-native": "0.68.2",
-    "react-native-audio-recorder-player": "^3.5.1",
-    "react-native-image-picker": "^4.8.4",
-    "react-native-keyboard-controller": "^1.0.0-beta.0",
-    "react-native-messy": "link:../",
-    "react-native-reanimated": "^2.8.0",
-    "react-native-ui-lib": "^6.17.1"
+    "@gorhom/bottom-sheet": "^4.6.1",
+    "@shopify/flash-list": "^1.6.3",
+    "@vokhuyet/react-native-messy": "link:../",
+    "react": "18.2.0",
+    "react-native": "0.73.2",
+    "react-native-gesture-handler": "^2.14.1",
+    "react-native-image-picker": "^7.1.0",
+    "react-native-keyboard-controller": "^1.10.3",
+    "react-native-lightbox-v2": "^0.9.0",
+    "react-native-pager-view": "^6.2.3",
+    "react-native-reanimated": "^3.6.1",
+    "react-native-tab-view": "^3.5.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.18.2",
-    "@babel/runtime": "^7.18.3",
-    "@react-native-community/eslint-config": "^3.0.2",
-    "babel-jest": "^28.1.1",
-    "babel-plugin-module-resolver": "^4.0.0",
-    "eslint": "^8.17.0",
-    "jest": "^28.1.1",
-    "metro-react-native-babel-preset": "^0.71.1",
-    "react-test-renderer": "17.0.2"
+    "@babel/core": "^7.20.0",
+    "@babel/preset-env": "^7.20.0",
+    "@babel/runtime": "^7.20.0",
+    "@react-native/babel-preset": "0.73.19",
+    "@react-native/metro-config": "0.73.3",
+    "@react-native/typescript-config": "0.73.1",
+    "babel-plugin-module-resolver": "^5.0.0",
+    "pod-install": "^0.1.0"
   },
-  "jest": {
-    "preset": "react-native"
+  "engines": {
+    "node": ">=18"
   }
 }

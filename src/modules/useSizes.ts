@@ -1,4 +1,4 @@
-import { useWindowDimensions } from 'react-native';
+import { StyleSheet, PixelRatio, useWindowDimensions } from 'react-native';
 
 type Size = {
   image_max_width: number;
@@ -11,27 +11,45 @@ type Size = {
   border: number;
   date_time: number;
   message: number;
+  message_line_height: number;
   button_image: number;
-  image_width_keyboard: number;
   device_width: number;
+  device_height: number;
+  system: number;
+  input_border_radius: number;
+  input_message: number;
+  input_message_line_heigh: number;
+  emoji: number;
+  action_width: number;
+  wpx: (px: number) => number;
 };
 
 export function useSizes(): Size {
   const { width, height } = useWindowDimensions();
+  const wpx = (px: number) =>
+    PixelRatio.roundToNearestPixel((px / 375) * width);
 
   return {
-    image_max_width: width * 0.6,
+    wpx,
+    device_height: height,
+    emoji: wpx(20),
+    message_line_height: wpx(21),
+    message: wpx(14),
+    image_max_width: wpx(260),
     image_max_height: height * 0.3,
-    text_max_width: width * 0.7,
-    padding: width * 0.04,
-    border_radius: width * 0.0225,
+    text_max_width: wpx(260),
+    padding: wpx(12),
+    border_radius: wpx(18),
     avatar: width * 0.1,
-    input_height: 48,
-    border: 1,
-    date_time: width * 0.035,
-    message: width * 0.05,
-    button_image: 30,
-    image_width_keyboard: width / 3,
+    input_height: wpx(48),
+    border: StyleSheet.hairlineWidth,
+    date_time: wpx(8),
+    button_image: wpx(24),
     device_width: width,
+    system: wpx(10),
+    input_border_radius: wpx(100),
+    input_message: wpx(16),
+    input_message_line_heigh: wpx(16),
+    action_width: wpx(20),
   };
 }

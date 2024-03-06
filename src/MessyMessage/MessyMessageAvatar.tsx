@@ -11,12 +11,12 @@ export function MessyMessageAvatar(props: IMessyMessageProps) {
   const Sizes = useSizes();
   const Colors = useColors();
 
-  const { renderAvatar, data, preMessage } = props;
+  const { renderAvatar, value, preMessage } = props;
 
-  const currentDate = dayjs(data.createdTime).format('YYYY MMMM DD');
+  const currentDate = dayjs(value.createdTime).format('YYYY MMMM DD');
   const preDate = dayjs(preMessage?.createdTime).format('YYYY MMMM DD');
 
-  if (currentDate === preDate && preMessage?.user?.id === data?.user?.id) {
+  if (currentDate === preDate && preMessage?.user?.id === value?.user?.id) {
     return (
       <View
         style={{
@@ -29,10 +29,10 @@ export function MessyMessageAvatar(props: IMessyMessageProps) {
   }
 
   if (typeof renderAvatar === 'function') {
-    return renderAvatar(data);
+    return renderAvatar(value);
   }
 
-  if (!data?.user?.avatar) {
+  if (!value?.user?.avatar) {
     return (
       <View
         style={{
@@ -51,14 +51,14 @@ export function MessyMessageAvatar(props: IMessyMessageProps) {
             color: Colors.primary,
           }}
         >
-          {data?.user?.userName?.[0]}
+          {value?.user?.userName?.[0]}
         </Text>
       </View>
     );
   }
   return (
     <Image
-      source={data.user.avatar}
+      source={value.user.avatar}
       style={{
         width: Sizes.avatar,
         height: Sizes.avatar,

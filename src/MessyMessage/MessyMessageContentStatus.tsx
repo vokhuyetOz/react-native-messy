@@ -1,51 +1,38 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
-import React, {
-  useEffect,
-  useState,
-  forwardRef,
-  useImperativeHandle,
-  Dispatch,
-  SetStateAction,
-} from 'react';
-import { Image, Text, View } from 'react-native';
-import Animated, { Layout, ZoomIn, ZoomOut } from 'react-native-reanimated';
+import React, { useEffect, useState } from 'react';
+import { Text, View } from 'react-native';
+import Animated, { ZoomIn, ZoomOut } from 'react-native-reanimated';
 
 import { useColors, useSizes } from '../modules';
 
-import type { IMessyMessage } from './MessyMessage';
+import type { TMessyMessage } from './MessyMessage';
+import { MImage } from '../elements/MImage/MImage';
 
-type MessyMessageContentStatusHandle = {
-  setDisplay: Dispatch<SetStateAction<boolean>>;
-};
-
-type MessyMessageContentStatusProps = {
-  data: IMessyMessage;
+type MessyMessageContentStatusProps = Readonly<{
+  value: TMessyMessage;
   last: boolean;
-};
+}>;
 
-const MessyMessageContentStatus = forwardRef<
-  MessyMessageContentStatusHandle,
-  MessyMessageContentStatusProps
->(({ data, last }, ref) => {
+export function MessyMessageContentStatus({
+  value,
+  last,
+}: MessyMessageContentStatusProps) {
   const Colors = useColors();
   const Sizes = useSizes();
 
   const [display, setDisplay] = useState(last);
 
-  useImperativeHandle(ref, () => ({
-    setDisplay,
-  }));
-
   useEffect(() => {
-    if (last !== display && display === true) {
-      setDisplay(last);
+    if (last === false && last !== display) {
+      setDisplay(false);
     }
   }, [last]);
+
   if (!display) return null;
 
   const renderContent = () => {
-    if (data.seenBy && Array.isArray(data.seenBy) && data.seenBy.length) {
+    if (value.seenBy && Array.isArray(value.seenBy) && value.seenBy.length) {
       return (
         <View
           style={{
@@ -55,10 +42,11 @@ const MessyMessageContentStatus = forwardRef<
             marginHorizontal: Sizes.padding / 2,
           }}
         >
-          {data.seenBy.map((item) => {
+          {value.seenBy.map((item) => {
             if (item.avatar) {
               return (
-                <Image
+                <MImage
+                  autoSize={false}
                   key={`${item.id}`}
                   source={item.avatar}
                   style={{
@@ -102,14 +90,15 @@ const MessyMessageContentStatus = forwardRef<
       );
     }
     let source = require('../utils/images/circle_o.png');
-    if (data.status === 'sent') {
+    if (value.status === 'sent') {
       source = require('../utils/images/time_check.png');
     }
-    if (data.status === 'seen') {
+    if (value.status === 'seen') {
       source = require('../utils/images/time_check_done.png');
     }
     return (
-      <Image
+      <MImage
+        autoSize={false}
         source={source}
         style={{
           width: Sizes.date_time / 1.2,
@@ -123,14 +112,8 @@ const MessyMessageContentStatus = forwardRef<
   };
 
   return (
-    <Animated.View
-      entering={ZoomIn}
-      exiting={ZoomOut}
-      layout={Layout.springify()}
-    >
+    <Animated.View entering={ZoomIn} exiting={ZoomOut}>
       {renderContent()}
     </Animated.View>
   );
-});
-
-export { MessyMessageContentStatus };
+}
