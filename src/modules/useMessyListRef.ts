@@ -10,8 +10,10 @@ let timeout: NodeJS.Timeout;
 export const useMessyListAction = () => {
   const scrollToLast = () => {
     timeout = setTimeout(() => {
-      listRef.current?.scrollToIndex({ animated: true, index: 0 });
-      clearTimeout(timeout);
+      try {
+        listRef.current?.scrollToIndex({ animated: true, index: 0 });
+        clearTimeout(timeout);
+      } catch {}
     }, 300);
   };
   return {
