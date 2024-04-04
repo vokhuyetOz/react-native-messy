@@ -1,3 +1,4 @@
 import { Messy } from './Messy';
+import type { TMessyMessage } from './MessyMessage/MessyMessage';
 
-export { Messy };
+export { Messy, TMessyMessage };

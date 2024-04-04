@@ -16,7 +16,10 @@ import { type IMessyFooterProps, MessyFooter } from './MessyFooter';
 import { type TMessyMessage, type IUser, MessyMessage } from './MessyMessage';
 import { MessyPropsContext } from './modules/useMessyPropsContext';
 
-type TListProps = Omit<FlatListProps<any>, 'data'> & {};
+type TListProps = Omit<
+  FlatListProps<any>,
+  'data' | 'renderItem' | 'keyExtractor'
+>;
 type TMessageProps = {
   hideOwnerAvatar: boolean;
   hidePartnerAvatar: boolean;
@@ -34,6 +37,7 @@ export type IMessyProps = Readonly<{
   parsedShape?: ParseShape[];
   showDateTime?: boolean;
   renderLoading?: FC<{}>;
+  renderMessageSystem?: FC<{ data?: TMessyMessage }>;
   renderAvatar?: FC<{ user?: IUser }>;
   renderMessageText?: (data: TMessyMessage) => JSX.Element;
   renderMessageAudio?: (data: TMessyMessage) => JSX.Element;

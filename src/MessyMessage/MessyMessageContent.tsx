@@ -2,7 +2,7 @@
 import React from 'react';
 import { Pressable, Text, View } from 'react-native';
 
-import { useSizes } from '../modules';
+import { useMessyPropsContext, useSizes } from '../modules';
 import { MessyMessageAvatar } from './MessyMessageAvatar';
 import { MessyMessageContentImage } from './MessyMessageContentImage';
 import { MessyMessageContentText } from './MessyMessageContentText';
@@ -12,7 +12,7 @@ import { MessyMessageContentStatus } from './MessyMessageContentStatus';
 
 export function MessyMessageContent(props: IMessyMessageProps) {
   const Sizes = useSizes();
-
+  const { renderMessageSystem } = useMessyPropsContext();
   const {
     user,
     value,
@@ -22,6 +22,9 @@ export function MessyMessageContent(props: IMessyMessageProps) {
 
   //System message
   if (value?.type === 'system') {
+    if (typeof renderMessageSystem === 'function') {
+      return renderMessageSystem({ data: value });
+    }
     return (
       <Text style={{ alignSelf: 'center', fontSize: Sizes.system }}>
         {value.text}

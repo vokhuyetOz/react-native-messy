@@ -1,6 +1,6 @@
 {
   "name": "@vokhuyet/react-native-messy",
-  "version": "0.0.3",
+  "version": "0.0.6",
   "description": "chat ui",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -58,7 +58,6 @@
     "emojilib": "^3.0.11",
     "react-native-animated-pagination-dots": "^0.1.73",
     "react-native-parsed-text": "^0.0.22",
-    "react-native-reanimated-image-viewer": "^1.0.2",
     "react-native-zoom-reanimated": "https://github.com/kesha-antonov/react-native-zoom-reanimated.git",
     "unicode-emoji-json": "^0.4.0"
   },

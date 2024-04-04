@@ -3943,7 +3943,6 @@ __metadata:
     react-native-pager-view: ^6.2.3
     react-native-parsed-text: ^0.0.22
     react-native-reanimated: ^3.6.1
-    react-native-reanimated-image-viewer: ^1.0.2
     react-native-tab-view: ^3.5.2
     react-native-zoom-reanimated: "https://github.com/kesha-antonov/react-native-zoom-reanimated.git"
     release-it: ^15.0.0
@@ -11558,18 +11557,6 @@ __metadata:
     react: "*"
     react-native: "*"
   checksum: a8672a50bbc60c9d925b8935b484cda2ed976483fce156f31b497d799eb349b24b79934aa683576e606e3fd3d8d97877d0048eba95f702f15ae21263c2658fd5
-  languageName: node
-  linkType: hard
-
-"react-native-reanimated-image-viewer@npm:^1.0.2":
-  version: 1.0.2
-  resolution: "react-native-reanimated-image-viewer@npm:1.0.2"
-  peerDependencies:
-    react: "*"
-    react-native: "*"
-    react-native-gesture-handler: "*"
-    react-native-reanimated: "*"
-  checksum: 6cab48d92bfa457b62d02045b1900c12a5c0a8d249215f8257fce77199083d432e465f42bab4e1102d474cf938d8867d74c8a89717d85e901c8c047159fc3079
   languageName: node
   linkType: hard
 

@@ -5,7 +5,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { KeyboardProvider } from 'react-native-keyboard-controller';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 //@ts-ignore
-import { Messy } from '@vokhuyet/react-native-messy';
+import { Messy, TMessyMessage } from '@vokhuyet/react-native-messy';
 
 const image1 = {
   uri: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg',
@@ -175,7 +175,8 @@ const App = () => {
               messages={mess}
               user={{ id: 2 }}
               footerProps={{
-                onSend: async (message: any) => {
+                onSend: async (message: TMessyMessage) => {
+                  message;
                   mess.unshift(message);
                   setMess([...mess]);
                   // upload image

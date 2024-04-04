@@ -1,10 +1,10 @@
 import React from 'react';
 import { type ImageSourcePropType, View } from 'react-native';
+import type { Asset } from 'react-native-image-picker';
 
 import type { IMessyMessageProps } from '../Messy';
 import { MessyMessageContent } from './MessyMessageContent';
 import { MessyMessageDateTime } from './MessyMessageDateTime';
-import type { Asset } from 'react-native-image-picker';
 
 export interface IUser {
   id: string | number | null | undefined;
@@ -18,7 +18,7 @@ export interface IMessyMessageAudio {
 export type TMessyMessage = {
   id?: string | number | null;
   text?: string;
-  image?: ImageSourcePropType | ImageSourcePropType[];
+  image?: ImageSourcePropType;
   audio?: IMessyMessageAudio;
   user?: IUser;
   type?: 'system' | 'message';
@@ -26,7 +26,8 @@ export type TMessyMessage = {
   status?: 'sending' | 'sent' | 'seen';
   seenBy?: IUser[];
   local?: Asset;
-  clientId?: string | number; // used for display message in List before receiving response from Server
+  clientId?: string; // used for display message in List before receiving response from Server
+  category?: string; // used for display multiple type of system message
 };
 
 export function MessyMessage(props: IMessyMessageProps) {
