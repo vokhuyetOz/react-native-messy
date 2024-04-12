@@ -87,6 +87,7 @@ type TMessyFooterEmoji = Readonly<{
 type TMessyFooterTextInput = Readonly<{
   textInputRef: RefObject<TextInput>;
   inputProps?: TextInputProps;
+  onChangeText: (text: string) => void;
 }>;
 type TMessyFooterEmojiContentPage = Readonly<{
   data: TEmoji[];
@@ -315,6 +316,7 @@ function MessyFooterEmoji({ emojiShared }: TMessyFooterEmoji) {
 function MessyFooterTextInput({
   textInputRef,
   inputProps,
+  onChangeText,
 }: TMessyFooterTextInput) {
   const Sizes = useSizes();
   const Colors = useColors();
@@ -336,6 +338,10 @@ function MessyFooterTextInput({
     });
     setText(newText);
   }, [force]);
+  //update text to parent
+  useEffect(() => {
+    onChangeText?.(text);
+  }, [text]);
 
   const onSelectionChange = (
     e: NativeSyntheticEvent<TextInputSelectionChangeEventData>
@@ -396,7 +402,9 @@ export function MessyFooterDefault(props: IMessyFooterProps) {
 
   const [borderRadius, setBorderRadius] = useState(Sizes.input_border_radius);
   const textInputRef = useRef<TextInput>(null);
-
+  const componentRef = useRef({
+    text: '',
+  });
   const emojiShared = useSharedValue(Sizes.device_height);
   const { height } = useReanimatedKeyboardAnimation();
 
@@ -419,12 +427,12 @@ export function MessyFooterDefault(props: IMessyFooterProps) {
     }
     setBorderRadius(Sizes.border_radius / 2);
   };
-
+  const onChangeText = (text: string) => {
+    componentRef.current.text = text;
+  };
   const onPressSendText = () => {
-    const text =
-      //@ts-ignore
-      textInputRef.current?._internalFiberInstanceHandleDEV?.memoizedProps
-        ?.value;
+    const text = componentRef.current.text;
+
     if (!text) return;
 
     textInputRef.current?.clear();
@@ -469,6 +477,7 @@ export function MessyFooterDefault(props: IMessyFooterProps) {
             <MessyFooterTextInput
               inputProps={props.inputProps}
               textInputRef={textInputRef}
+              onChangeText={onChangeText}
             />
             <MessyFooterEmoji emojiShared={emojiShared} />
           </View>

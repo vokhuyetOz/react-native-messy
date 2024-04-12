@@ -1,6 +1,6 @@
 {
   "name": "@vokhuyet/react-native-messy",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "chat ui",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
