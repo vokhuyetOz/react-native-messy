@@ -9,6 +9,7 @@ import { MessyMessageContentText } from './MessyMessageContentText';
 
 import type { IMessyMessageProps } from '../Messy';
 import { MessyMessageContentStatus } from './MessyMessageContentStatus';
+import { MessyMessageContentLocation } from './MessyMessageContentLocation';
 
 export function MessyMessageContent(props: IMessyMessageProps) {
   const Sizes = useSizes();
@@ -86,8 +87,9 @@ export function MessyMessageContent(props: IMessyMessageProps) {
             overflow: 'hidden',
           }}
         >
-          {!!value.text && <MessyMessageContentText {...props} />}
+          <MessyMessageContentText {...props} />
           <MessyMessageContentImage {...props} />
+          <MessyMessageContentLocation {...props} />
         </View>
         <View
           style={{

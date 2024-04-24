@@ -39,10 +39,11 @@ export type IMessyProps = Readonly<{
   renderLoading?: FC<{}>;
   renderMessageSystem?: FC<{ data?: TMessyMessage }>;
   renderAvatar?: FC<{ user?: IUser }>;
-  renderMessageText?: (data: TMessyMessage) => JSX.Element;
-  renderMessageAudio?: (data: TMessyMessage) => JSX.Element;
-  renderMessageImage?: (data: TMessyMessage) => JSX.Element;
+  renderMessageText?: (data: IMessyMessageProps) => JSX.Element;
+  renderMessageAudio?: (data: IMessyMessageProps) => JSX.Element;
+  renderMessageImage?: (data: IMessyMessageProps) => JSX.Element;
   renderMessageDateTime?: (data: TMessyMessage) => JSX.Element;
+  renderMessageLocation?: (data: IMessyMessageProps) => JSX.Element;
 }>;
 
 export type IMessyMessageProps = Readonly<

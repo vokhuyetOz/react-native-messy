@@ -18,7 +18,7 @@ export function MessyMessageContentText(props: IMessyMessageProps) {
   }
 
   if (typeof renderMessageText === 'function') {
-    return renderMessageText(value);
+    return renderMessageText(props);
   }
 
   const onUrlPress = (url: string) => {

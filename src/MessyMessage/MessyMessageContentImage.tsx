@@ -258,7 +258,7 @@ export function MessyMessageContentImage(props: IMessyMessageProps) {
   }
 
   if (typeof renderMessageImage === 'function') {
-    return renderMessageImage(value);
+    return renderMessageImage(props);
   }
   return <MessyMessageContentImageDefault {...props} />;
 }

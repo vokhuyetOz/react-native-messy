@@ -15,11 +15,18 @@ export interface IMessyMessageAudio {
   uri?: string;
   id?: string;
 }
+export type TMessyMessageLocation = {
+  name: string;
+  image: ImageSourcePropType;
+  latitude: 'string';
+  longitude: 'string';
+};
 export type TMessyMessage = {
   id?: string | number | null;
   text?: string;
   image?: ImageSourcePropType;
   audio?: IMessyMessageAudio;
+  location?: TMessyMessageLocation;
   user?: IUser;
   type?: 'system' | 'message';
   createdTime?: Date | number | string;
