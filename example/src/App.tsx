@@ -15,6 +15,19 @@ const image2 = {
 };
 const mockMessage = [
   {
+    createdTime: 165400565790,
+    id: 'aasdasdasdasd',
+    type: 'message',
+    location: {
+      name: 'Roman Plaza',
+      image: {
+        uri: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg',
+      },
+      latitude: '20.9859402',
+      longitude: '105.7750793',
+    },
+  },
+  {
     id: '1asdasd',
     image: image1,
     user: {
