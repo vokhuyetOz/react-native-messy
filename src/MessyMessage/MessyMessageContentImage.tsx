@@ -8,17 +8,19 @@ import {
   Pressable,
   Text,
 } from 'react-native';
-import { BottomSheetModal, useBottomSheetModal } from '@gorhom/bottom-sheet';
+import { BottomSheetModal, useBottomSheetModal } from '@discord/bottom-sheet';
 import Zoom from 'react-native-zoom-reanimated';
 import PagerView, {
   type PagerViewOnPageSelectedEvent,
 } from 'react-native-pager-view';
 
-import { useSizes } from '../modules';
+import type { TMessyMessageProps } from '../types';
 
-import { type IMessyMessageProps } from '../Messy';
+import { isImage, useSizes } from '../modules';
+
 import { MImage } from '../elements/MImage/MImage';
 import { MLoading } from '../elements/Loading/Loading';
+import { useBackHandler } from '@vokhuyet/native-hooks';
 
 type TImageContentListItem = Readonly<{
   data: ImageSourcePropType;
@@ -51,12 +53,8 @@ function ImageContentListItem({
       <MImage
         autoSize={false}
         source={data}
-        style={[
-          {
-            resizeMode: 'cover',
-          },
-          imageStyle,
-        ]}
+        resizeMode="cover"
+        style={imageStyle}
       />
     </Pressable>
   );
@@ -75,7 +73,7 @@ function ModalClose() {
       style={{
         position: 'absolute',
         left: Sizes.padding,
-        top: Sizes.padding,
+        top: Sizes.padding * 3,
         paddingTop: Sizes.padding * 1.5,
       }}
     >
@@ -186,9 +184,19 @@ function MessyMessageContentImageList({
     </View>
   );
 }
-function MessyMessageContentImageDefault({ value }: IMessyMessageProps) {
+function MessyMessageContentImageDefault({ value }: TMessyMessageProps) {
   const Sizes = useSizes();
+  const componentRef = useRef({
+    sheetOpen: false,
+  });
   const bottomSheetRef = useRef<BottomSheetModal>(null);
+  useBackHandler(() => {
+    if (componentRef.current.sheetOpen) {
+      bottomSheetRef.current?.dismiss();
+      return true;
+    }
+    return false;
+  });
 
   const onPresent = () => {
     bottomSheetRef.current?.present();
@@ -250,13 +258,15 @@ function MessyMessageContentImageDefault({ value }: IMessyMessageProps) {
     </View>
   );
 }
-export function MessyMessageContentImage(props: IMessyMessageProps) {
+export function MessyMessageContentImage(props: TMessyMessageProps) {
   const { renderMessageImage, value } = props;
 
   if (!value?.image && !value.local) {
     return null;
   }
-
+  if (value.local && !isImage(value.local?.uri)) {
+    return null;
+  }
   if (typeof renderMessageImage === 'function') {
     return renderMessageImage(props);
   }

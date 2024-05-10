@@ -1,17 +1,20 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import { Pressable, Text, View } from 'react-native';
+import { Pressable, View } from 'react-native';
+
+import type { TMessyMessageProps } from '../types';
 
 import { useMessyPropsContext, useSizes } from '../modules';
 import { MessyMessageAvatar } from './MessyMessageAvatar';
 import { MessyMessageContentImage } from './MessyMessageContentImage';
 import { MessyMessageContentText } from './MessyMessageContentText';
 
-import type { IMessyMessageProps } from '../Messy';
 import { MessyMessageContentStatus } from './MessyMessageContentStatus';
 import { MessyMessageContentLocation } from './MessyMessageContentLocation';
+import { MessyMessageContentVideo } from './MessyMessageContentVideo';
+import { MText } from '../elements/MText/MText';
 
-export function MessyMessageContent(props: IMessyMessageProps) {
+export function MessyMessageContent(props: TMessyMessageProps) {
   const Sizes = useSizes();
   const { renderMessageSystem } = useMessyPropsContext();
   const {
@@ -27,9 +30,9 @@ export function MessyMessageContent(props: IMessyMessageProps) {
       return renderMessageSystem({ data: value });
     }
     return (
-      <Text style={{ alignSelf: 'center', fontSize: Sizes.system }}>
+      <MText style={{ alignSelf: 'center', fontSize: Sizes.system }}>
         {value.text}
-      </Text>
+      </MText>
     );
   }
   const justifyContent: any = {
@@ -55,10 +58,13 @@ export function MessyMessageContent(props: IMessyMessageProps) {
     }
     return <MessyMessageAvatar {...props} />;
   };
-  //FIXME: reimplement
-  // const onPress = () => {
-  //   contentStatusRef?.current?.setDisplay?.((pre: boolean) => !pre);
-  // };
+  const onPress = () => {
+    // contentStatusRef?.current?.setDisplay?.((pre: boolean) => !pre);
+    messageProps.onPress?.(props);
+  };
+  const onLongPress = () => {
+    messageProps.onLongPress?.(props);
+  };
 
   let maxWidth = Sizes.text_max_width;
   if (value.image || value.local) {
@@ -76,9 +82,7 @@ export function MessyMessageContent(props: IMessyMessageProps) {
       }}
     >
       {renderAvatarLeft()}
-      <Pressable
-      // onPress={onPress}
-      >
+      <Pressable onPress={onPress} onLongPress={onLongPress}>
         <View
           style={{
             borderRadius: Sizes.border_radius,
@@ -90,6 +94,7 @@ export function MessyMessageContent(props: IMessyMessageProps) {
           <MessyMessageContentText {...props} />
           <MessyMessageContentImage {...props} />
           <MessyMessageContentLocation {...props} />
+          <MessyMessageContentVideo {...props} />
         </View>
         <View
           style={{

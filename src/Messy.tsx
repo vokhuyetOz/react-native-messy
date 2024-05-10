@@ -1,60 +1,16 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, { type FC } from 'react';
-import { View, FlatList, type FlatListProps } from 'react-native';
-
-import type { ParseShape } from 'react-native-parsed-text';
+import React from 'react';
+import { FlatList, View } from 'react-native';
+import type { TMessyMessage, TMessyProps } from './types';
 
 import { MessyLoading } from './MessyLoading';
 
-import {
-  type IColor,
-  useColors,
-  useInitColors,
-  useMessyListRef,
-} from './modules';
-import { type IMessyFooterProps, MessyFooter } from './MessyFooter';
-import { type TMessyMessage, type IUser, MessyMessage } from './MessyMessage';
+import { useColors, useInitColors, useMessyListRef } from './modules';
+import { MessyFooter } from './MessyFooter';
+import { MessyMessage } from './MessyMessage';
 import { MessyPropsContext } from './modules/useMessyPropsContext';
 
-type TListProps = Omit<
-  FlatListProps<any>,
-  'data' | 'renderItem' | 'keyExtractor'
->;
-type TMessageProps = {
-  hideOwnerAvatar: boolean;
-  hidePartnerAvatar: boolean;
-};
-
-export type IMessyProps = Readonly<{
-  loading?: boolean;
-  messages?: TMessyMessage[];
-  user?: IUser;
-  theme?: IColor;
-  footerProps?: IMessyFooterProps;
-  listProps?: TListProps;
-  messageProps?: TMessageProps;
-  handleLocalMessage?: Function;
-  parsedShape?: ParseShape[];
-  showDateTime?: boolean;
-  renderLoading?: FC<{}>;
-  renderMessageSystem?: FC<{ data?: TMessyMessage }>;
-  renderAvatar?: FC<{ user?: IUser }>;
-  renderMessageText?: (data: IMessyMessageProps) => JSX.Element;
-  renderMessageAudio?: (data: IMessyMessageProps) => JSX.Element;
-  renderMessageImage?: (data: IMessyMessageProps) => JSX.Element;
-  renderMessageDateTime?: (data: TMessyMessage) => JSX.Element;
-  renderMessageLocation?: (data: IMessyMessageProps) => JSX.Element;
-}>;
-
-export type IMessyMessageProps = Readonly<
-  Omit<IMessyProps, 'data'> & {
-    value: TMessyMessage;
-    preMessage?: TMessyMessage;
-    index?: number;
-  }
->;
-
-export function Messy(props: IMessyProps) {
+export function Messy(props: TMessyProps) {
   useInitColors(props.theme);
   const Colors = useColors();
 

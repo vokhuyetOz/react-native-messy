@@ -1,8 +1,9 @@
 import React from 'react';
-import { MLoading } from './elements/Loading/Loading';
-import type { IMessyProps } from './Messy';
+import type { TMessyProps } from './types';
 
-export function MessyLoading(props: IMessyProps) {
+import { MLoading } from './elements/Loading/Loading';
+
+export function MessyLoading(props: TMessyProps) {
   const { renderLoading } = props;
   if (typeof renderLoading === 'function') {
     return renderLoading({});

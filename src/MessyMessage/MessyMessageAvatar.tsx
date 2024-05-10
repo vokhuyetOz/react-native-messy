@@ -5,9 +5,9 @@ import dayjs from 'dayjs';
 
 import { useColors, useSizes } from '../modules';
 
-import type { IMessyMessageProps } from '../Messy';
+import type { TMessyMessageProps } from '../types';
 
-export function MessyMessageAvatar(props: IMessyMessageProps) {
+export function MessyMessageAvatar(props: TMessyMessageProps) {
   const Sizes = useSizes();
   const Colors = useColors();
 

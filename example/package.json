@@ -9,18 +9,22 @@
     "build:ios": "cd ios && xcodebuild -workspace MessyExample.xcworkspace -scheme MessyExample -configuration Debug -sdk iphonesimulator CC=clang CPLUSPLUS=clang++ LD=clang LDPLUSPLUS=clang++ GCC_OPTIMIZATION_LEVEL=0 GCC_PRECOMPILE_PREFIX_HEADER=YES ASSETCATALOG_COMPILER_OPTIMIZATION=time DEBUG_INFORMATION_FORMAT=dwarf COMPILER_INDEX_STORE_ENABLE=NO"
   },
   "dependencies": {
-    "@gorhom/bottom-sheet": "^4.6.1",
+    "@candlefinance/faster-image": "^1.5.0",
+    "@discord/bottom-sheet": "discord/react-native-bottom-sheet#discord-fork-4.6.1-rngh-v2",
     "@shopify/flash-list": "^1.6.3",
     "@vokhuyet/react-native-messy": "link:../",
     "react": "18.2.0",
     "react-native": "0.73.2",
     "react-native-gesture-handler": "^2.14.1",
-    "react-native-image-picker": "^7.1.0",
+    "react-native-image-picker": "^7.1.2",
     "react-native-keyboard-controller": "^1.10.3",
     "react-native-lightbox-v2": "^0.9.0",
+    "react-native-mmkv-storage": "^0.9.1",
     "react-native-pager-view": "^6.2.3",
+    "react-native-permissions": "^4.1.5",
     "react-native-reanimated": "^3.6.1",
-    "react-native-tab-view": "^3.5.2"
+    "react-native-tab-view": "^3.5.2",
+    "react-native-video": "6.0.0-rc.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

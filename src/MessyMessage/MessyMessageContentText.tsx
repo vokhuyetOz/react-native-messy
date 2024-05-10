@@ -6,9 +6,9 @@ import ParsedText from 'react-native-parsed-text';
 
 import { useColors, useSizes } from '../modules';
 
-import type { IMessyMessageProps } from '../Messy';
+import type { TMessyMessageProps } from '../types';
 
-export function MessyMessageContentText(props: IMessyMessageProps) {
+export function MessyMessageContentText(props: TMessyMessageProps) {
   const Colors = useColors();
   const Sizes = useSizes();
 
@@ -31,9 +31,7 @@ export function MessyMessageContentText(props: IMessyMessageProps) {
     Linking.openURL(url).catch(() => {});
   };
   const onEmailPress = (email: string) => {
-    Linking.openURL(`mailto:${email}`).catch((e) => {
-      console.log('e', e);
-    });
+    Linking.openURL(`mailto:${email}`).catch((_) => {});
   };
 
   const backgroundColor: string = {

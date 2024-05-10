@@ -1,11 +1,42 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, { useState } from 'react';
-import { SafeAreaView } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import {
+  SafeAreaView,
+  Image,
+  View,
+  Pressable,
+  Text,
+  Keyboard,
+} from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { KeyboardProvider } from 'react-native-keyboard-controller';
-import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
+import {
+  BottomSheetModal,
+  BottomSheetModalProvider,
+  useBottomSheetModal,
+} from '@discord/bottom-sheet';
+import { FasterImageView } from '@candlefinance/faster-image';
+
 //@ts-ignore
 import { Messy, TMessyMessage } from '@vokhuyet/react-native-messy';
+
+import { MMKVLoader, MMKVInstance } from 'react-native-mmkv-storage';
+
+function ImageV(props) {
+  let source = props.source;
+  if (typeof props?.source === 'number') {
+    return <Image {...props} source={source} />;
+  }
+  if (props?.source?.uri) {
+    source = { ...source, url: source.uri, resizeMode: props.resizeMode };
+  }
+  return <FasterImageView {...props} source={source} />;
+}
+
+export const MMKVwithID: MMKVInstance = new MMKVLoader()
+  .withInstanceID('default-mmkv-id')
+  .withEncryption()
+  .initialize();
 
 const image1 = {
   uri: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg',
@@ -166,17 +197,109 @@ const mockMessage = [
       },
     ],
   },
+  {
+    createdTime: 165400565790,
+    id: 'ssss',
+    type: 'message',
+    video: {
+      uri: 'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
+    },
+  },
+  {
+    createdTime: 165400565790,
+    id: 'ssss111',
+    type: 'message',
+    video: {
+      uri: 'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
+    },
+  },
+  {
+    createdTime: 165400565790,
+    id: 'asdasdasdasdasdasdasda',
+    type: 'message',
+    video: {
+      uri: 'https://storage-hrs001.rabiloo.net/videos/a7a0ee7d34422c5c1374e58259d619b089b1a26978958d530eb3307ad1e5dd7e.mov',
+    },
+  },
 ];
+function ExtraLeft({ animatedPosition }) {
+  const ref = useRef<BottomSheetModal>(null);
+  const componentRef = useRef<{ timeout?: NodeJS.Timeout }>({
+    timeout: undefined,
+  });
+  const { dismissAll } = useBottomSheetModal();
 
+  const clear = () => {
+    if (componentRef.current.timeout) {
+      clearTimeout(componentRef.current.timeout);
+    }
+  };
+  useEffect(() => {
+    return clear;
+  }, []);
+  return (
+    <View>
+      <Pressable
+        onPress={() => {
+          dismissAll();
+          Keyboard.dismiss();
+          clear();
+          componentRef.current.timeout = setTimeout(() => {
+            ref.current?.present();
+          }, 200);
+        }}
+      >
+        <View
+          style={{
+            width: 40,
+            height: 40,
+            backgroundColor: 'black',
+            marginRight: 4,
+          }}
+        >
+          <Text style={{ alignSelf: 'center', color: 'white' }}>ExtraLeft</Text>
+        </View>
+      </Pressable>
+      <BottomSheetModal
+        handleComponent={null}
+        ref={ref}
+        index={0}
+        style={{
+          shadowColor: '#000',
+          shadowOffset: {
+            width: 0,
+            height: 3,
+          },
+          shadowOpacity: 0.27,
+          shadowRadius: 4.65,
+
+          elevation: 6,
+        }}
+        animationConfigs={{ duration: 300 }}
+        snapPoints={[100, 600]}
+        animatedPosition={animatedPosition}
+      >
+        <Text style={{ alignSelf: 'center' }}>Demo</Text>
+      </BottomSheetModal>
+    </View>
+  );
+}
 const App = () => {
   const [mess, setMess] = useState([...mockMessage.reverse()]);
-  // return null;
+
   return (
-    <GestureHandlerRootView style={{ flex: 1, paddingVertical: 16 }}>
-      <BottomSheetModalProvider>
-        <SafeAreaView style={{ flex: 1 }}>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <SafeAreaView style={{ flex: 1 }}>
+        <BottomSheetModalProvider>
           <KeyboardProvider>
             <Messy
+              BaseModule={{
+                Image: ImageV,
+                Cache: {
+                  get: MMKVwithID.getMap,
+                  set: MMKVwithID.setMap,
+                },
+              }}
               listProps={{
                 onStartReached: () => {
                   console.log('onStartReached');
@@ -201,11 +324,12 @@ const App = () => {
 
                   //send to server by socket
                 },
+                ExtraLeft: <ExtraLeft />,
               }}
             />
           </KeyboardProvider>
-        </SafeAreaView>
-      </BottomSheetModalProvider>
+        </BottomSheetModalProvider>
+      </SafeAreaView>
     </GestureHandlerRootView>
   );
 };

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, createRef } from 'react';
-import type { BottomSheetModal } from '@gorhom/bottom-sheet';
+import type { BottomSheetModal } from '@discord/bottom-sheet';
 
 const listRef = createRef<BottomSheetModal>();
 

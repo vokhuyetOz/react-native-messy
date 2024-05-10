@@ -76,6 +76,11 @@ export function MessyFooterAction() {
           includeExtra: false,
           selectionLimit: 1,
           mediaType: 'mixed',
+          assetRepresentationMode: 'current',
+          quality: 0.8,
+          videoQuality: 'medium',
+          maxWidth: 960,
+          maxHeight: 1280,
         });
 
         handleOnSendFile(result);
@@ -89,6 +94,8 @@ export function MessyFooterAction() {
           mediaType: 'photo',
           includeBase64: false,
           includeExtra: false,
+          assetRepresentationMode: 'current',
+          quality: 0.8,
         });
         handleOnSendFile(result);
       },
@@ -101,9 +108,10 @@ export function MessyFooterAction() {
       style={{
         flexDirection: 'row',
         paddingLeft: Sizes.padding,
-        paddingTop: Sizes.padding,
+        paddingTop: Sizes.padding / 2,
       }}
     >
+      {footerProps?.ExtraActionLeft}
       {list.map((item, index) => {
         return <MessyFooterActionItem key={`${index}`} {...item} />;
       })}

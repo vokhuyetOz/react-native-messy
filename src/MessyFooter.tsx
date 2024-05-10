@@ -1,26 +1,13 @@
-import React, { type FC } from 'react';
-import { type TextInputProps } from 'react-native';
+import React from 'react';
 
-import type { TMessyMessage } from './MessyMessage';
+import { TMessyFooterProps } from './types';
+
 import { MessyFooterDefault } from './MessyFooter/MessyFooter.default';
 
-export type IMessyFooterProps = Readonly<{
-  onSend?: (message?: TMessyMessage) => Promise<void> | void;
-  inputProps?: TextInputProps;
-  ExtraLeft?: React.ReactNode;
-  ExtraActionLeft?: React.ReactNode;
-  renderFooter?: FC<IMessyFooterProps>;
-}>;
-export type TMessyFooterSend = Readonly<{
-  onPress?: () => void;
-}>;
-
-export function MessyFooter(props: IMessyFooterProps) {
-  const { renderFooter } = props;
-
+export function MessyFooter({ renderFooter, ...rest }: TMessyFooterProps) {
   if (typeof renderFooter === 'function') {
-    return renderFooter(props);
+    return renderFooter(rest);
   }
 
-  return <MessyFooterDefault {...props} />;
+  return <MessyFooterDefault {...rest} />;
 }

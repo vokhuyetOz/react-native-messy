@@ -1,5 +1,5 @@
 import React from 'react';
-import type { FlatList } from 'react-native';
+import { FlatList } from 'react-native';
 
 const listRef = React.createRef<FlatList>();
 

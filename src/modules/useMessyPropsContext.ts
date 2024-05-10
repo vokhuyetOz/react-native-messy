@@ -1,7 +1,7 @@
 import { useContext, createContext } from 'react';
-import type { IMessyProps } from '../Messy';
+import { TMessyProps } from '../types';
 
-export const MessyPropsContext = createContext<IMessyProps>({});
+export const MessyPropsContext = createContext<TMessyProps>({});
 
 export const useMessyPropsContext = () => {
   const value = useContext(MessyPropsContext);

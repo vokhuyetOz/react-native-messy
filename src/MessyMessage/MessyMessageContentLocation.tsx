@@ -1,17 +1,19 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import { Linking, Pressable } from 'react-native';
 
+import type { TMessyMessageProps } from '../types';
+
 import { useColors, useSizes } from '../modules';
 
-import type { IMessyMessageProps } from '../Messy';
 import { MImage } from '../elements/MImage/MImage';
 import { MText } from '../elements/MText/MText';
 
-export function MessyMessageContentLocation(props: IMessyMessageProps) {
+export function MessyMessageContentLocation(props: TMessyMessageProps) {
   const Colors = useColors();
   const Sizes = useSizes();
 
-  const { renderMessageLocation, value, user } = props;
+  const { renderMessageLocation, value, user, messageProps } = props;
   if (!value?.location) {
     return null;
   }
@@ -20,9 +22,10 @@ export function MessyMessageContentLocation(props: IMessyMessageProps) {
     return renderMessageLocation(props);
   }
   const onPress = async () => {
+    if (messageProps?.onPress) {
+      return;
+    }
     try {
-      // http://maps.google.com/maps?q=39.211374,-82.978277+(My+Point)&z=14&ll=39.211374,-82.978277
-
       await Linking.openURL(
         `https://maps.google.com/maps?q=${value.location?.latitude},${value.location?.longitude}+(${value.location?.name})&z=14&ll=${value.location?.latitude},${value.location?.longitude}`
       );
@@ -45,6 +48,7 @@ export function MessyMessageContentLocation(props: IMessyMessageProps) {
       <MText
         numberOfLines={2}
         style={{
+          textDecorationLine: 'underline',
           backgroundColor,
           color: textColor,
           fontSize: Sizes.message,

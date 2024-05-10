@@ -1687,6 +1687,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@candlefinance/faster-image@npm:^1.5.0":
+  version: 1.5.0
+  resolution: "@candlefinance/faster-image@npm:1.5.0"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 67341ad5d27b62e005d85cb6df0d542912de7b1b5d9affee5547c2376bea80d93e7aa7c5c515625632b2f8b0e53e5bb2f0a505fd3f8601c457ba24899075633b
+  languageName: node
+  linkType: hard
+
 "@commitlint/cli@npm:^17.8.1":
   version: 17.8.1
   resolution: "@commitlint/cli@npm:17.8.1"
@@ -1893,6 +1903,29 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@discord/bottom-sheet@discord/react-native-bottom-sheet#discord-fork-4.6.1-rngh-v2":
+  version: 4.6.1
+  resolution: "@discord/bottom-sheet@https://github.com/discord/react-native-bottom-sheet.git#commit=df1cc1c55cfd5fb887494947cf87676ab6f904a1"
+  dependencies:
+    "@gorhom/portal": 1.0.14
+    invariant: ^2.2.4
+  peerDependencies:
+    "@shopify/flash-list": "*"
+    "@types/react": "*"
+    "@types/react-native": "*"
+    react: "*"
+    react-native: "*"
+    react-native-gesture-handler: ">=2.5.0"
+    react-native-reanimated: ">=2.9.0"
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+    "@types/react-native":
+      optional: true
+  checksum: 0522875ea76c66356b10d9b964243bc28b7af3cdeac0819436691e747ee14bbb72bd1de88d25d0706aecb70b37ea7c8413b540ac59f9132bc187a377da0d6fb5
+  languageName: node
+  linkType: hard
+
 "@egjs/hammerjs@npm:^2.0.17":
   version: 2.0.17
   resolution: "@egjs/hammerjs@npm:2.0.17"
@@ -1951,28 +1984,6 @@ __metadata:
     lefthook: bin/index.js
   checksum: 51745444c8e279dd448565758fb829ee3c318e080c79c6a68b4b52560c417cba913c80db86b1b83d0a009e7a3a4af4327e77af12f9c440d7a4cd41679b0bef31
   conditions: (os=darwin | os=linux | os=win32) & (cpu=x64 | cpu=arm64 | cpu=ia32)
-  languageName: node
-  linkType: hard
-
-"@gorhom/bottom-sheet@npm:^4.6.1":
-  version: 4.6.1
-  resolution: "@gorhom/bottom-sheet@npm:4.6.1"
-  dependencies:
-    "@gorhom/portal": 1.0.14
-    invariant: ^2.2.4
-  peerDependencies:
-    "@types/react": "*"
-    "@types/react-native": "*"
-    react: "*"
-    react-native: "*"
-    react-native-gesture-handler: ">=1.10.1"
-    react-native-reanimated: ">=2.2.0"
-  peerDependenciesMeta:
-    "@types/react":
-      optional: true
-    "@types/react-native":
-      optional: true
-  checksum: fc30da15c5d7e7c7b81ad2450e6ecb3884f0e040bc1ed5f467b1f846e2598519608a21c14cd50ea8288caac3cdfd9ad2c7742c31c77dd137804f94148105f389
   languageName: node
   linkType: hard
 
@@ -3606,6 +3617,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/invariant@npm:^2.2.37":
+  version: 2.2.37
+  resolution: "@types/invariant@npm:2.2.37"
+  checksum: dd6ee07af8516d21c868f95fd96c601c50a231e69c2df69360cb491b5858c76cf9b5a646df166cb4197b5078ca824da3dd90d6142d01a3cefc1176c57278b129
+  languageName: node
+  linkType: hard
+
 "@types/istanbul-lib-coverage@npm:*, @types/istanbul-lib-coverage@npm:^2.0.0, @types/istanbul-lib-coverage@npm:^2.0.1":
   version: 2.0.6
   resolution: "@types/istanbul-lib-coverage@npm:2.0.6"
@@ -3914,11 +3932,12 @@ __metadata:
   resolution: "@vokhuyet/react-native-messy@workspace:."
   dependencies:
     "@commitlint/config-conventional": ^17.0.2
+    "@discord/bottom-sheet": "discord/react-native-bottom-sheet#discord-fork-4.6.1-rngh-v2"
     "@evilmartians/lefthook": ^1.5.0
-    "@gorhom/bottom-sheet": ^4.6.1
     "@react-native/eslint-config": ^0.72.2
     "@release-it/conventional-changelog": ^5.0.0
     "@shopify/flash-list": ^1.6.3
+    "@types/invariant": ^2.2.37
     "@types/jest": ^28.1.2
     "@types/react": ^18.2.61
     "@types/react-native": 0.73.0
@@ -3935,21 +3954,21 @@ __metadata:
     prettier: ^2.0.5
     react: 18.2.0
     react-native: 0.73.2
-    react-native-animated-pagination-dots: ^0.1.73
     react-native-builder-bob: ^0.20.0
     react-native-gesture-handler: ^2.14.1
-    react-native-image-picker: ^4.8.4
+    react-native-image-picker: ^7.1.2
     react-native-keyboard-controller: ^1.10.3
     react-native-pager-view: ^6.2.3
     react-native-parsed-text: ^0.0.22
     react-native-reanimated: ^3.6.1
     react-native-tab-view: ^3.5.2
-    react-native-zoom-reanimated: "https://github.com/kesha-antonov/react-native-zoom-reanimated.git"
+    react-native-video: 6.0.0-rc.0
+    react-native-zoom-reanimated: ^1.4.5
     release-it: ^15.0.0
     typescript: ^5.0.2
     unicode-emoji-json: ^0.4.0
   peerDependencies:
-    "@gorhom/bottom-sheet": "*"
+    "@discord/bottom-sheet": "*"
     "@shopify/flash-list": ">=1.6.3"
     dayjs: "*"
     fbjs: "*"
@@ -11410,17 +11429,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-animated-pagination-dots@npm:^0.1.73":
-  version: 0.1.73
-  resolution: "react-native-animated-pagination-dots@npm:0.1.73"
-  peerDependencies:
-    react: "*"
-    react-native: "*"
-    react-native-svg: "*"
-  checksum: 32caaeb978974c1f06402396f4f4c8336f6000b58885a8bbe35d7222c55806e222510955bb8bcdb9d61ac15eb025bd6458c618972072a177a2c6f7d7025e7a09
-  languageName: node
-  linkType: hard
-
 "react-native-builder-bob@npm:^0.20.0":
   version: 0.20.4
   resolution: "react-native-builder-bob@npm:0.20.4"
@@ -11470,23 +11478,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-image-picker@npm:^4.8.4":
-  version: 4.10.3
-  resolution: "react-native-image-picker@npm:4.10.3"
+"react-native-image-picker@npm:^7.1.2":
+  version: 7.1.2
+  resolution: "react-native-image-picker@npm:7.1.2"
   peerDependencies:
     react: "*"
     react-native: "*"
-  checksum: 1f1c5cae5950790cfbdab2e1f547cfe065de9949c7cf0102dec512f43889f586eed1c265e1ecbc88df106696650b3dc5bf936b862078906787aca7e9ca2f145c
-  languageName: node
-  linkType: hard
-
-"react-native-image-picker@npm:^7.1.0":
-  version: 7.1.0
-  resolution: "react-native-image-picker@npm:7.1.0"
-  peerDependencies:
-    react: "*"
-    react-native: "*"
-  checksum: 7f5c16dbcde719367e8fea7e05dd0ca8cb4cb4d163ce3fd093440fde69ff536dfb12f8b14a82b3d306785b7a5609e99042a981050631aa91cffb0a410c056ef9
+  checksum: af52328b7cb06c28549442f0d923cfa92dde8d5a968a642336df4c882f81adbf0e5e606a14de27f96883a76fa1e03230061c4080011c9107942edebc8e09c478
   languageName: node
   linkType: hard
 
@@ -11518,7 +11516,8 @@ __metadata:
     "@babel/core": ^7.20.0
     "@babel/preset-env": ^7.20.0
     "@babel/runtime": ^7.20.0
-    "@gorhom/bottom-sheet": ^4.6.1
+    "@candlefinance/faster-image": ^1.5.0
+    "@discord/bottom-sheet": "discord/react-native-bottom-sheet#discord-fork-4.6.1-rngh-v2"
     "@react-native/babel-preset": 0.73.19
     "@react-native/metro-config": 0.73.3
     "@react-native/typescript-config": 0.73.1
@@ -11529,14 +11528,28 @@ __metadata:
     react: 18.2.0
     react-native: 0.73.2
     react-native-gesture-handler: ^2.14.1
-    react-native-image-picker: ^7.1.0
+    react-native-image-picker: ^7.1.2
     react-native-keyboard-controller: ^1.10.3
     react-native-lightbox-v2: ^0.9.0
+    react-native-mmkv-storage: ^0.9.1
     react-native-pager-view: ^6.2.3
+    react-native-permissions: ^4.1.5
     react-native-reanimated: ^3.6.1
     react-native-tab-view: ^3.5.2
+    react-native-video: 6.0.0-rc.0
   languageName: unknown
   linkType: soft
+
+"react-native-mmkv-storage@npm:^0.9.1":
+  version: 0.9.1
+  resolution: "react-native-mmkv-storage@npm:0.9.1"
+  peerDependencies:
+    react-native: "*"
+  bin:
+    mmkv-link: autolink/postlink/run.js
+  checksum: 564f1cd971d20c9db03cff2d1cf8d55a2c69bd5a907eebbee7bcdc0592917bea5c787b424b1910931c649b3f17c9a361385565af585ec72fb7d1b63b9f2570af
+  languageName: node
+  linkType: hard
 
 "react-native-pager-view@npm:^6.2.3":
   version: 6.2.3
@@ -11557,6 +11570,20 @@ __metadata:
     react: "*"
     react-native: "*"
   checksum: a8672a50bbc60c9d925b8935b484cda2ed976483fce156f31b497d799eb349b24b79934aa683576e606e3fd3d8d97877d0048eba95f702f15ae21263c2658fd5
+  languageName: node
+  linkType: hard
+
+"react-native-permissions@npm:^4.1.5":
+  version: 4.1.5
+  resolution: "react-native-permissions@npm:4.1.5"
+  peerDependencies:
+    react: ">=18.1.0"
+    react-native: ">=0.70.0"
+    react-native-windows: ">=0.70.0"
+  peerDependenciesMeta:
+    react-native-windows:
+      optional: true
+  checksum: dc4b366a0f561a47f032c027eb703a2be45e801788b915ed583e38f617eea23656eb63a77b17fb3a663fe3199b2ec25788f799e751421634e35a64f5258feed9
   languageName: node
   linkType: hard
 
@@ -11594,13 +11621,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-zoom-reanimated@https://github.com/kesha-antonov/react-native-zoom-reanimated.git":
-  version: 1.4.3
-  resolution: "react-native-zoom-reanimated@https://github.com/kesha-antonov/react-native-zoom-reanimated.git#commit=d3df7c7c0aa9075f73c36cbc357a31ffe08d7dec"
+"react-native-video@npm:6.0.0-rc.0":
+  version: 6.0.0-rc.0
+  resolution: "react-native-video@npm:6.0.0-rc.0"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: d0486037012a7e5c28c697b600c55d523415627d7e670361d8fec8eab100993d115aada0276e9d9ac81c4e9d1139b9701513e4217807dd4ca9b6c473a7843257
+  languageName: node
+  linkType: hard
+
+"react-native-zoom-reanimated@npm:^1.4.5":
+  version: 1.4.5
+  resolution: "react-native-zoom-reanimated@npm:1.4.5"
   peerDependencies:
     react-native-gesture-handler: "*"
     react-native-reanimated: ">=2.0.0"
-  checksum: 4428e2ea6dab1a3d0690d559fb14c1d283d60c61dff8c8c827f2828b746bcb0fbd3bc43d57185598be5e5be969386d60cf467ae1c0a20969e9dd8cb79a97bca3
+  checksum: c2c7b69f481db3ad4d92f0758c0d28a98c9d8aec8ec98cfca945202cc0ab415a8a9b4349c985882441a8e8f743d73ed0a37fd808fb3b3d141de8d53aa12a6ac6
   languageName: node
   linkType: hard
 

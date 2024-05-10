@@ -1,13 +1,12 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import { Text } from 'react-native';
 import dayjs from 'dayjs';
+import type { TMessyMessageProps } from '../types';
+import { MText } from '../elements/MText/MText';
 
 import { useColors, useSizes } from '../modules';
 
-import type { IMessyMessageProps } from '../Messy';
-
-export function MessyMessageDateTime(props: IMessyMessageProps) {
+export function MessyMessageDateTime(props: TMessyMessageProps) {
   const Colors = useColors();
   const Sizes = useSizes();
 
@@ -27,7 +26,7 @@ export function MessyMessageDateTime(props: IMessyMessageProps) {
     currentDateFormat = currentDate.format('YYYY MMMM DD  HH:mm');
   }
   return (
-    <Text
+    <MText
       style={{
         color: Colors.placeholder,
         fontSize: Sizes.date_time,
@@ -37,6 +36,6 @@ export function MessyMessageDateTime(props: IMessyMessageProps) {
       }}
     >
       {currentDateFormat}
-    </Text>
+    </MText>
   );
 }

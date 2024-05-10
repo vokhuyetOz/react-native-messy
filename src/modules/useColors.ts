@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import type { TColor } from '../types';
 
 const DefaultColors = {
   background: 'white',
@@ -28,43 +29,16 @@ const DefaultColors = {
   },
 };
 
-export type IColor = {
-  background: string;
-  primary: string;
-  accent: string;
-  placeholder: string;
-  shadow: string;
-  success: string;
-  message_left: {
-    background: string;
-    text: string;
-    link: string;
-    email: string;
-    phone: string;
-    audio: string;
-  };
-  message_right: {
-    background: string;
-    text: string;
-    link: string;
-    email: string;
-    phone: string;
-    audio: string;
-  };
-  input: {
-    text: string;
-  };
-};
-type Listener = (color: IColor) => void;
+type Listener = (color: TColor) => void;
 const listeners = new Set<Listener>();
 
-export function setTheme(color: IColor) {
+export function setTheme(color: TColor) {
   listeners.forEach((listener) => listener(color));
 }
 
-let initData: IColor = DefaultColors;
+let initData: TColor = DefaultColors;
 
-export const useInitColors = (data: IColor = DefaultColors) => {
+export const useInitColors = (data: TColor = DefaultColors) => {
   const firstRenderRef = useRef(true);
   initData = data;
   useEffect(() => {
@@ -84,8 +58,8 @@ export const useInitColors = (data: IColor = DefaultColors) => {
   }, [data]);
 };
 
-export function useColors(): IColor {
-  const [color, setColor] = useState<IColor>(initData);
+export function useColors(): TColor {
+  const [color, setColor] = useState<TColor>(initData);
 
   // Listen for updates
   useEffect(() => {

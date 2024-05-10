@@ -1,6 +1,6 @@
 {
   "name": "@vokhuyet/react-native-messy",
-  "version": "0.0.8",
+  "version": "0.1.9",
   "description": "chat ui",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -56,18 +56,18 @@
     "@vokhuyet/native-hooks": "^0.0.2",
     "dayjs": "^1.11.10",
     "emojilib": "^3.0.11",
-    "react-native-animated-pagination-dots": "^0.1.73",
     "react-native-parsed-text": "^0.0.22",
-    "react-native-zoom-reanimated": "https://github.com/kesha-antonov/react-native-zoom-reanimated.git",
+    "react-native-zoom-reanimated": "^1.4.5",
     "unicode-emoji-json": "^0.4.0"
   },
   "devDependencies": {
     "@commitlint/config-conventional": "^17.0.2",
+    "@discord/bottom-sheet": "discord/react-native-bottom-sheet#discord-fork-4.6.1-rngh-v2",
     "@evilmartians/lefthook": "^1.5.0",
-    "@gorhom/bottom-sheet": "^4.6.1",
     "@react-native/eslint-config": "^0.72.2",
     "@release-it/conventional-changelog": "^5.0.0",
     "@shopify/flash-list": "^1.6.3",
+    "@types/invariant": "^2.2.37",
     "@types/jest": "^28.1.2",
     "@types/react": "^18.2.61",
     "@types/react-native": "0.73.0",
@@ -83,11 +83,12 @@
     "react-native": "0.73.2",
     "react-native-builder-bob": "^0.20.0",
     "react-native-gesture-handler": "^2.14.1",
-    "react-native-image-picker": "^4.8.4",
+    "react-native-image-picker": "^7.1.2",
     "react-native-keyboard-controller": "^1.10.3",
     "react-native-pager-view": "^6.2.3",
     "react-native-reanimated": "^3.6.1",
     "react-native-tab-view": "^3.5.2",
+    "react-native-video": "6.0.0-rc.0",
     "release-it": "^15.0.0",
     "typescript": "^5.0.2"
   },
@@ -95,7 +96,7 @@
     "@types/react": "18.2.61"
   },
   "peerDependencies": {
-    "@gorhom/bottom-sheet": "*",
+    "@discord/bottom-sheet": "*",
     "@shopify/flash-list": ">=1.6.3",
     "dayjs": "*",
     "fbjs": "*",

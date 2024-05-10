@@ -17,13 +17,16 @@
     "noImplicitReturns": true,
     "noImplicitUseStrict": false,
     "noStrictGenericChecks": false,
-    "noUncheckedIndexedAccess": true,
+    "noUncheckedIndexedAccess": false,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": true,
     "target": "esnext",
-    "verbatimModuleSyntax": false
-  }
+    "verbatimModuleSyntax": false,
+    "ignoreDeprecations": "5.0"
+  },
+  "exclude": ["example"],
+  "include": ["src"]
 }

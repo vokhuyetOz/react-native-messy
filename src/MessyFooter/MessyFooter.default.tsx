@@ -7,6 +7,7 @@ import React, {
   useState,
   type RefObject,
   useCallback,
+  cloneElement,
 } from 'react';
 import {
   Image,
@@ -32,7 +33,8 @@ import {
   BottomSheetBackdrop,
   type BottomSheetBackdropProps,
   useBottomSheet,
-} from '@gorhom/bottom-sheet';
+  useBottomSheetModal,
+} from '@discord/bottom-sheet';
 import emojiJson from 'unicode-emoji-json/data-by-group.json';
 import {
   TabView,
@@ -43,6 +45,8 @@ import {
 } from 'react-native-tab-view';
 import { FlashList } from '@shopify/flash-list';
 import emoji from 'emojilib';
+
+import type { TMessyFooterProps, TMessyFooterSend } from '../types';
 
 import {
   useColors,
@@ -58,7 +62,6 @@ import {
   useBotomSheetEmojiIndex,
 } from '../modules';
 
-import type { IMessyFooterProps, TMessyFooterSend } from '../MessyFooter';
 import { CommonStyle } from '../utils/CommonStyle';
 import { MessyFooterAction } from './MessyFooterAction';
 import { MImage } from '../elements/MImage/MImage';
@@ -275,12 +278,32 @@ function MessyFooterEmojiContent() {
 }
 
 function MessyFooterEmoji({ emojiShared }: TMessyFooterEmoji) {
+  const { footerProps } = useMessyPropsContext();
   const Sizes = useSizes();
+  const { dismissAll } = useBottomSheetModal();
+
   const bottomSheetRef = useMessyEmojiSheetRef();
+
+  const componentRef = useRef<{ timeout?: NodeJS.Timeout }>({
+    timeout: undefined,
+  });
+
+  const clear = () => {
+    if (componentRef.current.timeout) {
+      clearTimeout(componentRef.current.timeout);
+    }
+  };
+  useEffect(() => {
+    return clear;
+  }, []);
 
   const onPress = () => {
     Keyboard.dismiss();
-    bottomSheetRef?.current?.present();
+    dismissAll();
+    clear();
+    setTimeout(() => {
+      bottomSheetRef?.current?.present();
+    }, 200);
   };
   const renderBackdrop = (props: BottomSheetBackdropProps) => {
     return <BottomSheetBackdrop {...props} pressBehavior={'close'} />;
@@ -288,7 +311,7 @@ function MessyFooterEmoji({ emojiShared }: TMessyFooterEmoji) {
 
   return (
     <View>
-      <Pressable onPress={onPress}>
+      <Pressable disabled={footerProps?.disabled} onPress={onPress}>
         <Image
           source={require('../utils/images/emoji.png')}
           style={{ width: Sizes.button_image, height: Sizes.button_image }}
@@ -320,6 +343,8 @@ function MessyFooterTextInput({
 }: TMessyFooterTextInput) {
   const Sizes = useSizes();
   const Colors = useColors();
+  const { footerProps } = useMessyPropsContext();
+  const { dismissAll } = useBottomSheetModal();
 
   const { emoji: newEmoji, force } = useSelectEmoji();
 
@@ -327,7 +352,6 @@ function MessyFooterTextInput({
   const componentRef = useRef({
     cursorStart: text.length - 1,
   });
-  const bottomSheetRef = useMessyEmojiSheetRef();
 
   useEffect(() => {
     if (!newEmoji) return;
@@ -349,11 +373,12 @@ function MessyFooterTextInput({
     componentRef.current.cursorStart = e.nativeEvent.selection.start;
   };
   const onInputFocus = () => {
-    bottomSheetRef.current?.close();
+    dismissAll();
   };
   return (
     <TextInput
       ref={textInputRef}
+      editable={!footerProps?.disabled}
       onSelectionChange={onSelectionChange}
       style={{
         flex: 1,
@@ -376,9 +401,11 @@ function MessyFooterTextInput({
 }
 function MessyFooterSend({ onPress }: TMessyFooterSend) {
   const Sizes = useSizes();
+  const { footerProps } = useMessyPropsContext();
 
   return (
     <Pressable
+      disabled={footerProps?.disabled}
       onPress={onPress}
       style={{
         paddingLeft: Sizes.padding,
@@ -393,7 +420,7 @@ function MessyFooterSend({ onPress }: TMessyFooterSend) {
   );
 }
 
-export function MessyFooterDefault(props: IMessyFooterProps) {
+export function MessyFooterDefault(props: TMessyFooterProps) {
   const Sizes = useSizes();
   const Colors = useColors();
   const { user } = useMessyPropsContext();
@@ -406,12 +433,18 @@ export function MessyFooterDefault(props: IMessyFooterProps) {
     text: '',
   });
   const emojiShared = useSharedValue(Sizes.device_height);
+  const leftExtraShared = useSharedValue(Sizes.device_height);
   const { height } = useReanimatedKeyboardAnimation();
 
   const fakeViewKeyboard = useAnimatedStyle(() => {
     const emojiHeight = Sizes.device_height - emojiShared.value;
+    const leftExtraHeight = Sizes.device_height - leftExtraShared.value;
 
-    const maxHeight = Math.max(Math.abs(emojiHeight), Math.abs(height.value));
+    const maxHeight = Math.max(
+      Math.abs(emojiHeight),
+      Math.abs(height.value),
+      Math.abs(leftExtraHeight)
+    );
     return {
       height: maxHeight,
     };
@@ -449,6 +482,13 @@ export function MessyFooterDefault(props: IMessyFooterProps) {
     scrollToLast();
   };
 
+  let ExtraLeftWithProps = props.ExtraLeft;
+  if (props.ExtraLeft) {
+    ExtraLeftWithProps = cloneElement(props.ExtraLeft as React.ReactElement, {
+      animatedPosition: emojiShared,
+    });
+  }
+
   return (
     <View style={{ marginTop: Sizes.padding }}>
       <View>
@@ -461,7 +501,7 @@ export function MessyFooterDefault(props: IMessyFooterProps) {
             maxHeight: Sizes.input_height * 5,
           }}
         >
-          {props.ExtraLeft}
+          {ExtraLeftWithProps}
           <View
             style={{
               flex: 1,

@@ -36,7 +36,7 @@ export function useSizes(): Size {
     message_line_height: wpx(21),
     message: wpx(14),
     image_max_width: wpx(260),
-    image_max_height: height * 0.3,
+    image_max_height: height * 0.4,
     text_max_width: wpx(260),
     padding: wpx(12),
     border_radius: wpx(18),

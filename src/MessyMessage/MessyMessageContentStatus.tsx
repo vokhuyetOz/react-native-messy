@@ -4,9 +4,10 @@ import React, { useEffect, useState } from 'react';
 import { Text, View } from 'react-native';
 import Animated, { ZoomIn, ZoomOut } from 'react-native-reanimated';
 
+import type { TMessyMessage } from '../types';
+
 import { useColors, useSizes } from '../modules';
 
-import type { TMessyMessage } from './MessyMessage';
 import { MImage } from '../elements/MImage/MImage';
 
 type MessyMessageContentStatusProps = Readonly<{
