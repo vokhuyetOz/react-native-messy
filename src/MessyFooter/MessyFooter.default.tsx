@@ -8,6 +8,7 @@ import React, {
   type RefObject,
   useCallback,
   cloneElement,
+  isValidElement,
 } from 'react';
 import {
   Image,
@@ -402,7 +403,18 @@ function MessyFooterTextInput({
 function MessyFooterSend({ onPress }: TMessyFooterSend) {
   const Sizes = useSizes();
   const { footerProps } = useMessyPropsContext();
-
+  const renderSend = () => {
+    if (isValidElement(footerProps?.Send)) {
+      return footerProps.Send;
+    }
+    return (
+      <Image
+        source={require('../utils/images/send.png')}
+        style={{ width: Sizes.button_image, height: Sizes.button_image }}
+        resizeMode={'contain'}
+      />
+    );
+  };
   return (
     <Pressable
       disabled={footerProps?.disabled}
@@ -411,11 +423,7 @@ function MessyFooterSend({ onPress }: TMessyFooterSend) {
         paddingLeft: Sizes.padding,
       }}
     >
-      <Image
-        source={require('../utils/images/send.png')}
-        style={{ width: Sizes.button_image, height: Sizes.button_image }}
-        resizeMode={'contain'}
-      />
+      {renderSend()}
     </Pressable>
   );
 }
@@ -485,7 +493,7 @@ export function MessyFooterDefault(props: TMessyFooterProps) {
   let ExtraLeftWithProps = props.ExtraLeft;
   if (props.ExtraLeft) {
     ExtraLeftWithProps = cloneElement(props.ExtraLeft as React.ReactElement, {
-      animatedPosition: emojiShared,
+      animatedPosition: leftExtraShared,
     });
   }
 
@@ -519,11 +527,11 @@ export function MessyFooterDefault(props: TMessyFooterProps) {
               textInputRef={textInputRef}
               onChangeText={onChangeText}
             />
-            <MessyFooterEmoji emojiShared={emojiShared} />
+            {!props.hideEmoji && <MessyFooterEmoji emojiShared={emojiShared} />}
           </View>
           <MessyFooterSend onPress={onPressSendText} />
         </View>
-        <MessyFooterAction />
+        {!props.hideFooterAction && <MessyFooterAction />}
       </View>
       {/* fakeview keyboard */}
       <Animated.View style={fakeViewKeyboard} />

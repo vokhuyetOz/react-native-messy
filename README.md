@@ -59,6 +59,9 @@ import { Messy } from '@vokhuyet/react-native-messy';
         }}
         user={{id: account?.user?.id}}
         footerProps={{
+          hideEmoji: false;
+          hideFooterAction: false;
+          Send: <Image source={require('NewSendIcon.png')} />
           onSend,
           ExtraLeft: <ChatListExtraLeft />,
           ExtraActionLeft: <ChatListExtraActionLeft />,
@@ -137,6 +140,9 @@ import { Messy } from '@vokhuyet/react-native-messy';
 ### TMessyFooterProps
 
 ```ts
+  hideEmoji?: false;
+  hideFooterAction?: false;
+  Send?: React.ReactNode;
   onSend?: (message?: TMessyMessage) => Promise<void> | void;
   inputProps?: TextInputProps;
   ExtraLeft?: React.ReactNode;

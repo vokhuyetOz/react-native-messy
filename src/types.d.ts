@@ -7,7 +7,7 @@ import type {
 } from 'react-native';
 import type { ParseShape } from 'react-native-parsed-text';
 import type { Asset } from 'react-native-image-picker';
-import { TColor } from './modules';
+import type { TColor } from './modules';
 
 type TListProps = Omit<
   FlatListProps<any>,
@@ -122,8 +122,11 @@ export type TMessyMessage = {
 
 export type TMessyFooterProps = Readonly<{
   disabled?: boolean;
+  hideEmoji?: boolean;
+  hideFooterAction?: boolean;
   onSend?: (message?: TMessyMessage) => Promise<void> | void;
   inputProps?: TextInputProps;
+  Send?: React.ReactNode;
   ExtraLeft?: React.ReactNode;
   ExtraActionLeft?: React.ReactNode;
   renderFooter?: FC<TMessyFooterProps>;
