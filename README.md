@@ -140,8 +140,8 @@ import { Messy } from '@vokhuyet/react-native-messy';
 ### TMessyFooterProps
 
 ```ts
-  hideEmoji?: false;
-  hideFooterAction?: false;
+  hideEmoji?: boolean;
+  hideFooterAction?: boolean;
   Send?: React.ReactNode;
   onSend?: (message?: TMessyMessage) => Promise<void> | void;
   inputProps?: TextInputProps;
