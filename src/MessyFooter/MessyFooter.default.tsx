@@ -477,7 +477,7 @@ export function MessyFooterDefault(props: TMessyFooterProps) {
     if (!text) return;
 
     textInputRef.current?.clear();
-
+    componentRef.current.text = '';
     const createdTime = Date.now();
     props.onSend?.({
       id: `${Date.now()}`,
