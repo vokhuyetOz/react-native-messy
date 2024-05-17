@@ -1,6 +1,7 @@
 # react-native-messy
 
 Chat ui for React Native
+
 <p>
     <img src="preview/demo_1.png" width="200px">
   <img src="preview/demo_2.png" width="200px">
@@ -74,10 +75,10 @@ import { Messy } from '@vokhuyet/react-native-messy';
 ### TMessyMessageLocation
 
 ```typescript
-  name: string;
-  image: ImageProps['source'];
-  latitude: string;
-  longitude: string;
+name: string;
+image: ImageProps['source'];
+latitude: string;
+longitude: string;
 ```
 
 ### TMessyMessage
@@ -102,31 +103,31 @@ import { Messy } from '@vokhuyet/react-native-messy';
 ### TColor
 
 ```ts
+background: string;
+primary: string;
+accent: string;
+placeholder: string;
+shadow: string;
+success: string;
+message_left: {
   background: string;
-  primary: string;
-  accent: string;
-  placeholder: string;
-  shadow: string;
-  success: string;
-  message_left: {
-    background: string;
-    text: string;
-    link: string;
-    email: string;
-    phone: string;
-    audio: string;
-  };
-  message_right: {
-    background: string;
-    text: string;
-    link: string;
-    email: string;
-    phone: string;
-    audio: string;
-  };
-  input: {
-    text: string; //text color in TextInput
-  };
+  text: string;
+  link: string;
+  email: string;
+  phone: string;
+  audio: string;
+}
+message_right: {
+  background: string;
+  text: string;
+  link: string;
+  email: string;
+  phone: string;
+  audio: string;
+}
+input: {
+  text: string; //text color in TextInput
+}
 ```
 
 ### TUser
@@ -173,26 +174,27 @@ import { Messy } from '@vokhuyet/react-native-messy';
 
 ## Props
 
-- ```loading```(boolean): loading status
-- **```messages```**([TMessyMessage[]](#tmessymessage)): list of messages
-- ```user```([TUser](#tuser)): sender information;
-- ```theme```: ([TColor](#tcolor)): custom theme for message;
-- ```footerProps```([TMessyFooterProps](#tmessyfooterprops)):  Custom props for Element below list messages;
-- ```listProps```(TListProps): custom flatlist props;
-- ```messageProps```([TMessageProps](#tmessageprops)): ;
-- ```parsedShape```([ParseShape[]](https://github.com/taskrabbit/react-native-parsed-text)): Custom parse patterns for react-native-parsed-text ;
-- ```showDateTime```(boolean): show created time of message;
-- ```renderLoading```(FC<{}>): component when loading list message;
-- ```renderMessageSystem```(FC<{ data?: TMessyMessage }>): custom system message;
-- ```renderMessage```((data: TMessyMessageProps) => JSX.Element): custom whole message item view;
-- ```renderAvatar```FC<{ user?: TUser }>: custom ;
-- ```renderMessageText```((data: TMessyMessageProps) => JSX.Element): custom text message;
-- ```renderMessageAudio```(data: TMessyMessageProps) => JSX.Element;
-- ```renderMessageImage```(data: TMessyMessageProps) => JSX.Element;
-- ```renderMessageVideo```(data: TMessyMessageProps) => JSX.Element;
-- ```renderMessageDateTime```((data: TMessyMessage) => JSX.Element): custom datetime value in message item
-- ```renderMessageLocation```: (data: TMessyMessageProps) => JSX.Element;
-- ```BaseModule```([TBaseModule](#tbasemodule));
+- `loading`(boolean): loading status
+- **`messages`**([TMessyMessage[]](#tmessymessage)): list of messages
+- `user`([TUser](#tuser)): sender information;
+- `theme`: ([TColor](#tcolor)): custom theme for message;
+- `footerProps`([TMessyFooterProps](#tmessyfooterprops)): Custom props for Element below list messages;
+- `listProps`(TListProps): custom flatlist props;
+- `messageProps`([TMessageProps](#tmessageprops)): ;
+- `parsedShape`([ParseShape[]](https://github.com/taskrabbit/react-native-parsed-text)): Custom parse patterns for react-native-parsed-text ;
+- `showDateTime`(boolean): show created time of message;
+- `renderLoading`(FC<{}>): component when loading list message;
+- `renderMessageSystem`(FC<{ data?: TMessyMessage }>): custom system message;
+- `renderMessage`((data: TMessyMessageProps) => JSX.Element): custom whole message item view;
+- `renderAvatar`FC<{ user?: TUser }>: custom ;
+- `renderMessageText`((data: TMessyMessageProps) => JSX.Element): custom text message;
+- `renderMessageAudio`(data: TMessyMessageProps) => JSX.Element;
+- `renderMessageImage`(data: TMessyMessageProps) => JSX.Element;
+- `renderMessageVideo`(data: TMessyMessageProps) => JSX.Element;
+- `renderMessageDateTime`((data: TMessyMessage) => JSX.Element): custom datetime value in message item
+- `renderMessageLocation`: (data: TMessyMessageProps) => JSX.Element;
+- `renderMessageOther`(data: TMessyMessageProps) => JSX.Element: custom any message in message item
+- `BaseModule`([TBaseModule](#tbasemodule));
 
 ## Contributing
 
