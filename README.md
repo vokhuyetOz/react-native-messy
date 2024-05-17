@@ -9,7 +9,7 @@ Chat ui for React Native
 
 ## Dependency
 
-- [discord/bottom-sheet](discord/react-native-bottom-sheet#discord-fork-4.6.1-rngh-v2)
+- [discord/bottom-sheet](https://github.com/discord/react-native-bottom-sheet/tree/discord-fork-4.6.1-rngh-v2)
 - [react-native-keyboard-controller](https://kirillzyusko.github.io/react-native-keyboard-controller/)
 - [react-native-image-picker](https://github.com/react-native-image-picker/react-native-image-picker)
 - [react-native-gesture-handler](https://github.com/software-mansion/react-native-gesture-handler#readme)
