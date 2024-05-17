@@ -193,7 +193,7 @@ input: {
 - `renderMessageVideo`(data: TMessyMessageProps) => JSX.Element;
 - `renderMessageDateTime`((data: TMessyMessage) => JSX.Element): custom datetime value in message item
 - `renderMessageLocation`: (data: TMessyMessageProps) => JSX.Element;
-- `renderMessageOther`(data: TMessyMessageProps) => JSX.Element: custom any message in message item
+- `renderMessageOther`(data: TMessyMessageProps) => JSX.Element: Customize other message types that the library does not yet support
 - `BaseModule`([TBaseModule](#tbasemodule));
 
 ## Contributing
