@@ -13,6 +13,7 @@ import { MessyMessageContentStatus } from './MessyMessageContentStatus';
 import { MessyMessageContentLocation } from './MessyMessageContentLocation';
 import { MessyMessageContentVideo } from './MessyMessageContentVideo';
 import { MText } from '../elements/MText/MText';
+import { MessyMessageContentOther } from './MessyMessageContentOther';
 
 export function MessyMessageContent(props: TMessyMessageProps) {
   const Sizes = useSizes();
@@ -95,6 +96,7 @@ export function MessyMessageContent(props: TMessyMessageProps) {
           <MessyMessageContentImage {...props} />
           <MessyMessageContentLocation {...props} />
           <MessyMessageContentVideo {...props} />
+          <MessyMessageContentOther {...props} />
         </View>
         <View
           style={{

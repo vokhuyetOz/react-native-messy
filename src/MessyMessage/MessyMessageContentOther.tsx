@@ -1,6 +1,3 @@
-import React from 'react';
-import { View } from 'react-native';
-
 import type { TMessyMessageProps } from '../types';
 
 export function MessyMessageContentOther(props: TMessyMessageProps) {
@@ -19,5 +16,5 @@ export function MessyMessageContentOther(props: TMessyMessageProps) {
     return renderMessageOther(props);
   }
 
-  return <View>{renderMessageOther}</View>;
+  return null;
 }
