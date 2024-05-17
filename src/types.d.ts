@@ -77,6 +77,7 @@ export type TMessyProps = Readonly<{
   renderMessageVideo?: (data: TMessyMessageProps) => JSX.Element;
   renderMessageDateTime?: (data: TMessyMessage) => JSX.Element;
   renderMessageLocation?: (data: TMessyMessageProps) => JSX.Element;
+  renderMessageOther?: (data: TMessyMessageProps) => JSX.Element;
   BaseModule?: TBaseModule;
 }>;
 
