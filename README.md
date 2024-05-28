@@ -70,6 +70,30 @@ import { Messy } from '@vokhuyet/react-native-messy';
     />
 ```
 
+## Default Element
+
+### MessyFooterActionLibraryDefault
+
+- props
+
+```typescript
+  onPress?: () => Promise<void> | void;  // use your own onPress handler
+  handlePermission?: () => Promise<boolean>; // insert check permisson before use our internal handle select image
+  style?: ImageStyle;
+  source?: ImageSourcePropType;
+```
+
+### MessyFooterActionCameraDefault
+
+- props
+
+```typescript
+  onPress?: () => Promise<void> | void;  // use your own onPress handler
+  handlePermission?: () => Promise<boolean>; // insert check permisson before use our internal handle select image
+  style?: ImageStyle;
+  source?: ImageSourcePropType;
+```
+
 ## Object Type
 
 ### TMessyMessageLocation
@@ -99,6 +123,7 @@ longitude: string;
   clientId?: string; // used for display message in List before receiving response from Server
   category?: string; // used for display multiple type of system message
 ```
+
 
 ### TColor
 
@@ -149,6 +174,7 @@ input: {
   ExtraLeft?: React.ReactNode;
   ExtraActionLeft?: React.ReactNode;
   renderFooter?: FC<TMessyFooterProps>;
+  renderFooterAction?: FC<TMessyFooterProps>;
 ```
 
 ### TMessageProps
@@ -180,7 +206,7 @@ input: {
 - `theme`: ([TColor](#tcolor)): custom theme for message;
 - `footerProps`([TMessyFooterProps](#tmessyfooterprops)): Custom props for Element below list messages;
 - `listProps`(TListProps): custom flatlist props;
-- `messageProps`([TMessageProps](#tmessageprops)): ;
+- `messageProps`([TMessageProps](#tmessageprops));
 - `parsedShape`([ParseShape[]](https://github.com/taskrabbit/react-native-parsed-text)): Custom parse patterns for react-native-parsed-text ;
 - `showDateTime`(boolean): show created time of message;
 - `renderLoading`(FC<{}>): component when loading list message;

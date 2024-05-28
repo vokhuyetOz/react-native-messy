@@ -131,7 +131,15 @@ export type TMessyFooterProps = Readonly<{
   ExtraLeft?: React.ReactNode;
   ExtraActionLeft?: React.ReactNode;
   renderFooter?: FC<TMessyFooterProps>;
+  renderFooterAction?: FC<TMessyFooterProps>;
 }>;
 export type TMessyFooterSend = Readonly<{
   onPress?: () => void;
+}>;
+
+export type TMessyFooterActionItemDefault = Readonly<{
+  handlePermission?: () => Promise<boolean>;
+  style?: ImageStyle;
+  source?: ImageSourcePropType;
+  onPress?: () => Promise<void> | void;
 }>;
