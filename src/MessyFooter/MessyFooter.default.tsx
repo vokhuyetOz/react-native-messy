@@ -453,8 +453,9 @@ export function MessyFooterDefault(props: TMessyFooterProps) {
       Math.abs(height.value),
       Math.abs(leftExtraHeight)
     );
+
     return {
-      height: maxHeight,
+      height: maxHeight - Sizes.padding,
     };
   }, [Sizes.device_height]);
 
@@ -498,7 +499,9 @@ export function MessyFooterDefault(props: TMessyFooterProps) {
   }
 
   return (
-    <View style={{ marginTop: Sizes.padding }}>
+    <View
+      style={{ marginTop: Sizes.padding, backgroundColor: Colors.background }}
+    >
       <View>
         <View
           style={{

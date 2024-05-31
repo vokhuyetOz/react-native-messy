@@ -276,7 +276,7 @@ function ExtraLeft({ animatedPosition }) {
           elevation: 6,
         }}
         animationConfigs={{ duration: 300 }}
-        snapPoints={[100, 600]}
+        snapPoints={[100, '90%']}
         animatedPosition={animatedPosition}
       >
         <Text style={{ alignSelf: 'center' }}>Demo</Text>
@@ -284,49 +284,71 @@ function ExtraLeft({ animatedPosition }) {
     </View>
   );
 }
-const App = () => {
+function BasicExample() {
   const [mess, setMess] = useState([...mockMessage.reverse()]);
 
+  const { dismissAll } = useBottomSheetModal();
+  return (
+    <Messy
+      BaseModule={{
+        Image: ImageV,
+        Cache: {
+          get: MMKVwithID.getMap,
+          set: MMKVwithID.setMap,
+        },
+      }}
+      messageProps={{
+        hideOwnerAvatar: true,
+        hidePartnerAvatar: false,
+        onPress: () => {
+          console.log('press item');
+        },
+        onLongPress: () => {
+          console.log('long press item');
+        },
+      }}
+      listProps={{
+        onStartReached: () => {
+          console.log('onStartReached');
+        },
+        onEndReached: () => {
+          console.log('onEndReached');
+        },
+        onPress: () => {
+          //hide all bottom sheet modal
+          dismissAll();
+          //hide keyboard
+          Keyboard.dismiss();
+        },
+      }}
+      messages={mess}
+      user={{ id: 2 }}
+      footerProps={{
+        onSend: async (message: TMessyMessage) => {
+          message;
+          mess.unshift(message);
+          setMess([...mess]);
+          // upload image
+          setTimeout(() => {
+            //@ts-ignore
+            mess[0].status = 'sent';
+            setMess([...mess]);
+          }, 2000);
+
+          //send to server by socket
+        },
+        ExtraLeft: <ExtraLeft />,
+      }}
+    />
+  );
+}
+const App = () => {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaView style={{ flex: 1 }}>
         <BottomSheetModalProvider>
           <KeyboardProvider>
-            <Messy
-              BaseModule={{
-                Image: ImageV,
-                Cache: {
-                  get: MMKVwithID.getMap,
-                  set: MMKVwithID.setMap,
-                },
-              }}
-              listProps={{
-                onStartReached: () => {
-                  console.log('onStartReached');
-                },
-                onEndReached: () => {
-                  console.log('onEndReached');
-                },
-              }}
-              messages={mess}
-              user={{ id: 2 }}
-              footerProps={{
-                onSend: async (message: TMessyMessage) => {
-                  message;
-                  mess.unshift(message);
-                  setMess([...mess]);
-                  // upload image
-                  setTimeout(() => {
-                    //@ts-ignore
-                    mess[0].status = 'sent';
-                    setMess([...mess]);
-                  }, 2000);
-
-                  //send to server by socket
-                },
-                ExtraLeft: <ExtraLeft />,
-              }}
-            />
+            <BasicExample />
           </KeyboardProvider>
         </BottomSheetModalProvider>
       </SafeAreaView>

@@ -51,6 +51,12 @@ import { Messy } from '@vokhuyet/react-native-messy';
         listProps={{
           onEndReached,
           ListHeaderComponent: ChatListHeader,
+          onPress: () => {
+              //hide all bottom sheet modal inlcuding: emoji picker,...
+              dismissAll();
+              //hide keyboard
+              Keyboard.dismiss();
+          },
         }}
         messageProps={{
           hideOwnerAvatar: true,
@@ -205,7 +211,7 @@ input: {
 - `user`([TUser](#tuser)): sender information;
 - `theme`: ([TColor](#tcolor)): custom theme for message;
 - `footerProps`([TMessyFooterProps](#tmessyfooterprops)): Custom props for Element below list messages;
-- `listProps`(TListProps): custom flatlist props;
+- `listProps`(TListProps): custom flatlist props and onPress event;
 - `messageProps`([TMessageProps](#tmessageprops));
 - `parsedShape`([ParseShape[]](https://github.com/taskrabbit/react-native-parsed-text)): Custom parse patterns for react-native-parsed-text ;
 - `showDateTime`(boolean): show created time of message;

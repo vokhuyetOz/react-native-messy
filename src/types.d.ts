@@ -12,7 +12,9 @@ import type { TColor } from './modules';
 type TListProps = Omit<
   FlatListProps<any>,
   'data' | 'renderItem' | 'keyExtractor'
->;
+> & {
+  onPress?: () => void | Promise<void>;
+};
 type TMessageProps = {
   hideOwnerAvatar: boolean;
   hidePartnerAvatar: boolean;

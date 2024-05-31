@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { Pressable } from 'react-native';
 
 import { TMessyMessageProps } from '../types';
 
@@ -11,9 +11,9 @@ export function MessyMessage({ renderMessage, ...rest }: TMessyMessageProps) {
     return renderMessage(rest);
   }
   return (
-    <View>
+    <Pressable onPress={rest?.listProps?.onPress}>
       <MessyMessageDateTime {...rest} />
       <MessyMessageContent {...rest} />
-    </View>
+    </Pressable>
   );
 }
