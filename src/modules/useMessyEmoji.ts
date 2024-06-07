@@ -16,9 +16,9 @@ export type TEmoji = {
   emoji_version: string;
 };
 
-const listeners = new Set<(e: TEmoji) => void>();
+const listeners = new Set<(e?: TEmoji) => void>();
 
-export function selectEmoji(e: TEmoji) {
+export function selectEmoji(e?: TEmoji) {
   listeners.forEach((listener) => listener(e));
 }
 /**
@@ -30,9 +30,11 @@ export function useSelectEmoji() {
   const [force, setForce] = useState<boolean>(true);
 
   useEffect(() => {
-    const handle = (e: TEmoji) => {
+    const handle = (e?: TEmoji) => {
       componentRef.current.emoji = e;
-      setForce((pre) => !pre);
+      if(e){
+        setForce((pre) => !pre);
+      }
     };
     listeners.add(handle);
 

@@ -476,7 +476,7 @@ export function MessyFooterDefault(props: TMessyFooterProps) {
     const text = componentRef.current.text;
 
     if (!text) return;
-
+    selectEmoji()
     textInputRef.current?.clear();
     componentRef.current.text = '';
     const createdTime = Date.now();
