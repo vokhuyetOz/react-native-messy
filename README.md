@@ -100,6 +100,11 @@ import { Messy } from '@vokhuyet/react-native-messy';
   source?: ImageSourcePropType;
 ```
 
+## Default Function
+### setMessyFooterInputText
+
+Use as global function to set Message Input text
+
 ## Object Type
 
 ### TMessyMessageLocation
