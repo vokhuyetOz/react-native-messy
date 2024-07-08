@@ -1,7 +1,8 @@
 import React from 'react';
 import { FlatList } from 'react-native';
+import { BottomSheetFlatListMethods } from '@discord/bottom-sheet';
 
-const listRef = React.createRef<FlatList>();
+const listRef = React.createRef<FlatList | BottomSheetFlatListMethods>();
 
 export const useMessyListRef = () => {
   return listRef;
@@ -11,7 +12,7 @@ export const useMessyListAction = () => {
   const scrollToLast = () => {
     timeout = setTimeout(() => {
       try {
-        listRef.current?.scrollToIndex({ animated: true, index: 0 });
+        listRef.current?.scrollToIndex?.({ animated: true, index: 0 });
         clearTimeout(timeout);
       } catch {}
     }, 300);

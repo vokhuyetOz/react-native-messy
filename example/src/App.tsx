@@ -342,15 +342,82 @@ function BasicExample() {
     />
   );
 }
+// function UseInBottomSheetExample() {
+//   const sheetRef = useRef<BottomSheet>(null);
+
+//   const [mess, setMess] = useState([...mockMessage.reverse()]);
+
+//   useEffect(() => {
+//     sheetRef.current?.expand();
+//   }, []);
+//   return (
+//     <BottomSheet
+//       ref={sheetRef}
+//       index={0}
+//       snapPoints={[104, '85%']}
+//       enablePanDownToClose={false}
+//       enableContentPanningGesture={false}
+//       enableHandlePanningGesture
+//     >
+//       <Messy
+//         useInBottomSheet
+//         BaseModule={{
+//           Image: ImageV,
+//           Cache: {
+//             get: MMKVwithID.getMap,
+//             set: MMKVwithID.setMap,
+//           },
+//         }}
+//         messageProps={{
+//           hideOwnerAvatar: true,
+//           hidePartnerAvatar: false,
+//           onPress: () => {
+//             console.log('press item');
+//           },
+//           onLongPress: () => {
+//             console.log('long press item');
+//           },
+//         }}
+//         listProps={{
+//           onStartReached: () => {
+//             console.log('onStartReached');
+//           },
+//           onEndReached: () => {
+//             console.log('onEndReached');
+//           },
+//         }}
+//         messages={mess}
+//         user={{ id: 2 }}
+//         footerProps={{
+//           onSend: async (message: TMessyMessage) => {
+//             message;
+//             mess.unshift(message);
+//             setMess([...mess]);
+//             // upload image
+//             setTimeout(() => {
+//               //@ts-ignore
+//               mess[0].status = 'sent';
+//               setMess([...mess]);
+//             }, 2000);
+
+//             //send to server by socket
+//           },
+//           ExtraLeft: <ExtraLeft />,
+//         }}
+//       />
+//     </BottomSheet>
+//   );
+// }
 const App = () => {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaView style={{ flex: 1 }}>
-        <BottomSheetModalProvider>
-          <KeyboardProvider>
+        <KeyboardProvider>
+          <BottomSheetModalProvider>
             <BasicExample />
-          </KeyboardProvider>
-        </BottomSheetModalProvider>
+            {/* <UseInBottomSheetExample /> */}
+          </BottomSheetModalProvider>
+        </KeyboardProvider>
       </SafeAreaView>
     </GestureHandlerRootView>
   );

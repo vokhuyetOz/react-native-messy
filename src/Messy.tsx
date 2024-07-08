@@ -2,6 +2,7 @@
 import React from 'react';
 import { FlatList, View } from 'react-native';
 import type { TMessyMessage, TMessyProps } from './types';
+import { BottomSheetFlatList } from '@discord/bottom-sheet';
 
 import { MessyLoading } from './MessyLoading';
 
@@ -22,10 +23,15 @@ export function Messy(props: TMessyProps) {
     return <MessyLoading {...props} />;
   }
 
+  const ListComponent = { true: BottomSheetFlatList, false: FlatList }[
+    `${props.useInBottomSheet ?? false}`
+  ];
+
   return (
     <MessyPropsContext.Provider value={props}>
       <View style={{ flex: 1 }}>
-        <FlatList
+        <ListComponent
+          //@ts-ignore
           ref={flatlistRef}
           keyExtractor={(item: TMessyMessage) => `${item.clientId || item.id}`}
           style={{

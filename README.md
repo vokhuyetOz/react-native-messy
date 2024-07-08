@@ -180,6 +180,7 @@ input: {
   hideEmoji?: boolean;
   hideFooterAction?: boolean;
   Send?: React.ReactNode;
+  Emoji?: React.ReactNode; // button for click to open emoji picker
   onSend?: (message?: TMessyMessage) => Promise<void> | void;
   inputProps?: TextInputProps;
   ExtraLeft?: React.ReactNode;
@@ -211,6 +212,7 @@ input: {
 
 ## Props
 
+- `useInBottomSheet`(boolean): default false
 - `loading`(boolean): loading status
 - **`messages`**([TMessyMessage[]](#tmessymessage)): list of messages
 - `user`([TUser](#tuser)): sender information;

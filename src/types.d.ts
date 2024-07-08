@@ -60,6 +60,7 @@ export type TColor = {
 };
 
 export type TMessyProps = Readonly<{
+  useInBottomSheet?: boolean;
   loading?: boolean;
   messages?: TMessyMessage[];
   user?: TUser;
@@ -130,6 +131,7 @@ export type TMessyFooterProps = Readonly<{
   onSend?: (message?: TMessyMessage) => Promise<void> | void;
   inputProps?: TextInputProps;
   Send?: React.ReactNode;
+  Emoji?: React.ReactNode;
   ExtraLeft?: React.ReactNode;
   ExtraActionLeft?: React.ReactNode;
   renderFooter?: FC<TMessyFooterProps>;

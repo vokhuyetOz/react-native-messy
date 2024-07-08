@@ -92,6 +92,7 @@ type TMessyFooterTextInput = Readonly<{
   textInputRef: RefObject<TextInput>;
   inputProps?: TextInputProps;
   onChangeText: (text: string) => void;
+  clearTextInput?: () => void;
 }>;
 type TMessyFooterEmojiContentPage = Readonly<{
   data: TEmoji[];
@@ -313,15 +314,23 @@ function MessyFooterEmoji({ emojiShared }: TMessyFooterEmoji) {
   const renderBackdrop = (props: BottomSheetBackdropProps) => {
     return <BottomSheetBackdrop {...props} pressBehavior={'close'} />;
   };
+  const renderEmoji = () => {
+    if (isValidElement(footerProps?.Emoji)) {
+      return footerProps.Emoji;
+    }
+    return (
+      <Image
+        source={require('../utils/images/emoji.png')}
+        style={{ width: Sizes.button_image, height: Sizes.button_image }}
+        resizeMode={'contain'}
+      />
+    );
+  };
 
   return (
     <View>
       <Pressable disabled={footerProps?.disabled} onPress={onPress}>
-        <Image
-          source={require('../utils/images/emoji.png')}
-          style={{ width: Sizes.button_image, height: Sizes.button_image }}
-          resizeMode={'contain'}
-        />
+        {renderEmoji()}
       </Pressable>
       <BottomSheetModal
         ref={bottomSheetRef}
@@ -449,6 +458,7 @@ export function MessyFooterDefault(props: TMessyFooterProps) {
   const componentRef = useRef({
     text: '',
   });
+  const [inputKey, setInputKey] = useState(Date.now());
   const emojiShared = useSharedValue(Sizes.device_height);
   const leftExtraShared = useSharedValue(Sizes.device_height);
   const { height } = useReanimatedKeyboardAnimation();
@@ -483,12 +493,14 @@ export function MessyFooterDefault(props: TMessyFooterProps) {
   };
   const onPressSendText = () => {
     const text = componentRef.current.text;
-
-    if (!text) return;
+    if (!text?.trim()) {
+      return;
+    }
     selectEmoji();
     textInputRef.current?.clear();
     componentRef.current.text = '';
     const createdTime = Date.now();
+    setInputKey(createdTime);
     props.onSend?.({
       id: `${Date.now()}`,
       text,
@@ -535,6 +547,7 @@ export function MessyFooterDefault(props: TMessyFooterProps) {
             onLayout={onLayout}
           >
             <MessyFooterTextInput
+              key={inputKey}
               inputProps={props.inputProps}
               textInputRef={textInputRef}
               onChangeText={onChangeText}
