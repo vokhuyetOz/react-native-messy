@@ -97,7 +97,7 @@ type TMessyFooterEmojiContentPage = Readonly<{
   data: TEmoji[];
 }>;
 
-export let setMessyMessageText : React.Dispatch<React.SetStateAction<string>>;
+export let setMessyFooterInputText : React.Dispatch<React.SetStateAction<string>>;
 
 function MessyFooterEmojiSearch({ query, setQuery }: TMessyFooterEmojiSearch) {
   const Sizes = useSizes();
@@ -358,7 +358,7 @@ function MessyFooterTextInput({
 
   //create global setting text function
   useEffect(() =>{
-    setMessyMessageText = setText
+    setMessyFooterInputText = setText
   }, [])
 
   useEffect(() => {

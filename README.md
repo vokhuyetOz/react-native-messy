@@ -101,7 +101,7 @@ import { Messy } from '@vokhuyet/react-native-messy';
 ```
 
 ## Default Function
-### setMessyMessageText
+### setMessyFooterInputText
 
 Use as global function to set Message Input text
 
