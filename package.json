@@ -53,7 +53,6 @@
     "registry": "https://registry.npmjs.org/"
   },
   "dependencies": {
-    "@gorhom/bottom-sheet": "^4.6.4",
     "@vokhuyet/native-hooks": "^0.0.2",
     "dayjs": "^1.11.10",
     "emojilib": "^3.0.11",
