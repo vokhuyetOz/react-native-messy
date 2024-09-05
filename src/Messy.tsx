@@ -2,7 +2,7 @@
 import React from 'react';
 import { FlatList, View } from 'react-native';
 import type { TMessyMessage, TMessyProps } from './types';
-import { BottomSheetFlatList } from '@discord/bottom-sheet';
+import { BottomSheetFlatList } from '@gorhom/bottom-sheet';
 
 import { MessyLoading } from './MessyLoading';
 

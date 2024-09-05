@@ -1,6 +1,6 @@
 import React from 'react';
 import { FlatList } from 'react-native';
-import { BottomSheetFlatListMethods } from '@discord/bottom-sheet';
+import { BottomSheetFlatListMethods } from '@gorhom/bottom-sheet';
 
 const listRef = React.createRef<FlatList | BottomSheetFlatListMethods>();
 
