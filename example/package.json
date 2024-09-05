@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@candlefinance/faster-image": "^1.5.0",
-    "@discord/bottom-sheet": "discord/react-native-bottom-sheet#discord-fork-4.6.1-rngh-v2",
+    "@gorhom/bottom-sheet": "^4.6.4",
     "@shopify/flash-list": "^1.6.3",
     "@vokhuyet/react-native-messy": "link:../",
     "react": "18.2.0",

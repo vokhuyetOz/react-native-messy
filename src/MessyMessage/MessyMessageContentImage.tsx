@@ -8,7 +8,7 @@ import {
   Pressable,
   Text,
 } from 'react-native';
-import { BottomSheetModal, useBottomSheetModal } from '@discord/bottom-sheet';
+import { BottomSheetModal, useBottomSheetModal } from '@gorhom/bottom-sheet';
 import Zoom from 'react-native-zoom-reanimated';
 import PagerView, {
   type PagerViewOnPageSelectedEvent,

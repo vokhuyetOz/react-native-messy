@@ -3,7 +3,7 @@ import React, { useRef } from 'react';
 import { View, Pressable } from 'react-native';
 
 import { VideoRef } from 'react-native-video';
-import { BottomSheetModal, useBottomSheetModal } from '@discord/bottom-sheet';
+import { BottomSheetModal, useBottomSheetModal } from '@gorhom/bottom-sheet';
 import { useBackHandler } from '@vokhuyet/native-hooks';
 
 import type { TMessyMessageProps } from '../types';

@@ -35,7 +35,7 @@ import {
   type BottomSheetBackdropProps,
   useBottomSheet,
   useBottomSheetModal,
-} from '@discord/bottom-sheet';
+} from '@gorhom/bottom-sheet';
 import emojiJson from 'unicode-emoji-json/data-by-group.json';
 import {
   TabView,
@@ -97,7 +97,9 @@ type TMessyFooterEmojiContentPage = Readonly<{
   data: TEmoji[];
 }>;
 
-export let setMessyFooterInputText : React.Dispatch<React.SetStateAction<string>>;
+export let setMessyFooterInputText: React.Dispatch<
+  React.SetStateAction<string>
+>;
 
 function MessyFooterEmojiSearch({ query, setQuery }: TMessyFooterEmojiSearch) {
   const Sizes = useSizes();
@@ -357,9 +359,9 @@ function MessyFooterTextInput({
   });
 
   //create global setting text function
-  useEffect(() =>{
-    setMessyFooterInputText = setText
-  }, [])
+  useEffect(() => {
+    setMessyFooterInputText = setText;
+  }, []);
 
   useEffect(() => {
     if (!newEmoji) return;
@@ -483,7 +485,7 @@ export function MessyFooterDefault(props: TMessyFooterProps) {
     const text = componentRef.current.text;
 
     if (!text) return;
-    selectEmoji()
+    selectEmoji();
     textInputRef.current?.clear();
     componentRef.current.text = '';
     const createdTime = Date.now();

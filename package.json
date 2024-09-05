@@ -53,6 +53,7 @@
     "registry": "https://registry.npmjs.org/"
   },
   "dependencies": {
+    "@gorhom/bottom-sheet": "^4.6.4",
     "@vokhuyet/native-hooks": "^0.0.2",
     "dayjs": "^1.11.10",
     "emojilib": "^3.0.11",
@@ -62,8 +63,8 @@
   },
   "devDependencies": {
     "@commitlint/config-conventional": "^17.0.2",
-    "@discord/bottom-sheet": "discord/react-native-bottom-sheet#discord-fork-4.6.1-rngh-v2",
     "@evilmartians/lefthook": "^1.5.0",
+    "@gorhom/bottom-sheet": "^4.6.4",
     "@react-native/eslint-config": "^0.72.2",
     "@release-it/conventional-changelog": "^5.0.0",
     "@shopify/flash-list": "^1.6.3",
@@ -96,7 +97,7 @@
     "@types/react": "18.2.61"
   },
   "peerDependencies": {
-    "@discord/bottom-sheet": "*",
+    "@gorhom/bottom-sheet": "*",
     "@shopify/flash-list": ">=1.6.3",
     "dayjs": "*",
     "fbjs": "*",

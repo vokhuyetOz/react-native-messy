@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, createRef } from 'react';
-import type { BottomSheetModal } from '@discord/bottom-sheet';
+import type { BottomSheetModal } from '@gorhom/bottom-sheet';
 
 const listRef = createRef<BottomSheetModal>();
 
@@ -32,7 +32,7 @@ export function useSelectEmoji() {
   useEffect(() => {
     const handle = (e?: TEmoji) => {
       componentRef.current.emoji = e;
-      if(e){
+      if (e) {
         setForce((pre) => !pre);
       }
     };
