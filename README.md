@@ -9,7 +9,7 @@ Chat ui for React Native
 
 ## Dependency
 
-- [discord/bottom-sheet](https://github.com/discord/react-native-bottom-sheet/tree/discord-fork-4.6.1-rngh-v2)
+- [gorhom/bottom-sheet](https://github.com/gorhom/react-native-bottom-sheet)
 - [react-native-keyboard-controller](https://kirillzyusko.github.io/react-native-keyboard-controller/)
 - [react-native-image-picker](https://github.com/react-native-image-picker/react-native-image-picker)
 - [react-native-gesture-handler](https://github.com/software-mansion/react-native-gesture-handler#readme)
@@ -101,6 +101,7 @@ import { Messy } from '@vokhuyet/react-native-messy';
 ```
 
 ## Default Function
+
 ### setMessyFooterInputText
 
 Use as global function to set Message Input text
@@ -134,7 +135,6 @@ longitude: string;
   clientId?: string; // used for display message in List before receiving response from Server
   category?: string; // used for display multiple type of system message
 ```
-
 
 ### TColor
 

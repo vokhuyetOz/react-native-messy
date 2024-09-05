@@ -14,7 +14,7 @@ import {
   BottomSheetModal,
   BottomSheetModalProvider,
   useBottomSheetModal,
-} from '@discord/bottom-sheet';
+} from '@gorhom/bottom-sheet';
 import { FasterImageView } from '@candlefinance/faster-image';
 
 //@ts-ignore

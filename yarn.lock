@@ -1903,29 +1903,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@discord/bottom-sheet@discord/react-native-bottom-sheet#discord-fork-4.6.1-rngh-v2":
-  version: 4.6.1
-  resolution: "@discord/bottom-sheet@https://github.com/discord/react-native-bottom-sheet.git#commit=df1cc1c55cfd5fb887494947cf87676ab6f904a1"
-  dependencies:
-    "@gorhom/portal": 1.0.14
-    invariant: ^2.2.4
-  peerDependencies:
-    "@shopify/flash-list": "*"
-    "@types/react": "*"
-    "@types/react-native": "*"
-    react: "*"
-    react-native: "*"
-    react-native-gesture-handler: ">=2.5.0"
-    react-native-reanimated: ">=2.9.0"
-  peerDependenciesMeta:
-    "@types/react":
-      optional: true
-    "@types/react-native":
-      optional: true
-  checksum: 0522875ea76c66356b10d9b964243bc28b7af3cdeac0819436691e747ee14bbb72bd1de88d25d0706aecb70b37ea7c8413b540ac59f9132bc187a377da0d6fb5
-  languageName: node
-  linkType: hard
-
 "@egjs/hammerjs@npm:^2.0.17":
   version: 2.0.17
   resolution: "@egjs/hammerjs@npm:2.0.17"
@@ -1984,6 +1961,28 @@ __metadata:
     lefthook: bin/index.js
   checksum: 51745444c8e279dd448565758fb829ee3c318e080c79c6a68b4b52560c417cba913c80db86b1b83d0a009e7a3a4af4327e77af12f9c440d7a4cd41679b0bef31
   conditions: (os=darwin | os=linux | os=win32) & (cpu=x64 | cpu=arm64 | cpu=ia32)
+  languageName: node
+  linkType: hard
+
+"@gorhom/bottom-sheet@npm:^4.6.4":
+  version: 4.6.4
+  resolution: "@gorhom/bottom-sheet@npm:4.6.4"
+  dependencies:
+    "@gorhom/portal": 1.0.14
+    invariant: ^2.2.4
+  peerDependencies:
+    "@types/react": "*"
+    "@types/react-native": "*"
+    react: "*"
+    react-native: "*"
+    react-native-gesture-handler: ">=1.10.1"
+    react-native-reanimated: ">=2.2.0"
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+    "@types/react-native":
+      optional: true
+  checksum: 2cea033c4f321b93fdbf61470b507b5efd51425a8ab927b49d7aaa1d9f0568cbcfb188e385311389dbffbafe47b941dbd3e60f74b1d663a1a2d73262e2719f85
   languageName: node
   linkType: hard
 
@@ -3932,8 +3931,8 @@ __metadata:
   resolution: "@vokhuyet/react-native-messy@workspace:."
   dependencies:
     "@commitlint/config-conventional": ^17.0.2
-    "@discord/bottom-sheet": "discord/react-native-bottom-sheet#discord-fork-4.6.1-rngh-v2"
     "@evilmartians/lefthook": ^1.5.0
+    "@gorhom/bottom-sheet": ^4.6.4
     "@react-native/eslint-config": ^0.72.2
     "@release-it/conventional-changelog": ^5.0.0
     "@shopify/flash-list": ^1.6.3
@@ -3968,7 +3967,7 @@ __metadata:
     typescript: ^5.0.2
     unicode-emoji-json: ^0.4.0
   peerDependencies:
-    "@discord/bottom-sheet": "*"
+    "@gorhom/bottom-sheet": "*"
     "@shopify/flash-list": ">=1.6.3"
     dayjs: "*"
     fbjs: "*"
@@ -11517,7 +11516,7 @@ __metadata:
     "@babel/preset-env": ^7.20.0
     "@babel/runtime": ^7.20.0
     "@candlefinance/faster-image": ^1.5.0
-    "@discord/bottom-sheet": "discord/react-native-bottom-sheet#discord-fork-4.6.1-rngh-v2"
+    "@gorhom/bottom-sheet": ^4.6.4
     "@react-native/babel-preset": 0.73.19
     "@react-native/metro-config": 0.73.3
     "@react-native/typescript-config": 0.73.1
