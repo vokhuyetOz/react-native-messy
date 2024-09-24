@@ -18,6 +18,19 @@ Chat ui for React Native
 - [react-native-video](https://github.com/TheWidlarzGroup/react-native-video)
 - [@shopify/flash-list](https://shopify.github.io/flash-list/)
 
+## Features
+
+- [x] text message, phone, url, email format and fully customize
+- [x] single image message and fully customize
+- [x] list images message and fully customize
+- [x] emoji keyboard
+- [x] loadmore
+- [x] customize default system UI ( Text, Image, List...)
+- [ ] audio message
+- [ ] swipe to reply
+- [ ] reaction
+- [ ] and more
+
 ## Installation
 
 ```sh
