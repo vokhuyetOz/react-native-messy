@@ -17,13 +17,14 @@ import { MessyMessageContentOther } from './MessyMessageContentOther';
 
 export function MessyMessageContent(props: TMessyMessageProps) {
   const Sizes = useSizes();
-  const { renderMessageSystem } = useMessyPropsContext();
+  const messyProps = useMessyPropsContext();
+
   const {
+    renderMessageSystem,
     user,
-    value,
     messageProps = { hideOwnerAvatar: true, hidePartnerAvatar: false },
-    index,
-  } = props;
+  } = messyProps;
+  const { value, index } = props;
 
   //System message
   if (value?.type === 'system') {
@@ -61,10 +62,10 @@ export function MessyMessageContent(props: TMessyMessageProps) {
   };
   const onPress = () => {
     // contentStatusRef?.current?.setDisplay?.((pre: boolean) => !pre);
-    messageProps.onPress?.(props);
+    messageProps.onPress?.({ ...props, ...messyProps });
   };
   const onLongPress = () => {
-    messageProps.onLongPress?.(props);
+    messageProps.onLongPress?.({ ...props, ...messyProps });
   };
 
   let maxWidth = Sizes.text_max_width;

@@ -4,21 +4,24 @@ import { Linking } from 'react-native';
 //@ts-ignore
 import ParsedText from 'react-native-parsed-text';
 
-import { useColors, useSizes } from '../modules';
+import { useColors, useMessyPropsContext, useSizes } from '../modules';
 
 import type { TMessyMessageProps } from '../types';
 
 export function MessyMessageContentText(props: TMessyMessageProps) {
   const Colors = useColors();
   const Sizes = useSizes();
+  const messyProps = useMessyPropsContext();
+  const { renderMessageText, user, parsedShape = [] } = messyProps;
 
-  const { renderMessageText, value, user, parsedShape = [] } = props;
+  const { value } = props;
+
   if (!value?.text) {
     return null;
   }
 
   if (typeof renderMessageText === 'function') {
-    return renderMessageText(props);
+    return renderMessageText({ ...props, ...messyProps });
   }
 
   const onUrlPress = (url: string) => {

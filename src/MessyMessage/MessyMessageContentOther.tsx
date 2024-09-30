@@ -1,7 +1,10 @@
+import { useMessyPropsContext } from '../modules';
 import type { TMessyMessageProps } from '../types';
 
 export function MessyMessageContentOther(props: TMessyMessageProps) {
-  const { renderMessageOther, value } = props;
+  const { value } = props;
+  const messyProps = useMessyPropsContext();
+
   if (
     value?.text ||
     value?.audio ||
@@ -12,8 +15,8 @@ export function MessyMessageContentOther(props: TMessyMessageProps) {
     return null;
   }
 
-  if (typeof renderMessageOther === 'function') {
-    return renderMessageOther(props);
+  if (typeof messyProps.renderMessageOther === 'function') {
+    return messyProps.renderMessageOther({ ...props, ...messyProps });
   }
 
   return null;

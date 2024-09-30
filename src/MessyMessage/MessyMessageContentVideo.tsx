@@ -9,7 +9,7 @@ import { useBackHandler } from '@vokhuyet/native-hooks';
 import type { TMessyMessageProps } from '../types';
 
 import { MImage } from '../elements/MImage/MImage';
-import { isImage, useColors, useSizes } from '../modules';
+import { isImage, useColors, useMessyPropsContext, useSizes } from '../modules';
 
 import { MLoading } from '../elements/Loading/Loading';
 import { MVideo } from '../elements/MVideo/MVideo';
@@ -17,7 +17,6 @@ import { MVideo } from '../elements/MVideo/MVideo';
 function ModalClose() {
   const Sizes = useSizes();
   const { dismiss } = useBottomSheetModal();
-
   const onClose = () => {
     dismiss();
   };
@@ -127,6 +126,7 @@ function MessyMessageContentVideoDefault({ value }: TMessyMessageProps) {
         onDismiss={onDismiss}
         snapPoints={['100%']}
         backgroundStyle={{ backgroundColor: 'black' }}
+        enableDynamicSizing={false}
         style={{
           backgroundColor: 'black',
           alignItems: 'center',
@@ -157,7 +157,9 @@ function MessyMessageContentVideoDefault({ value }: TMessyMessageProps) {
 }
 
 export function MessyMessageContentVideo(props: TMessyMessageProps) {
-  const { renderMessageVideo, value } = props;
+  const { value } = props;
+  const messyProps = useMessyPropsContext();
+
   if (!value?.video && !value.local) {
     return null;
   }
@@ -165,8 +167,8 @@ export function MessyMessageContentVideo(props: TMessyMessageProps) {
     return null;
   }
 
-  if (typeof renderMessageVideo === 'function') {
-    return renderMessageVideo(props);
+  if (typeof messyProps.renderMessageVideo === 'function') {
+    return messyProps.renderMessageVideo({ ...props, ...messyProps });
   }
   return <MessyMessageContentVideoDefault {...props} />;
 }
