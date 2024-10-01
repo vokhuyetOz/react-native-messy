@@ -1,19 +1,24 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import { FlatList, View } from 'react-native';
+import { View } from 'react-native';
 import type { TMessyMessage, TMessyProps } from './types';
 import { BottomSheetFlatList } from '@gorhom/bottom-sheet';
+import { FlashList } from '@shopify/flash-list';
 
 import { MessyLoading } from './MessyLoading';
 
-import { useColors, useInitColors, useMessyListRef } from './modules';
+import { useInitColors, useMessyListRef } from './modules';
 import { MessyFooter } from './MessyFooter';
 import { MessyMessage } from './MessyMessage';
 import { MessyPropsContext } from './modules/useMessyPropsContext';
 
+type TListComponentItem = {
+  item: TMessyMessage;
+  index: number;
+};
+
 export function Messy(props: TMessyProps) {
   useInitColors(props.theme);
-  const Colors = useColors();
 
   const flatlistRef = useMessyListRef();
 
@@ -23,9 +28,13 @@ export function Messy(props: TMessyProps) {
     return <MessyLoading {...props} />;
   }
 
-  const ListComponent = { true: BottomSheetFlatList, false: FlatList }[
-    `${props.useInBottomSheet ?? false}`
-  ];
+  let ListComponent:
+    | typeof BottomSheetFlatList<TMessyMessage>
+    | typeof FlashList<TMessyMessage> = FlashList<TMessyMessage>;
+
+  if (props.useInBottomSheet) {
+    ListComponent = BottomSheetFlatList<TMessyMessage>;
+  }
 
   return (
     <MessyPropsContext.Provider value={props}>
@@ -33,21 +42,17 @@ export function Messy(props: TMessyProps) {
         <ListComponent
           //@ts-ignore
           ref={flatlistRef}
+          estimatedItemSize={200}
           keyExtractor={(item: TMessyMessage) => `${item.clientId || item.id}`}
-          style={{
-            backgroundColor: Colors.background,
-            flex: 1,
-          }}
           maintainVisibleContentPosition={{
             minIndexForVisible: 1,
             autoscrollToTopThreshold: 1,
           }}
           scrollsToTop={false}
-          data={messages}
-          renderItem={({ item, index }) => {
+          data={[...messages]}
+          renderItem={({ item, index }: TListComponentItem) => {
             return (
               <MessyMessage
-                {...props}
                 value={item}
                 index={index}
                 preMessage={messages[index - 1]}
@@ -57,7 +62,7 @@ export function Messy(props: TMessyProps) {
           {...listProps}
           inverted
         />
-        <MessyFooter {...props.footerProps} />
+        <MessyFooter />
       </View>
     </MessyPropsContext.Provider>
   );

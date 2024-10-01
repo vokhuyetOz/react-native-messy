@@ -1,7 +1,6 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
 import React, { useEffect, useState } from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import Animated, { ZoomIn, ZoomOut } from 'react-native-reanimated';
 
 import type { TMessyMessage } from '../types';
@@ -9,6 +8,7 @@ import type { TMessyMessage } from '../types';
 import { useColors, useSizes } from '../modules';
 
 import { MImage } from '../elements/MImage/MImage';
+import { MText } from '../elements/MText/MText';
 
 type MessyMessageContentStatusProps = Readonly<{
   value: TMessyMessage;
@@ -25,9 +25,7 @@ export function MessyMessageContentStatus({
   const [display, setDisplay] = useState(last);
 
   useEffect(() => {
-    if (last === false && last !== display) {
-      setDisplay(false);
-    }
+    setDisplay(last);
   }, [last]);
 
   if (!display) return null;
@@ -73,7 +71,7 @@ export function MessyMessageContentStatus({
                     marginHorizontal: Sizes.padding / 4,
                   }}
                 >
-                  <Text
+                  <MText
                     style={{
                       fontWeight: 'bold',
                       fontSize: Sizes.avatar / 4,
@@ -81,7 +79,7 @@ export function MessyMessageContentStatus({
                     }}
                   >
                     {item.userName?.[0]}
-                  </Text>
+                  </MText>
                 </View>
               );
             }

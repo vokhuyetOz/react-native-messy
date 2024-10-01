@@ -5,15 +5,18 @@ import { TMessyMessageProps } from '../types';
 
 import { MessyMessageContent } from './MessyMessageContent';
 import { MessyMessageDateTime } from './MessyMessageDateTime';
+import { useMessyPropsContext } from '../modules';
 
-export function MessyMessage({ renderMessage, ...rest }: TMessyMessageProps) {
+export function MessyMessage(props: TMessyMessageProps) {
+  const { renderMessage, listProps } = useMessyPropsContext();
+
   if (renderMessage) {
-    return renderMessage(rest);
+    return renderMessage(props);
   }
   return (
-    <Pressable onPress={rest?.listProps?.onPress}>
-      <MessyMessageDateTime {...rest} />
-      <MessyMessageContent {...rest} />
+    <Pressable onPress={listProps?.onPress}>
+      <MessyMessageDateTime {...props} />
+      <MessyMessageContent {...props} />
     </Pressable>
   );
 }

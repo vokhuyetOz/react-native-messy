@@ -7,10 +7,12 @@ import type {
 } from 'react-native';
 import type { ParseShape } from 'react-native-parsed-text';
 import type { Asset } from 'react-native-image-picker';
+import type { FlashListProps } from '@shopify/flash-list';
+
 import type { TColor } from './modules';
 
 type TListProps = Omit<
-  FlatListProps<any>,
+  FlatListProps<any> | FlashListProps<any>,
   'data' | 'renderItem' | 'keyExtractor'
 > & {
   onPress?: () => void | Promise<void>;

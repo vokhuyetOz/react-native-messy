@@ -138,7 +138,8 @@ export function MessyFooterActionLibraryDefault({
   const onPressDefault = async () => {
     //use your own onPress handler
     if (onPress) {
-      return onPress();
+      onPress();
+      return;
     }
     let validate = true;
     if (typeof handlePermission === 'function') {

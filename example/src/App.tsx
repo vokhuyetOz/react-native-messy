@@ -1,13 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useEffect, useRef, useState } from 'react';
-import {
-  SafeAreaView,
-  Image,
-  View,
-  Pressable,
-  Text,
-  Keyboard,
-} from 'react-native';
+import { View, Pressable, Text, Keyboard } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { KeyboardProvider } from 'react-native-keyboard-controller';
 import {
@@ -15,23 +8,10 @@ import {
   BottomSheetModalProvider,
   useBottomSheetModal,
 } from '@gorhom/bottom-sheet';
-import { FasterImageView } from '@candlefinance/faster-image';
-
 //@ts-ignore
 import { Messy, TMessyMessage } from '@vokhuyet/react-native-messy';
 
 import { MMKVLoader, MMKVInstance } from 'react-native-mmkv-storage';
-
-function ImageV(props) {
-  let source = props.source;
-  if (typeof props?.source === 'number') {
-    return <Image {...props} source={source} />;
-  }
-  if (props?.source?.uri) {
-    source = { ...source, url: source.uri, resizeMode: props.resizeMode };
-  }
-  return <FasterImageView {...props} source={source} />;
-}
 
 export const MMKVwithID: MMKVInstance = new MMKVLoader()
   .withInstanceID('default-mmkv-id')
@@ -241,6 +221,7 @@ function ExtraLeft({ animatedPosition }) {
     <View>
       <Pressable
         onPress={() => {
+          console.log('ExtraLeft');
           dismissAll();
           Keyboard.dismiss();
           clear();
@@ -264,6 +245,7 @@ function ExtraLeft({ animatedPosition }) {
         handleComponent={null}
         ref={ref}
         index={0}
+        animateOnMount
         style={{
           shadowColor: '#000',
           shadowOffset: {
@@ -272,11 +254,11 @@ function ExtraLeft({ animatedPosition }) {
           },
           shadowOpacity: 0.27,
           shadowRadius: 4.65,
-
           elevation: 6,
         }}
         animationConfigs={{ duration: 300 }}
         snapPoints={[100, '90%']}
+        enableDynamicSizing={false}
         animatedPosition={animatedPosition}
       >
         <Text style={{ alignSelf: 'center' }}>Demo</Text>
@@ -291,7 +273,7 @@ function BasicExample() {
   return (
     <Messy
       BaseModule={{
-        Image: ImageV,
+        // Image: TurboImage,
         Cache: {
           get: MMKVwithID.getMap,
           set: MMKVwithID.setMap,
@@ -325,7 +307,6 @@ function BasicExample() {
       user={{ id: 2 }}
       footerProps={{
         onSend: async (message: TMessyMessage) => {
-          message;
           mess.unshift(message);
           setMess([...mess]);
           // upload image
@@ -408,19 +389,19 @@ function BasicExample() {
 //     </BottomSheet>
 //   );
 // }
-const App = () => {
+function App() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <SafeAreaView style={{ flex: 1 }}>
-        <KeyboardProvider>
-          <BottomSheetModalProvider>
+      <KeyboardProvider>
+        <BottomSheetModalProvider>
+          <View style={{ flex: 1, paddingTop: 24, paddingBottom: 24 }}>
             <BasicExample />
             {/* <UseInBottomSheetExample /> */}
-          </BottomSheetModalProvider>
-        </KeyboardProvider>
-      </SafeAreaView>
+          </View>
+        </BottomSheetModalProvider>
+      </KeyboardProvider>
     </GestureHandlerRootView>
   );
-};
+}
 
 export default App;

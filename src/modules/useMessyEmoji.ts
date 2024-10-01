@@ -49,7 +49,7 @@ export function useSelectEmoji() {
 let defaultIndex = -1;
 const listenersIndex = new Set<(index: number) => void>();
 
-export const setBotomSheetEmojiIndex = (index: number) => {
+export const setBottomSheetEmojiIndex = (index: number) => {
   defaultIndex = index;
   listenersIndex.forEach((listener) => listener(index));
 };

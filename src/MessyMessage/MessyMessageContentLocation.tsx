@@ -4,7 +4,7 @@ import { Linking, Pressable } from 'react-native';
 
 import type { TMessyMessageProps } from '../types';
 
-import { useColors, useSizes } from '../modules';
+import { useColors, useMessyPropsContext, useSizes } from '../modules';
 
 import { MImage } from '../elements/MImage/MImage';
 import { MText } from '../elements/MText/MText';
@@ -12,24 +12,24 @@ import { MText } from '../elements/MText/MText';
 export function MessyMessageContentLocation(props: TMessyMessageProps) {
   const Colors = useColors();
   const Sizes = useSizes();
+  const messyProps = useMessyPropsContext();
+  const { renderMessageLocation, user, messageProps } = messyProps;
+  const { value } = props;
 
-  const { renderMessageLocation, value, user, messageProps } = props;
   if (!value?.location) {
     return null;
   }
 
   if (typeof renderMessageLocation === 'function') {
-    return renderMessageLocation(props);
+    return renderMessageLocation({ ...props, ...messyProps });
   }
   const onPress = async () => {
     if (messageProps?.onPress) {
       return;
     }
-    try {
-      await Linking.openURL(
-        `https://maps.google.com/maps?q=${value.location?.latitude},${value.location?.longitude}+(${value.location?.name})&z=14&ll=${value.location?.latitude},${value.location?.longitude}`
-      );
-    } catch {}
+    Linking.openURL(
+      `https://maps.google.com/maps?q=${value.location?.latitude},${value.location?.longitude}+(${value.location?.name})&z=14&ll=${value.location?.latitude},${value.location?.longitude}`
+    ).catch();
   };
 
   const backgroundColor: string = {

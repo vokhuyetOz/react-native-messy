@@ -1,13 +1,13 @@
 import React from 'react';
 
-import { TMessyFooterProps } from './types';
-
 import { MessyFooterDefault } from './MessyFooter/MessyFooter.default';
+import { useMessyPropsContext } from './modules';
 
-export function MessyFooter({ renderFooter, ...rest }: TMessyFooterProps) {
-  if (typeof renderFooter === 'function') {
-    return renderFooter(rest);
+export function MessyFooter() {
+  const { footerProps } = useMessyPropsContext();
+  if (typeof footerProps?.renderFooter === 'function') {
+    return footerProps.renderFooter(footerProps);
   }
 
-  return <MessyFooterDefault {...rest} />;
+  return <MessyFooterDefault />;
 }

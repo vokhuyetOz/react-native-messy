@@ -16,7 +16,7 @@ import PagerView, {
 
 import type { TMessyMessageProps } from '../types';
 
-import { isImage, useSizes } from '../modules';
+import { isImage, useMessyPropsContext, useSizes } from '../modules';
 
 import { MImage } from '../elements/MImage/MImage';
 import { MLoading } from '../elements/Loading/Loading';
@@ -157,6 +157,7 @@ function MessyMessageContentImageList({
         backgroundStyle={{ backgroundColor: 'black' }}
         style={{ backgroundColor: 'black' }}
         handleComponent={null}
+        enableDynamicSizing={false}
       >
         <PagerView
           initialPage={page}
@@ -259,7 +260,8 @@ function MessyMessageContentImageDefault({ value }: TMessyMessageProps) {
   );
 }
 export function MessyMessageContentImage(props: TMessyMessageProps) {
-  const { renderMessageImage, value } = props;
+  const { value } = props;
+  const messyProps = useMessyPropsContext();
 
   if (!value?.image && !value.local) {
     return null;
@@ -267,8 +269,8 @@ export function MessyMessageContentImage(props: TMessyMessageProps) {
   if (value.local && !isImage(value.local?.uri)) {
     return null;
   }
-  if (typeof renderMessageImage === 'function') {
-    return renderMessageImage(props);
+  if (typeof messyProps.renderMessageImage === 'function') {
+    return messyProps.renderMessageImage({ ...props, ...messyProps });
   }
   return <MessyMessageContentImageDefault {...props} />;
 }
