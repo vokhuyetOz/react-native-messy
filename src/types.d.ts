@@ -161,6 +161,7 @@ export type TMessyMessage = {
   clientId?: string; // used for displaying message in List before receiving response from Server
   category?: string; // used for displaying multiple type of system message
   reactions?: Array<TMessyMessageContentReaction>;
+  replyTo?: TMessyMessage;
 };
 
 export type TMessyFooterProps = Readonly<{
