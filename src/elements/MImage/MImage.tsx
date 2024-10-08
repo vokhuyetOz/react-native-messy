@@ -18,7 +18,7 @@ function MImageAuto(props: TMImage) {
   let width = Sizes.image_max_width;
   let height = Sizes.image_max_height;
   if ((props?.source as ImageURISource)?.uri && BaseModule?.Cache) {
-    const size = BaseModule.Cache.get(
+    const size = BaseModule.Cache.get<{ width: number; height: number }>(
       (props?.source as ImageURISource)?.uri as string
     );
     if (size) {
@@ -63,7 +63,9 @@ function MImageAuto(props: TMImage) {
 }
 export function MImage(props: TMImage) {
   const { BaseModule } = useMessyPropsContext();
-  if (!props.source) return null;
+  if (!props.source) {
+    return null;
+  }
 
   if (props.autoSize) {
     return <MImageAuto {...props} />;

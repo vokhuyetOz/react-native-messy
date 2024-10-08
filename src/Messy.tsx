@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import { View } from 'react-native';
 import type { TMessyMessage, TMessyProps } from './types';
@@ -11,12 +10,12 @@ import { useInitColors, useMessyListRef } from './modules';
 import { MessyFooter } from './MessyFooter';
 import { MessyMessage } from './MessyMessage';
 import { MessyPropsContext } from './modules/useMessyPropsContext';
+import { MessyReactionPopupDefault } from './MessyReaction/MessyReactionPopup';
 
 type TListComponentItem = {
   item: TMessyMessage;
   index: number;
 };
-
 export function Messy(props: TMessyProps) {
   useInitColors(props.theme);
 
@@ -35,7 +34,6 @@ export function Messy(props: TMessyProps) {
   if (props.useInBottomSheet) {
     ListComponent = BottomSheetFlatList<TMessyMessage>;
   }
-
   return (
     <MessyPropsContext.Provider value={props}>
       <View style={{ flex: 1 }}>
@@ -63,6 +61,7 @@ export function Messy(props: TMessyProps) {
           inverted
         />
         <MessyFooter />
+        <MessyReactionPopupDefault />
       </View>
     </MessyPropsContext.Provider>
   );

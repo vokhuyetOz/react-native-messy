@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import React, { RefObject, useState } from 'react';
 import { View } from 'react-native';
 import Video, {
@@ -27,7 +26,9 @@ export function MVideo({ displayProgress, ...props }: TMVideo) {
   });
   const [videoSize, setVideoSize] = useState(() => {
     if (BaseModule?.Cache && typeof props.source?.uri === 'string') {
-      const size = BaseModule.Cache.get(props.source.uri);
+      const size = BaseModule.Cache.get<{ width: number; height: number }>(
+        props.source.uri
+      );
 
       if (size) {
         return {

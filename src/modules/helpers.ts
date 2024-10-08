@@ -10,6 +10,8 @@ export function insert({ str, index, value }: TInsertInput) {
 }
 
 export function isImage(filename?: string) {
-  if (!filename) return false;
+  if (!filename) {
+    return false;
+  }
   return /\.(gif|jpe?g|tiff?|png|webp|bmp)$/i.test(filename);
 }

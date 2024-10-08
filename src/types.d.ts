@@ -3,6 +3,8 @@ import type {
   FlatListProps,
   ImageProps,
   ImageSourcePropType,
+  LayoutRectangle,
+  NativeTouchEvent,
   TextProps,
 } from 'react-native';
 import type { ParseShape } from 'react-native-parsed-text';
@@ -10,6 +12,7 @@ import type { Asset } from 'react-native-image-picker';
 import type { FlashListProps } from '@shopify/flash-list';
 
 import type { TColor } from './modules';
+import React from 'react';
 
 type TListProps = Omit<
   FlatListProps<any> | FlashListProps<any>,
@@ -22,19 +25,23 @@ type TMessageProps = {
   hidePartnerAvatar: boolean;
   onPress?: (message: TMessyMessageProps) => Promise<void> | void;
   onLongPress?: (message: TMessyMessageProps) => Promise<void> | void;
+  renderMessyMessageContentReaction?: (
+    data: TMessyMessageProps
+  ) => React.JSX.Element;
 };
 type TBaseModule = {
   Image?: FC<ImageProps>;
   Text?: FC<TextProps>;
   Video?: FC;
   Cache: {
-    get: (key: string) => any;
-    set: (key: string, value: any) => void;
+    get: <T>(key: string) => T;
+    set: (key: string, value: unknown) => void;
   };
 };
 
 export type TColor = {
   background: string;
+  background_emoji_popup: string;
   primary: string;
   accent: string;
   placeholder: string;
@@ -61,6 +68,31 @@ export type TColor = {
   };
 };
 
+export type TReactionItem = {
+  key: string;
+  value: any;
+  [key: string]: unknown;
+};
+export type TReactionItemInfo = {
+  item: TReactionItem;
+  index: number;
+  direction: EMessyReactionPopupItemDirection;
+};
+export type TReactionItemPressInfo = {
+  message: TMessyMessage;
+  reaction: TReactionItem;
+};
+export type TReaction = {
+  data?: Array<TReactionItem>;
+  renderItems?: ({
+    item,
+    index,
+    direction,
+  }: TReactionItemInfo) => React.ReactElement;
+  renderReactionButton?: FC;
+  onPress?: ({ message, react }: TReactionItemPressInfo) => void;
+};
+
 export type TMessyProps = Readonly<{
   useInBottomSheet?: boolean;
   loading?: boolean;
@@ -70,29 +102,28 @@ export type TMessyProps = Readonly<{
   footerProps?: TMessyFooterProps;
   listProps?: TListProps;
   messageProps?: TMessageProps;
+  reaction?: TReaction;
   parsedShape?: ParseShape[];
   showDateTime?: boolean;
   renderLoading?: FC<{}>;
   renderMessageSystem?: FC<{ data?: TMessyMessage }>;
-  renderMessage?: (data: TMessyMessageProps) => JSX.Element;
+  renderMessage?: (data: TMessyMessageProps) => React.JSX.Element;
   renderAvatar?: FC<{ user?: TUser }>;
-  renderMessageText?: (data: TMessyMessageProps) => JSX.Element;
-  renderMessageAudio?: (data: TMessyMessageProps) => JSX.Element;
-  renderMessageImage?: (data: TMessyMessageProps) => JSX.Element;
-  renderMessageVideo?: (data: TMessyMessageProps) => JSX.Element;
-  renderMessageDateTime?: (data: TMessyMessage) => JSX.Element;
-  renderMessageLocation?: (data: TMessyMessageProps) => JSX.Element;
-  renderMessageOther?: (data: TMessyMessageProps) => JSX.Element;
+  renderMessageText?: (data: TMessyMessageProps) => React.JSX.Element;
+  renderMessageAudio?: (data: TMessyMessageProps) => React.JSX.Element;
+  renderMessageImage?: (data: TMessyMessageProps) => React.JSX.Element;
+  renderMessageVideo?: (data: TMessyMessageProps) => React.JSX.Element;
+  renderMessageDateTime?: (data: TMessyMessage) => React.JSX.Element;
+  renderMessageLocation?: (data: TMessyMessageProps) => React.JSX.Element;
+  renderMessageOther?: (data: TMessyMessageProps) => React.JSX.Element;
   BaseModule?: TBaseModule;
 }>;
 
-export type TMessyMessageProps = Readonly<
-  Omit<TMessyProps, 'data'> & {
-    value: TMessyMessage;
-    preMessage?: TMessyMessage;
-    index?: number;
-  }
->;
+export type TMessyMessageProps = Readonly<{
+  value: TMessyMessage;
+  preMessage?: TMessyMessage;
+  index: number;
+}>;
 
 export type TUser = {
   id: string | number | null | undefined;
@@ -109,6 +140,11 @@ export type TMessyMessageLocation = {
   latitude: string;
   longitude: string;
 };
+export type TMessyMessageContentReaction = {
+  id: string;
+  user: TUser;
+  reaction: TReactionItem;
+};
 export type TMessyMessage = {
   id?: string | number | null;
   text?: string;
@@ -122,8 +158,9 @@ export type TMessyMessage = {
   status?: 'sending' | 'sent' | 'seen';
   seenBy?: TUser[];
   local?: Asset;
-  clientId?: string; // used for display message in List before receiving response from Server
-  category?: string; // used for display multiple type of system message
+  clientId?: string; // used for displaying message in List before receiving response from Server
+  category?: string; // used for displaying multiple type of system message
+  reactions?: Array<TMessyMessageContentReaction>;
 };
 
 export type TMessyFooterProps = Readonly<{
@@ -149,3 +186,17 @@ export type TMessyFooterActionItemDefault = Readonly<{
   source?: ImageSourcePropType;
   onPress?: () => Promise<void> | void;
 }>;
+
+export type TUseReaction = {
+  layout: NativeTouchEvent & LayoutRectangle;
+  message: TMessyMessage;
+};
+export enum EMessyReactionPopupItemDirection {
+  UP = 'up',
+  DOWN = 'down',
+}
+export type TMessyReactionPopupItem = {
+  data: TReactionItem;
+  index: number;
+  direction: EMessyReactionPopupItemDirection;
+};

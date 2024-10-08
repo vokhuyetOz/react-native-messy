@@ -31,10 +31,10 @@ export function MessyMessageContentText(props: TMessyMessageProps) {
       onUrlPress(`https://${url}`);
       return;
     }
-    Linking.openURL(url).catch(() => {});
+    Linking.openURL(url).catch();
   };
   const onEmailPress = (email: string) => {
-    Linking.openURL(`mailto:${email}`).catch((_) => {});
+    Linking.openURL(`mailto:${email}`).catch();
   };
 
   const backgroundColor: string = {
@@ -84,7 +84,6 @@ export function MessyMessageContentText(props: TMessyMessageProps) {
         {
           type: 'phone',
           style: { color: phoneColor, textDecorationLine: 'underline' },
-          onPress: () => {},
         },
         {
           type: 'email',
