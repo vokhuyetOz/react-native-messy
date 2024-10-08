@@ -28,7 +28,7 @@ Chat ui for React Native
 - [x] customize default system UI ( Text, Image, List...)
 - [ ] audio message
 - [ ] swipe to reply
-- [ ] reaction
+- [x] reaction
 - [ ] and more
 
 ## Installation
