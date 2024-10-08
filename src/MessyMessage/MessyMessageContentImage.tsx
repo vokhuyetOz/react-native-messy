@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import React, { useRef, useState } from 'react';
 import {
   type ImageSourcePropType,

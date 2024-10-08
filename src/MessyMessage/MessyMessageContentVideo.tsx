@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import React, { useRef } from 'react';
 import { View, Pressable } from 'react-native';
 

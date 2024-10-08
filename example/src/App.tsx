@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import React, { useEffect, useRef, useState } from 'react';
 import { View, Pressable, Text, Keyboard } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -125,6 +124,30 @@ const mockMessage = [
         userName: 'Demo',
       },
     ],
+    reactions: [
+      {
+        id: '1',
+        user: { id: '1', name: 'Demo' },
+        reaction: {
+          key: '2',
+          value: '🥰',
+        },
+      },
+      {
+        id: '2',
+        reaction: { key: '1', value: '😀' },
+        user: { id: '1', name: 'Demo' },
+      },
+      {
+        id: '3',
+        data: {},
+        user: { id: '1', name: 'Demo' },
+        reaction: {
+          key: '3',
+          value: '🤩',
+        },
+      },
+    ],
   },
   {
     id: '4',
@@ -200,6 +223,32 @@ const mockMessage = [
     video: {
       uri: 'https://storage-hrs001.rabiloo.net/videos/a7a0ee7d34422c5c1374e58259d619b089b1a26978958d530eb3307ad1e5dd7e.mov',
     },
+    reactions: [
+      {
+        id: '1',
+        user: { id: '1', name: 'Demo' },
+        reaction: {
+          key: '2',
+          value: '🥰',
+        },
+      },
+      {
+        id: '2',
+        user: { id: '1', name: 'Demo' },
+        reaction: {
+          key: '1',
+          value: '😀',
+        },
+      },
+      {
+        user: { id: '1', name: 'Demo' },
+        reaction: {
+          key: '3',
+          value: '🤩',
+        },
+        data: {},
+      },
+    ],
   },
 ];
 function ExtraLeft({ animatedPosition }) {
@@ -270,6 +319,7 @@ function BasicExample() {
   const [mess, setMess] = useState([...mockMessage.reverse()]);
 
   const { dismissAll } = useBottomSheetModal();
+  const user = { id: 2 };
   return (
     <Messy
       BaseModule={{
@@ -303,8 +353,29 @@ function BasicExample() {
           Keyboard.dismiss();
         },
       }}
+      reaction={{
+        onPress: ({ message, reaction }) => {
+          const messageIndex = mess.findIndex((item) => item.id === message.id);
+          if (!message.reactions) {
+            message.reactions = [];
+          }
+          const reactedIndex = message.reactions.findIndex(
+            (item) =>
+              item?.user?.id === user.id && item.reaction.key === reaction.key
+          );
+          if (reactedIndex !== -1) {
+            //remove
+            message.reactions.splice(reactedIndex, 1);
+          } else {
+            //add more
+            message.reactions.push({ id: `${Date.now()}`, user, reaction });
+          }
+          mess[messageIndex] = message;
+          setMess([...mess]);
+        },
+      }}
       messages={mess}
-      user={{ id: 2 }}
+      user={user}
       footerProps={{
         onSend: async (message: TMessyMessage) => {
           mess.unshift(message);

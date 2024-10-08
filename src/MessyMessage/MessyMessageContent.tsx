@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import { Pressable, View } from 'react-native';
 
@@ -9,11 +8,13 @@ import { MessyMessageAvatar } from './MessyMessageAvatar';
 import { MessyMessageContentImage } from './MessyMessageContentImage';
 import { MessyMessageContentText } from './MessyMessageContentText';
 
-import { MessyMessageContentStatus } from './MessyMessageContentStatus';
 import { MessyMessageContentLocation } from './MessyMessageContentLocation';
 import { MessyMessageContentVideo } from './MessyMessageContentVideo';
 import { MText } from '../elements/MText/MText';
 import { MessyMessageContentOther } from './MessyMessageContentOther';
+import { MessyMessageContentReactionButton } from './MessyMessageContentReactionButton';
+import { MessyMessageContentReaction } from './MessyMessageContentReaction';
+import { MessyMessageContentStatus } from './MessyMessageContentStatus';
 
 export function MessyMessageContent(props: TMessyMessageProps) {
   const Sizes = useSizes();
@@ -77,9 +78,8 @@ export function MessyMessageContent(props: TMessyMessageProps) {
     <View
       style={{
         alignItems: 'flex-start',
-        marginBottom: Sizes.padding / 2,
-        paddingHorizontal: Sizes.padding,
         flexDirection: 'row',
+        paddingHorizontal: Sizes.padding,
         justifyContent,
       }}
     >
@@ -99,14 +99,10 @@ export function MessyMessageContent(props: TMessyMessageProps) {
           <MessyMessageContentVideo {...props} />
           <MessyMessageContentOther {...props} />
         </View>
-        <View
-          style={{
-            alignItems: justifyContent,
-          }}
-        >
-          <MessyMessageContentStatus last={index === 0} value={value} />
-        </View>
+        <MessyMessageContentReaction {...props} />
+        <MessyMessageContentStatus {...props} last={index === 0} />
       </Pressable>
+      <MessyMessageContentReactionButton {...props} />
       {renderAvatarRight()}
     </View>
   );

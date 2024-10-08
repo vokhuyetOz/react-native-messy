@@ -3,6 +3,7 @@ import type { TColor } from '../types';
 
 const DefaultColors = {
   background: 'white',
+  background_emoji_popup: 'black',
   primary: '#F9A825',
   accent: '#D32F2F',
   shadow: '#000000',

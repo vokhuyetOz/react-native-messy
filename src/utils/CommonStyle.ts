@@ -1,3 +1,5 @@
+import type { ViewStyle } from 'react-native';
+
 export const CommonStyle = {
   shadow: {
     shadowColor: '#000',
@@ -10,4 +12,8 @@ export const CommonStyle = {
     elevation: 4,
     backgroundColor: 'white',
   },
+  center: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  } as ViewStyle,
 };

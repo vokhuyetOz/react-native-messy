@@ -1,17 +1,18 @@
-/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import { Image, Text, View } from 'react-native';
+import { Image, View } from 'react-native';
 import dayjs from 'dayjs';
 
-import { useColors, useSizes } from '../modules';
+import { useColors, useMessyPropsContext, useSizes } from '../modules';
 
 import type { TMessyMessageProps } from '../types';
+import { MText } from '../elements/MText/MText';
 
 export function MessyMessageAvatar(props: TMessyMessageProps) {
   const Sizes = useSizes();
   const Colors = useColors();
+  const { renderAvatar } = useMessyPropsContext();
 
-  const { renderAvatar, value, preMessage } = props;
+  const { value, preMessage } = props;
 
   const currentDate = dayjs(value.createdTime).format('YYYY MMMM DD');
   const preDate = dayjs(preMessage?.createdTime).format('YYYY MMMM DD');
@@ -44,7 +45,7 @@ export function MessyMessageAvatar(props: TMessyMessageProps) {
           backgroundColor: Colors.message_left.background,
         }}
       >
-        <Text
+        <MText
           style={{
             fontWeight: 'bold',
             fontSize: Sizes.avatar / 2,
@@ -52,7 +53,7 @@ export function MessyMessageAvatar(props: TMessyMessageProps) {
           }}
         >
           {value?.user?.userName?.[0]}
-        </Text>
+        </MText>
       </View>
     );
   }

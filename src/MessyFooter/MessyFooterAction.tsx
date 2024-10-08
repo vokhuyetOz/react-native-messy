@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {
   View,
@@ -114,7 +113,9 @@ export function MessyFooterActionCameraDefault({
     if (typeof handlePermission === 'function') {
       validate = await handlePermission();
     }
-    if (!validate) return;
+    if (!validate) {
+      return;
+    }
     return handleCamera();
   };
 
@@ -145,7 +146,9 @@ export function MessyFooterActionLibraryDefault({
     if (typeof handlePermission === 'function') {
       validate = await handlePermission();
     }
-    if (!validate) return;
+    if (!validate) {
+      return;
+    }
     return handleLibrary();
   };
 

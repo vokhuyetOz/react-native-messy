@@ -1,5 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable react-native/no-inline-styles */
 import React, {
   useEffect,
   useRef,
@@ -73,7 +71,9 @@ function MessyFooterTextInput({
   }, []);
 
   useEffect(() => {
-    if (!newEmoji) return;
+    if (!newEmoji) {
+      return;
+    }
     const newText = insert({
       str: text,
       index: componentRef.current.cursorStart,
@@ -158,7 +158,7 @@ export function MessyFooterDefault() {
   const componentRef = useRef({
     text: '',
   });
-  const [inputKey, setInputKey] = useState(Date.now());
+  // const [inputKey, setInputKey] = useState(Date.now());
   const emojiShared = useSharedValue(Sizes.device_height);
   const leftExtraShared = useSharedValue(Sizes.device_height);
   const { height } = useReanimatedKeyboardAnimation();
@@ -199,7 +199,7 @@ export function MessyFooterDefault() {
     textInputRef.current?.clear();
     componentRef.current.text = '';
     const createdTime = Date.now();
-    setInputKey(createdTime);
+    // setInputKey(createdTime);
     props?.onSend?.({
       id: `${Date.now()}`,
       text,
@@ -246,7 +246,7 @@ export function MessyFooterDefault() {
             onLayout={onLayout}
           >
             <MessyFooterTextInput
-              key={inputKey}
+              // key={inputKey}
               textInputRef={textInputRef}
               onChangeText={onChangeText}
             />

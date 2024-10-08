@@ -1,11 +1,10 @@
-/* eslint-disable react-native/no-inline-styles */
 import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import Animated, { ZoomIn, ZoomOut } from 'react-native-reanimated';
 
 import type { TMessyMessage } from '../types';
 
-import { useColors, useSizes } from '../modules';
+import { useColors, useMessyPropsContext, useSizes } from '../modules';
 
 import { MImage } from '../elements/MImage/MImage';
 import { MText } from '../elements/MText/MText';
@@ -21,6 +20,7 @@ export function MessyMessageContentStatus({
 }: MessyMessageContentStatusProps) {
   const Colors = useColors();
   const Sizes = useSizes();
+  const { user } = useMessyPropsContext();
 
   const [display, setDisplay] = useState(last);
 
@@ -28,7 +28,14 @@ export function MessyMessageContentStatus({
     setDisplay(last);
   }, [last]);
 
-  if (!display) return null;
+  if (!display) {
+    return null;
+  }
+
+  const alignItems: any = {
+    true: 'flex-end',
+    false: 'flex-start',
+  }[`${user?.id === value?.user?.id}`];
 
   const renderContent = () => {
     if (value.seenBy && Array.isArray(value.seenBy) && value.seenBy.length) {
@@ -111,8 +118,14 @@ export function MessyMessageContentStatus({
   };
 
   return (
-    <Animated.View entering={ZoomIn} exiting={ZoomOut}>
-      {renderContent()}
-    </Animated.View>
+    <View
+      style={{
+        alignItems,
+      }}
+    >
+      <Animated.View entering={ZoomIn} exiting={ZoomOut}>
+        {renderContent()}
+      </Animated.View>
+    </View>
   );
 }

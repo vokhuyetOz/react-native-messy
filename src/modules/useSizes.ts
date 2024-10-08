@@ -20,6 +20,8 @@ type Size = {
   input_message: number;
   input_message_line_heigh: number;
   emoji: number;
+  emoji_button: number;
+  emoji_react: number;
   action_width: number;
   wpx: (px: number) => number;
 };
@@ -51,5 +53,7 @@ export function useSizes(): Size {
     input_message: wpx(16),
     input_message_line_heigh: wpx(16),
     action_width: wpx(20),
+    emoji_react: wpx(32),
+    emoji_button: wpx(14),
   };
 }
