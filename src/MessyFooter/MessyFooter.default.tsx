@@ -33,10 +33,13 @@ import {
   useSelectEmoji,
   insert,
   useMessyPropsContext,
+  setMessageReplying,
+  getMessageReplying,
 } from '../modules';
 
 import { MessyFooterAction } from './MessyFooterAction';
 import { MessyFooterEmoji } from './MessyFooterEmoji.default';
+import { MessyFooterReplying } from './MessyFooterReplying';
 
 type TMessyFooterTextInput = Readonly<{
   textInputRef: RefObject<TextInput>;
@@ -200,6 +203,8 @@ export function MessyFooterDefault() {
     componentRef.current.text = '';
     const createdTime = Date.now();
     // setInputKey(createdTime);
+    const replyMessage = getMessageReplying();
+
     props?.onSend?.({
       id: `${Date.now()}`,
       text,
@@ -207,7 +212,9 @@ export function MessyFooterDefault() {
       status: 'sending',
       user,
       clientId: `${createdTime}`,
+      replyTo: { ...replyMessage },
     });
+    setMessageReplying();
     scrollToLast();
   };
 
@@ -219,10 +226,9 @@ export function MessyFooterDefault() {
   }
 
   return (
-    <View
-      style={{ marginTop: Sizes.padding, backgroundColor: Colors.background }}
-    >
+    <View style={{ backgroundColor: Colors.background }}>
       <View>
+        <MessyFooterReplying />
         <View
           style={{
             flexDirection: 'row',
@@ -246,7 +252,6 @@ export function MessyFooterDefault() {
             onLayout={onLayout}
           >
             <MessyFooterTextInput
-              // key={inputKey}
               textInputRef={textInputRef}
               onChangeText={onChangeText}
             />

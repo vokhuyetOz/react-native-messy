@@ -16,6 +16,8 @@ const DefaultColors = {
     email: '#2962FF',
     phone: '#43A047',
     audio: 'rgba(0,0,0,0.2)',
+    reply_text: 'rgba(0,0,0,0.8)',
+    reply_background: 'rgba(0,0,0,0.1)',
   },
   message_right: {
     background: '#F85767',
@@ -24,6 +26,8 @@ const DefaultColors = {
     email: '#2962FF',
     phone: '#D32F2F',
     audio: 'rgba(255,255,255,0.5)',
+    reply_text: 'rgba(0,0,0,0.8)',
+    reply_background: 'rgba(0,0,0,0.1)',
   },
   input: {
     text: '#000000',

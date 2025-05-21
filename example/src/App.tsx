@@ -36,6 +36,15 @@ const mockMessage = [
       latitude: '20.9859402',
       longitude: '105.7750793',
     },
+    replyTo: {
+      id: 'asdsadwww',
+      text: '好きな花は何ですか https://google.com',
+      user: {
+        id: 2,
+        userName: 'Demo',
+        avatar: image1,
+      },
+    },
   },
   {
     id: '1asdasd',
@@ -102,7 +111,7 @@ const mockMessage = [
     user: {
       id: 2,
       userName: 'Demo',
-      avatar: image2,
+      avatar: image1,
     },
     seenBy: [
       {
@@ -156,6 +165,7 @@ const mockMessage = [
     user: {
       id: 1,
       userName: 'Demo',
+      avatar: image1,
     },
     seenBy: [
       {
@@ -177,6 +187,15 @@ const mockMessage = [
   {
     id: '5',
     text: '好きな花は何ですか',
+    replyTo: {
+      id: 'asdsadwww',
+      text: '好きな花は何ですか https://google.com',
+      user: {
+        id: 2,
+        userName: 'Demo',
+        avatar: image1,
+      },
+    },
     user: {
       id: 1,
       userName: 'Demo',

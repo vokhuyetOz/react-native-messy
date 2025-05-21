@@ -13,6 +13,7 @@ import type { FlashListProps } from '@shopify/flash-list';
 
 import type { TColor } from './modules';
 import React from 'react';
+import { SwipeableProps } from 'react-native-gesture-handler/ReanimatedSwipeable';
 
 type TListProps = Omit<
   FlatListProps<any> | FlashListProps<any>,
@@ -28,6 +29,7 @@ type TMessageProps = {
   renderMessyMessageContentReaction?: (
     data: TMessyMessageProps
   ) => React.JSX.Element;
+  renderMessyMessageContentReplyTo: FC<TMessyMessageProps>;
 };
 type TBaseModule = {
   Image?: FC<ImageProps>;
@@ -54,6 +56,8 @@ export type TColor = {
     email: string;
     phone: string;
     audio: string;
+    reply_background: string;
+    reply_text: string;
   };
   message_right: {
     background: string;
@@ -62,6 +66,8 @@ export type TColor = {
     email: string;
     phone: string;
     audio: string;
+    reply_background: string;
+    reply_text: string;
   };
   input: {
     text: string;
@@ -103,6 +109,7 @@ export type TMessyProps = Readonly<{
   listProps?: TListProps;
   messageProps?: TMessageProps;
   reaction?: TReaction;
+  replySwipable: SwipeableProps;
   parsedShape?: ParseShape[];
   showDateTime?: boolean;
   renderLoading?: FC<{}>;
@@ -122,7 +129,7 @@ export type TMessyProps = Readonly<{
 export type TMessyMessageProps = Readonly<{
   value: TMessyMessage;
   preMessage?: TMessyMessage;
-  index: number;
+  index?: number;
 }>;
 
 export type TUser = {
@@ -175,6 +182,7 @@ export type TMessyFooterProps = Readonly<{
   ExtraLeft?: React.ReactNode;
   ExtraActionLeft?: React.ReactNode;
   renderFooter?: FC<TMessyFooterProps>;
+  renderFooterReplying?: FC<TMessyMessage>;
   renderFooterAction?: FC<TMessyFooterProps>;
 }>;
 export type TMessyFooterSend = Readonly<{

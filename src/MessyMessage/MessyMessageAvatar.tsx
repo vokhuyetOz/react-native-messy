@@ -1,11 +1,12 @@
 import React from 'react';
-import { Image, View } from 'react-native';
+import { View } from 'react-native';
 import dayjs from 'dayjs';
 
 import { useColors, useMessyPropsContext, useSizes } from '../modules';
 
 import type { TMessyMessageProps } from '../types';
 import { MText } from '../elements/MText/MText';
+import { MImage } from '../elements/MImage/MImage';
 
 export function MessyMessageAvatar(props: TMessyMessageProps) {
   const Sizes = useSizes();
@@ -58,7 +59,8 @@ export function MessyMessageAvatar(props: TMessyMessageProps) {
     );
   }
   return (
-    <Image
+    <MImage
+      autoSize={false}
       source={value.user.avatar}
       style={{
         width: Sizes.avatar,
