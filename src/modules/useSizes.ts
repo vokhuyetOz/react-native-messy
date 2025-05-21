@@ -6,6 +6,7 @@ type Size = {
   text_max_width: number;
   padding: number;
   border_radius: number;
+  oval_radius: number;
   avatar: number;
   input_height: number;
   border: number;
@@ -23,6 +24,15 @@ type Size = {
   emoji_button: number;
   emoji_react: number;
   action_width: number;
+  swipe_threshold: number;
+  swipe_reply_text: number;
+  swipe_reply_icon: number;
+  reply: {
+    name: number;
+    avatar: number;
+    message: number;
+    close: number;
+  };
   wpx: (px: number) => number;
 };
 
@@ -41,7 +51,8 @@ export function useSizes(): Size {
     image_max_height: height * 0.4,
     text_max_width: wpx(260),
     padding: wpx(12),
-    border_radius: wpx(18),
+    border_radius: wpx(4),
+    oval_radius: wpx(16),
     avatar: width * 0.1,
     input_height: wpx(48),
     border: StyleSheet.hairlineWidth,
@@ -55,5 +66,14 @@ export function useSizes(): Size {
     action_width: wpx(20),
     emoji_react: wpx(32),
     emoji_button: wpx(14),
+    swipe_threshold: wpx(50),
+    swipe_reply_text: wpx(10),
+    swipe_reply_icon: wpx(10),
+    reply: {
+      avatar: wpx(24),
+      name: wpx(12),
+      message: wpx(10),
+      close: wpx(10),
+    },
   };
 }

@@ -4,3 +4,4 @@ export * from './useMessyPropsContext';
 export * from './useMessyListRef';
 export * from './useMessyEmoji';
 export * from './helpers';
+export * from './useMessageReplying';
