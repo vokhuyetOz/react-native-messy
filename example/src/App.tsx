@@ -158,8 +158,10 @@ function ComposerActions() {
   );
 }
 
-// one-sided demo mirrors the Mobbin reference (Cal AI): near-black accent
-const calAiLike = { colors: { primary: '#111111', surface: '#FFFFFF' } };
+// demo theme mirrors the Mobbin reference (Cal AI): near-black accent, white input
+const calAiLike = {
+  colors: { primary: '#111111', ownBubble: '#111111', surface: '#FFFFFF' },
+};
 
 // slots are defined once, outside render
 const components = { ComposerActions };
@@ -223,7 +225,7 @@ function ChatExample() {
         messages={messages}
         user={me}
         layout={layout}
-        theme={dark ? darkTheme : layout === 'list' ? calAiLike : undefined}
+        theme={dark ? darkTheme : calAiLike}
         components={components}
         showSenderName
         composerProps={{ bottomInset: BOTTOM_INSET }}

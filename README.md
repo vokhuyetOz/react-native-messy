@@ -18,7 +18,7 @@ Chat UI for React Native that you can restyle and take apart piece by piece.
   <img src="preview/reactions.jpg" width="180" alt="Reaction picker">
 </p>
 
-Design reference: [Cal AI – Sending a message in a group](https://mobbin.com/flows/aa385ee8-cc31-4230-95fd-82fd8fde4e12) (one-sided layout, in-pill send button, reply threads), plus the two-sided pattern shared by the "Chatting & Sending Messages" flows on Mobbin. The example's one-sided mode uses `theme={{ colors: { primary: '#111111', surface: '#FFFFFF' } }}` to mirror it.
+Design reference: [Cal AI – Sending a message in a group](https://mobbin.com/flows/aa385ee8-cc31-4230-95fd-82fd8fde4e12) (one-sided layout, in-pill send button, reply threads), plus the two-sided pattern shared by the "Chatting & Sending Messages" flows on Mobbin. The example applies it to both layouts with `theme={{ colors: { primary: '#111111', ownBubble: '#111111', surface: '#FFFFFF' } }}`.
 
 ## Installation
 
