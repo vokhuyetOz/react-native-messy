@@ -1,478 +1,267 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { View, Pressable, Text, Keyboard } from 'react-native';
+import React, { useRef, useState } from 'react';
+import { Platform, Pressable, Text, View, SafeAreaView } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { KeyboardProvider } from 'react-native-keyboard-controller';
 import {
-  BottomSheetModal,
-  BottomSheetModalProvider,
-  useBottomSheetModal,
-} from '@gorhom/bottom-sheet';
-//@ts-ignore
-import { Messy, TMessyMessage } from '@vokhuyet/react-native-messy';
+  Messy,
+  darkTheme,
+  DefaultComposerActions,
+  useMessyComposerActions,
+  useMessyTheme,
+  type TMessyMessage,
+  type TMessyLayout,
+  type TMessyRef,
+  type TMessyMediaSize,
+} from '@vokhuyet/react-native-messy';
 
-import { MMKVLoader, MMKVInstance } from 'react-native-mmkv-storage';
+// any key-value store works (MMKV getMap/setMap, AsyncStorage wrapper...)
+const sizes = new Map<string, TMessyMediaSize>();
+const cache = {
+  get: (key: string) => sizes.get(key),
+  set: (key: string, value: TMessyMediaSize) => sizes.set(key, value),
+};
 
-export const MMKVwithID: MMKVInstance = new MMKVLoader()
-  .withInstanceID('default-mmkv-id')
-  .withEncryption()
-  .initialize();
-
+const me = { id: 2, userName: 'Alex' };
+const sam = {
+  id: 1,
+  userName: 'Sam',
+  avatar: {
+    uri: 'https://picsum.photos/id/64/200/200',
+  },
+};
+const kim = { id: 3, userName: 'Kim' };
 const image1 = {
-  uri: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg',
+  uri: 'https://picsum.photos/id/1015/1200/800',
 };
 const image2 = {
-  uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRN410QNjLLnkMSrQNyi0Z3v8v9Irp6bYtHsAdjGYks-0RtmPVtTPCRXCxRYIG4CGUKo1A&usqp=CAU',
+  uri: 'https://picsum.photos/id/1002/1200/800',
 };
-const mockMessage = [
+const ago = (min: number) => Date.now() - min * 60 * 1000;
+
+// newest first
+const initialMessages: TMessyMessage[] = [
   {
-    createdTime: 165400565790,
-    id: 'aasdasdasdasd',
-    type: 'message',
-    location: {
-      name: 'Roman Plaza',
-      image: {
-        uri: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg',
-      },
-      latitude: '20.9859402',
-      longitude: '105.7750793',
-    },
+    id: '12',
+    text: 'Oh you better be 😄',
+    user: me,
+    createdTime: ago(1),
+    status: 'seen',
+    seenBy: [sam, kim],
   },
   {
-    id: '1asdasd',
-    image: image1,
-    user: {
-      id: 2,
-      userName: 'Demo',
-      avatar: image1,
-    },
+    id: '11',
+    text: "i'm gonna sing my heart out fr",
+    user: sam,
+    replies: { count: 2, users: [kim, me] },
+    createdTime: ago(2),
   },
   {
-    id: '1asd',
-    image: image2,
-    user: {
-      id: 1,
-      userName: 'Demo',
-      avatar: image1,
-    },
+    id: '10',
+    text: 'of course! see u there, bud.',
+    user: sam,
+    createdTime: ago(3),
+    reactions: [{ id: 'r1', user: me, reaction: { key: 'love', value: '❤️' } }],
   },
+  { id: '9', type: 'system', text: 'Kim joined the chat', createdTime: ago(4) },
   {
-    id: '2',
-    createdTime: 165400565790,
-    text: '好きな花は何ですか https://google.com',
-    user: {
-      id: 2,
-      userName: 'Demo',
-      avatar: image1,
-    },
+    id: '8',
+    text: 'This event is gonna be sooo much fun! 🔥 https://example.com',
+    user: me,
+    createdTime: ago(5),
   },
+  { id: '7', image: image1, user: me, createdTime: ago(6) },
   {
-    id: '2aasdsd',
-    createdTime: 165400565790,
-    image: [image1, image2],
-    user: {
-      id: 2,
-      userName: 'Demo',
-      avatar: image1,
-    },
-  },
-  {
-    id: '2aSDASD',
-    createdTime: 165400565790,
-    image: [image1, image2, image1],
-    user: {
-      id: 2,
-      userName: 'Demo',
-      avatar: image1,
-    },
-  },
-  {
-    id: 'asdasdasdasd',
-    createdTime: 165400565790,
-    image: [image1, image2, image1, image2, image1, image2, image1],
-    user: {
-      id: 2,
-      userName: 'Demo',
-      avatar: image2,
-    },
-  },
-  {
-    id: '3',
-    createdTime: 1654002565790,
-    text: '#asdaksdkans @knaskndkasndkasndas vanhung13495@gmail.com 0348641146 https://google.com',
-    user: {
-      id: 2,
-      userName: 'Demo',
-      avatar: image2,
-    },
-    seenBy: [
-      {
-        id: 1,
-        userName: 'Demo',
-        avatar: {
-          uri: 'https://static.remove.bg/remove-bg-web/588fbfdd2324490a4329d4ad22d1bd436e1d384a/assets/start-1abfb4fe2980eabfbbaaa4365a0692539f7cd2725f324f904565a9a744f8e214.jpg',
-        },
-      },
-      {
-        id: 2,
-        userName: 'Demo',
-        avatar: {
-          uri: 'https://static.remove.bg/remove-bg-web/588fbfdd2324490a4329d4ad22d1bd436e1d384a/assets/start-1abfb4fe2980eabfbbaaa4365a0692539f7cd2725f324f904565a9a744f8e214.jpg',
-        },
-      },
-      {
-        id: 3,
-        userName: 'Demo',
-      },
-    ],
-    reactions: [
-      {
-        id: '1',
-        user: { id: '1', name: 'Demo' },
-        reaction: {
-          key: '2',
-          value: '🥰',
-        },
-      },
-      {
-        id: '2',
-        reaction: { key: '1', value: '😀' },
-        user: { id: '1', name: 'Demo' },
-      },
-      {
-        id: '3',
-        data: {},
-        user: { id: '1', name: 'Demo' },
-        reaction: {
-          key: '3',
-          value: '🤩',
-        },
-      },
-    ],
-  },
-  {
-    id: '4',
-    text: '#asdaksdkans @knaskndkasndkasndas vanhung13495@gmail.com 0348641146 https://google.com',
-    status: 'sent',
-    user: {
-      id: 1,
-      userName: 'Demo',
-    },
-    seenBy: [
-      {
-        id: 1,
-        userName: 'Demo',
-        avatar: image1,
-      },
-      {
-        id: 2,
-        userName: 'Demo',
-        avatar: image1,
-      },
-      {
-        id: 3,
-        userName: 'Demo',
-      },
-    ],
+    id: '6',
+    text: 'Hey, u coming this friday?',
+    user: me,
+    createdTime: ago(7),
   },
   {
     id: '5',
-    text: '好きな花は何ですか',
-    user: {
-      id: 1,
-      userName: 'Demo',
-    },
-    status: 'seen',
-
-    seenBy: [
-      {
-        id: 1,
-        userName: 'Demo',
-        avatar: image1,
-      },
-      {
-        id: 2,
-        userName: 'Demo',
-        avatar: image1,
-      },
-      {
-        id: 3,
-        userName: 'Demo',
-      },
-    ],
+    image: [image1, image2, image1, image2, image1],
+    user: kim,
+    createdTime: ago(60 * 24),
   },
   {
-    createdTime: 165400565790,
-    id: 'ssss',
-    type: 'message',
+    id: '4',
     video: {
-      uri: 'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
+      uri: 'https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/360/Big_Buck_Bunny_360_10s_1MB.mp4',
     },
+    user: sam,
+    createdTime: ago(60 * 24 + 1),
   },
   {
-    createdTime: 165400565790,
-    id: 'ssss111',
-    type: 'message',
-    video: {
-      uri: 'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
+    id: '3',
+    location: {
+      name: 'Roman Plaza',
+      image: image2,
+      latitude: '20.9859402',
+      longitude: '105.7750793',
     },
+    user: sam,
+    createdTime: ago(60 * 24 + 2),
   },
   {
-    createdTime: 165400565790,
-    id: 'asdasdasdasdasdasdasda',
-    type: 'message',
-    video: {
-      uri: 'https://storage-hrs001.rabiloo.net/videos/a7a0ee7d34422c5c1374e58259d619b089b1a26978958d530eb3307ad1e5dd7e.mov',
-    },
+    id: '2',
+    text: 'call me 0348641146 or mail demo@example.com',
+    user: kim,
+    createdTime: ago(60 * 48),
     reactions: [
-      {
-        id: '1',
-        user: { id: '1', name: 'Demo' },
-        reaction: {
-          key: '2',
-          value: '🥰',
-        },
-      },
-      {
-        id: '2',
-        user: { id: '1', name: 'Demo' },
-        reaction: {
-          key: '1',
-          value: '😀',
-        },
-      },
-      {
-        user: { id: '1', name: 'Demo' },
-        reaction: {
-          key: '3',
-          value: '🤩',
-        },
-        data: {},
-      },
+      { id: 'r2', user: sam, reaction: { key: 'haha', value: '😂' } },
+      { id: 'r3', user: me, reaction: { key: 'haha', value: '😂' } },
     ],
   },
+  { id: '1', text: 'Welcome 👋', user: kim, createdTime: ago(60 * 48 + 1) },
 ];
-function ExtraLeft({ animatedPosition }) {
-  const ref = useRef<BottomSheetModal>(null);
-  const componentRef = useRef<{ timeout?: NodeJS.Timeout }>({
-    timeout: undefined,
-  });
-  const { dismissAll } = useBottomSheetModal();
 
-  const clear = () => {
-    if (componentRef.current.timeout) {
-      clearTimeout(componentRef.current.timeout);
-    }
-  };
-  useEffect(() => {
-    return clear;
-  }, []);
+/** A custom panel opened from the composer, replacing the old ExtraLeft sheet. */
+function StickerPanel() {
+  const theme = useMessyTheme();
+  const { send, closePanel } = useMessyComposerActions();
   return (
-    <View>
-      <Pressable
-        onPress={() => {
-          console.log('ExtraLeft');
-          dismissAll();
-          Keyboard.dismiss();
-          clear();
-          componentRef.current.timeout = setTimeout(() => {
-            ref.current?.present();
-          }, 200);
-        }}
-      >
-        <View
-          style={{
-            width: 40,
-            height: 40,
-            backgroundColor: 'black',
-            marginRight: 4,
+    <View
+      style={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap', padding: 16 }}
+    >
+      {['🐶', '🐱', '🦊', '🐼', '🐸', '🐵'].map((s) => (
+        <Pressable
+          key={s}
+          onPress={() => {
+            send({ text: s });
+            closePanel();
           }}
+          style={{ padding: 12 }}
         >
-          <Text style={{ alignSelf: 'center', color: 'white' }}>ExtraLeft</Text>
-        </View>
-      </Pressable>
-      <BottomSheetModal
-        handleComponent={null}
-        ref={ref}
-        index={0}
-        animateOnMount
-        style={{
-          shadowColor: '#000',
-          shadowOffset: {
-            width: 0,
-            height: 3,
-          },
-          shadowOpacity: 0.27,
-          shadowRadius: 4.65,
-          elevation: 6,
-        }}
-        animationConfigs={{ duration: 300 }}
-        snapPoints={[100, '90%']}
-        enableDynamicSizing={false}
-        animatedPosition={animatedPosition}
-      >
-        <Text style={{ alignSelf: 'center' }}>Demo</Text>
-      </BottomSheetModal>
+          <Text style={{ fontSize: 48, color: theme.colors.text }}>{s}</Text>
+        </Pressable>
+      ))}
     </View>
   );
 }
-function BasicExample() {
-  const [mess, setMess] = useState([...mockMessage.reverse()]);
 
-  const { dismissAll } = useBottomSheetModal();
-  const user = { id: 2 };
+function ComposerActions() {
+  const theme = useMessyTheme();
+  const { togglePanel } = useMessyComposerActions();
   return (
-    <Messy
-      BaseModule={{
-        // Image: TurboImage,
-        Cache: {
-          get: MMKVwithID.getMap,
-          set: MMKVwithID.setMap,
-        },
-      }}
-      messageProps={{
-        hideOwnerAvatar: true,
-        hidePartnerAvatar: false,
-        onPress: () => {
-          console.log('press item');
-        },
-        onLongPress: () => {
-          console.log('long press item');
-        },
-      }}
-      listProps={{
-        onStartReached: () => {
-          console.log('onStartReached');
-        },
-        onEndReached: () => {
-          console.log('onEndReached');
-        },
-        onPress: () => {
-          //hide all bottom sheet modal
-          dismissAll();
-          //hide keyboard
-          Keyboard.dismiss();
-        },
-      }}
-      reaction={{
-        onPress: ({ message, reaction }) => {
-          const messageIndex = mess.findIndex((item) => item.id === message.id);
-          if (!message.reactions) {
-            message.reactions = [];
-          }
-          const reactedIndex = message.reactions.findIndex(
-            (item) =>
-              item?.user?.id === user.id && item.reaction.key === reaction.key
-          );
-          if (reactedIndex !== -1) {
-            //remove
-            message.reactions.splice(reactedIndex, 1);
-          } else {
-            //add more
-            message.reactions.push({ id: `${Date.now()}`, user, reaction });
-          }
-          mess[messageIndex] = message;
-          setMess([...mess]);
-        },
-      }}
-      messages={mess}
-      user={user}
-      footerProps={{
-        onSend: async (message: TMessyMessage) => {
-          mess.unshift(message);
-          setMess([...mess]);
-          // upload image
-          setTimeout(() => {
-            //@ts-ignore
-            mess[0].status = 'sent';
-            setMess([...mess]);
-          }, 2000);
-
-          //send to server by socket
-        },
-        ExtraLeft: <ExtraLeft />,
-      }}
-    />
+    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+      <Pressable
+        accessibilityLabel="Stickers"
+        hitSlop={6}
+        onPress={() => togglePanel('stickers', <StickerPanel />)}
+        style={{ paddingHorizontal: 8 }}
+      >
+        <Text style={{ fontSize: 24, color: theme.colors.textSecondary }}>
+          +
+        </Text>
+      </Pressable>
+      <DefaultComposerActions />
+    </View>
   );
 }
-// function UseInBottomSheetExample() {
-//   const sheetRef = useRef<BottomSheet>(null);
 
-//   const [mess, setMess] = useState([...mockMessage.reverse()]);
+// demo theme mirrors the Mobbin reference (Cal AI): near-black accent, white input
+const calAiLike = {
+  colors: { primary: '#111111', ownBubble: '#111111', surface: '#FFFFFF' },
+};
 
-//   useEffect(() => {
-//     sheetRef.current?.expand();
-//   }, []);
-//   return (
-//     <BottomSheet
-//       ref={sheetRef}
-//       index={0}
-//       snapPoints={[104, '85%']}
-//       enablePanDownToClose={false}
-//       enableContentPanningGesture={false}
-//       enableHandlePanningGesture
-//     >
-//       <Messy
-//         useInBottomSheet
-//         BaseModule={{
-//           Image: ImageV,
-//           Cache: {
-//             get: MMKVwithID.getMap,
-//             set: MMKVwithID.setMap,
-//           },
-//         }}
-//         messageProps={{
-//           hideOwnerAvatar: true,
-//           hidePartnerAvatar: false,
-//           onPress: () => {
-//             console.log('press item');
-//           },
-//           onLongPress: () => {
-//             console.log('long press item');
-//           },
-//         }}
-//         listProps={{
-//           onStartReached: () => {
-//             console.log('onStartReached');
-//           },
-//           onEndReached: () => {
-//             console.log('onEndReached');
-//           },
-//         }}
-//         messages={mess}
-//         user={{ id: 2 }}
-//         footerProps={{
-//           onSend: async (message: TMessyMessage) => {
-//             message;
-//             mess.unshift(message);
-//             setMess([...mess]);
-//             // upload image
-//             setTimeout(() => {
-//               //@ts-ignore
-//               mess[0].status = 'sent';
-//               setMess([...mess]);
-//             }, 2000);
+// slots are defined once, outside render
+const components = { ComposerActions };
 
-//             //send to server by socket
-//           },
-//           ExtraLeft: <ExtraLeft />,
-//         }}
-//       />
-//     </BottomSheet>
-//   );
-// }
-function App() {
+// shortcut: fixed home-indicator inset; real apps pass useSafeAreaInsets().bottom
+const BOTTOM_INSET = Platform.OS === 'ios' ? 34 : 0;
+
+function Toggle({ label, onPress }: { label: string; onPress: () => void }) {
+  return (
+    <Pressable
+      onPress={onPress}
+      style={{
+        paddingHorizontal: 12,
+        paddingVertical: 6,
+        borderRadius: 14,
+        backgroundColor: '#8884',
+      }}
+    >
+      <Text style={{ fontSize: 13, color: '#888' }}>{label}</Text>
+    </Pressable>
+  );
+}
+
+function ChatExample() {
+  const [messages, setMessages] = useState(initialMessages);
+  const [layout, setLayout] = useState<TMessyLayout>('bubble');
+  const [dark, setDark] = useState(false);
+  const messyRef = useRef<TMessyRef>(null);
+
+  const update = (id: TMessyMessage['id'], patch: Partial<TMessyMessage>) =>
+    setMessages((list) =>
+      list.map((m) => (m.id === id ? { ...m, ...patch } : m))
+    );
+
+  return (
+    <View style={{ flex: 1, backgroundColor: dark ? 'black' : 'white' }}>
+      <SafeAreaView />
+      <View
+        style={{
+          flexDirection: 'row',
+          gap: 8,
+          padding: 8,
+          justifyContent: 'center',
+        }}
+      >
+        <Toggle
+          label={layout === 'bubble' ? 'Two-sided' : 'One-sided'}
+          onPress={() => setLayout(layout === 'bubble' ? 'list' : 'bubble')}
+        />
+        <Toggle
+          label={dark ? 'Dark' : 'Light'}
+          onPress={() => setDark(!dark)}
+        />
+        <Toggle
+          label="Prefill"
+          onPress={() => messyRef.current?.setText('Hello from ref! ')}
+        />
+      </View>
+      <Messy
+        ref={messyRef}
+        messages={messages}
+        user={me}
+        layout={layout}
+        theme={dark ? darkTheme : calAiLike}
+        components={components}
+        showSenderName
+        swipeToReply
+        composerProps={{ bottomInset: BOTTOM_INSET }}
+        cache={cache}
+        onSend={(message) => {
+          setMessages((list) => [message, ...list]);
+          // pretend the server acknowledged it
+          setTimeout(() => update(message.id, { status: 'sent' }), 1500);
+        }}
+        onPressMessage={(m) => console.log('press', m.id)}
+        onPressReplies={(m) => console.log('open thread', m.id)}
+        reactions={{
+          onPress: ({ message, reaction }) => {
+            const others = (message.reactions ?? []).filter(
+              (r) => !(r.user?.id === me.id && r.reaction.key === reaction.key)
+            );
+            const removed = others.length !== (message.reactions ?? []).length;
+            update(message.id, {
+              reactions: removed
+                ? others
+                : [...others, { id: `${Date.now()}`, user: me, reaction }],
+            });
+          },
+        }}
+      />
+    </View>
+  );
+}
+
+export default function App() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <KeyboardProvider>
-        <BottomSheetModalProvider>
-          <View style={{ flex: 1, paddingTop: 24, paddingBottom: 24 }}>
-            <BasicExample />
-            {/* <UseInBottomSheetExample /> */}
-          </View>
-        </BottomSheetModalProvider>
+        <ChatExample />
       </KeyboardProvider>
     </GestureHandlerRootView>
   );
 }
-
-export default App;

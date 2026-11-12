@@ -1,252 +1,98 @@
 # react-native-messy
 
-Chat ui for React Native
+Chat UI for React Native that you can restyle and take apart piece by piece.
 
 <p>
-    <img src="preview/demo_1.png" width="200px">
-  <img src="preview/demo_2.png" width="200px">
+  <img src="preview/bubble.jpg" width="180" alt="Two-sided bubble layout">
+  <img src="preview/list.jpg" width="180" alt="One-sided list layout">
+  <img src="preview/dark.jpg" width="180" alt="Dark theme">
+  <img src="preview/emoji.jpg" width="180" alt="Inline emoji panel">
+  <img src="preview/reactions.jpg" width="180" alt="Reaction picker">
 </p>
 
-## Dependency
+- **Two layouts**: `bubble` (yours on the right, theirs on the left) and `list` (everything on the left, Slack style)
+- **Grouped bubbles**: tighter corners between consecutive messages, day separators, and delivered/seen status under your latest message
+- **Rich content**: tappable links, phone numbers and emails; images and image grids; video; location
+- **Interactions**: long-press reactions, swipe to reply with quotes, and "N Replies ›" thread summaries
+- **Composer**: pill input with an in-pill send button, and an emoji panel where the keyboard is. Open your own panels in the same place
+- **Media viewer**: full screen, swipe between items, pinch to zoom
+- **Customizable at every level**: theme tokens (dark theme included), translatable texts, and 27 replaceable **slots** whose defaults are all exported
 
-- [gorhom/bottom-sheet](https://github.com/gorhom/react-native-bottom-sheet)
-- [react-native-keyboard-controller](https://kirillzyusko.github.io/react-native-keyboard-controller/)
-- [react-native-image-picker](https://github.com/react-native-image-picker/react-native-image-picker)
-- [react-native-gesture-handler](https://github.com/software-mansion/react-native-gesture-handler#readme)
-- [react-native-reanimated](https://github.com/software-mansion/react-native-reanimated#readme)
-- [react-native-tab-view](https://reactnavigation.org/docs/tab-view/)
-- [react-native-video](https://github.com/TheWidlarzGroup/react-native-video)
-- [@shopify/flash-list](https://shopify.github.io/flash-list/)
-
-## Features
-
-- [x] text message, phone, url, email format and fully customize
-- [x] single image message and fully customize
-- [x] list images message and fully customize
-- [x] emoji keyboard
-- [x] loadmore
-- [x] customize default system UI ( Text, Image, List...)
-- [ ] audio message
-- [ ] swipe to reply
-- [x] reaction
-- [ ] and more
-
-## Installation
-
-```sh
-npm install @vokhuyet/react-native-messy
-```
-
-or
+## Install
 
 ```sh
 yarn add @vokhuyet/react-native-messy
+yarn add @shopify/flash-list react-native-gesture-handler react-native-reanimated \
+  react-native-keyboard-controller react-native-image-picker react-native-video dayjs
 ```
 
-## Usage
+Wrap your app once:
 
-```ts
-import { Messy } from '@vokhuyet/react-native-messy';
+```tsx
+<GestureHandlerRootView style={{ flex: 1 }}>
+  <KeyboardProvider>
+    <App />
+  </KeyboardProvider>
+</GestureHandlerRootView>
+```
 
-// ...
-    const [list, setList] = useState([]);
+## Quick start
 
+```tsx
+import { Messy, type TMessyMessage } from '@vokhuyet/react-native-messy';
+
+function Chat() {
+  const [messages, setMessages] = useState<TMessyMessage[]>([]); // newest first
+  const insets = useSafeAreaInsets();
+
+  return (
     <Messy
-       messages={list}
-        loading={isLoading}
-        BaseModule={{
-          Cache: CacheDimension,
-          Image: ChatListImage,
-          Text: AppText,
-        }}
-        renderLoading={renderLoading}
-        renderMessageSystem={ChatListMessageSystem}
-        listProps={{
-          onEndReached,
-          ListHeaderComponent: ChatListHeader,
-          onPress: () => {
-              //hide all bottom sheet modal inlcuding: emoji picker,...
-              dismissAll();
-              //hide keyboard
-              Keyboard.dismiss();
-          },
-        }}
-        messageProps={{
-          hideOwnerAvatar: true,
-          hidePartnerAvatar: false,
-          onPress: onPressMessage,
-          onLongPress: onLongPressMessage,
-        }}
-        user={{id: account?.user?.id}}
-        footerProps={{
-          hideEmoji: false;
-          hideFooterAction: false;
-          Send: <Image source={require('NewSendIcon.png')} />
-          onSend,
-          ExtraLeft: <ChatListExtraLeft />,
-          ExtraActionLeft: <ChatListExtraActionLeft />,
-        }}
+      messages={messages}
+      user={{ id: me.id, userName: me.name, avatar: { uri: me.avatar } }}
+      composerProps={{ bottomInset: insets.bottom }}
+      onSend={(message) => {
+        setMessages((list) => [message, ...list]); // arrives with status: 'sending'
+        api.send(message); // then update its status to 'sent' or 'seen'
+      }}
     />
-```
-
-## Default Element
-
-### MessyFooterActionLibraryDefault
-
-- props
-
-```typescript
-  onPress?: () => Promise<void> | void;  // use your own onPress handler
-  handlePermission?: () => Promise<boolean>; // insert check permisson before use our internal handle select image
-  style?: ImageStyle;
-  source?: ImageSourcePropType;
-```
-
-### MessyFooterActionCameraDefault
-
-- props
-
-```typescript
-  onPress?: () => Promise<void> | void;  // use your own onPress handler
-  handlePermission?: () => Promise<boolean>; // insert check permisson before use our internal handle select image
-  style?: ImageStyle;
-  source?: ImageSourcePropType;
-```
-
-## Default Function
-
-### setMessyFooterInputText
-
-Use as global function to set Message Input text
-
-## Object Type
-
-### TMessyMessageLocation
-
-```typescript
-name: string;
-image: ImageProps['source'];
-latitude: string;
-longitude: string;
-```
-
-### TMessyMessage
-
-```ts
-  id?: string | number | null;
-  text?: string;
-  image?: ImageSourcePropType;
-  video?: { uri: string };
-  audio?: {uri: string}; // not implemented, you can implement by yourself
-  location?: TMessyMessageLocation;
-  user?: TUser;
-  type?: 'system' | 'message';
-  createdTime?: Date | number | string;
-  status?: 'sending' | 'sent' | 'seen';
-  seenBy?: TUser[];
-  local?: Asset;
-  clientId?: string; // used for display message in List before receiving response from Server
-  category?: string; // used for display multiple type of system message
-```
-
-### TColor
-
-```ts
-background: string;
-primary: string;
-accent: string;
-placeholder: string;
-shadow: string;
-success: string;
-message_left: {
-  background: string;
-  text: string;
-  link: string;
-  email: string;
-  phone: string;
-  audio: string;
-}
-message_right: {
-  background: string;
-  text: string;
-  link: string;
-  email: string;
-  phone: string;
-  audio: string;
-}
-input: {
-  text: string; //text color in TextInput
+  );
 }
 ```
 
-### TUser
+## Customize in three levels
 
-```ts
-  id: string | number | null | undefined;
-  userName?: string | null;
-  avatar?: ImageSource;
+```tsx
+// 1. theme tokens
+<Messy theme={{ colors: { primary: '#7C3AED', ownBubble: '#7C3AED' }, radius: { bubble: 12 } }} />
+
+// 2. wrap a default slot
+function Avatar(props: TMessyAvatarProps) {
+  return <Pressable onPress={() => openProfile(props.user)}><DefaultAvatar {...props} /></Pressable>;
+}
+
+// 3. replace a slot
+function SendButton({ disabled, onPress }: TMessySendButtonProps) {
+  return <MyIconButton icon="send" disabled={disabled} onPress={onPress} />;
+}
+
+const components = { Avatar, SendButton }; // define outside render
+<Messy components={components} />;
 ```
 
-### TMessyFooterProps
+## Documentation
 
-```ts
-  hideEmoji?: boolean;
-  hideFooterAction?: boolean;
-  Send?: React.ReactNode;
-  Emoji?: React.ReactNode; // button for click to open emoji picker
-  onSend?: (message?: TMessyMessage) => Promise<void> | void;
-  inputProps?: TextInputProps;
-  ExtraLeft?: React.ReactNode;
-  ExtraActionLeft?: React.ReactNode;
-  renderFooter?: FC<TMessyFooterProps>;
-  renderFooterAction?: FC<TMessyFooterProps>;
-```
+| | |
+|---|---|
+| [Getting started](docs/getting-started.md) | install, the send lifecycle, uploads, loading older messages, safe area |
+| [Layouts](docs/layouts.md) | two-sided and one-sided layouts, grouping |
+| [Theming and texts](docs/theming.md) | every token with its default, dark mode, translations |
+| [Customization](docs/customization.md) | how slots work, the slot map, recipes (bubbles, avatars, custom message types, system messages, reaction menu, …), hooks |
+| [Composer](docs/composer.md) | composer options and actions, send button, attachments, your own panels, reply bar |
+| [Features](docs/features.md) | reactions, swipe to reply, threads, media and the size cache, links |
+| [API reference](docs/api.md) | all props, types, ref, hooks and exports |
+| [Migrating from 0.x](docs/migration.md) | old prop → new API |
 
-### TMessageProps
-
-```ts
-  hideOwnerAvatar: boolean;
-  hidePartnerAvatar: boolean;
-  onPress?: (message: TMessyMessageProps) => Promise<void> | void;
-  onLongPress?: (message: TMessyMessageProps) => Promise<void> | void;
-```
-
-### TBaseModule
-
-```ts
-  Image?: FC<ImageProps>;
-  Text?: FC<TextProps>;
-  Video?: FC;
-  Cache: {
-    get: (key: string) => any;
-    set: (key: string, value: any) => void;
-  };
-```
-
-## Props
-
-- `useInBottomSheet`(boolean): default false
-- `loading`(boolean): loading status
-- **`messages`**([TMessyMessage[]](#tmessymessage)): list of messages
-- `user`([TUser](#tuser)): sender information;
-- `theme`: ([TColor](#tcolor)): custom theme for message;
-- `footerProps`([TMessyFooterProps](#tmessyfooterprops)): Custom props for Element below list messages;
-- `listProps`(TListProps): custom flatlist props and onPress event;
-- `messageProps`([TMessageProps](#tmessageprops));
-- `parsedShape`([ParseShape[]](https://github.com/taskrabbit/react-native-parsed-text)): Custom parse patterns for react-native-parsed-text ;
-- `showDateTime`(boolean): show created time of message;
-- `renderLoading`(FC<{}>): component when loading list message;
-- `renderMessageSystem`(FC<{ data?: TMessyMessage }>): custom system message;
-- `renderMessage`((data: TMessyMessageProps) => JSX.Element): custom whole message item view;
-- `renderAvatar`FC<{ user?: TUser }>: custom ;
-- `renderMessageText`((data: TMessyMessageProps) => JSX.Element): custom text message;
-- `renderMessageAudio`(data: TMessyMessageProps) => JSX.Element;
-- `renderMessageImage`(data: TMessyMessageProps) => JSX.Element;
-- `renderMessageVideo`(data: TMessyMessageProps) => JSX.Element;
-- `renderMessageDateTime`((data: TMessyMessage) => JSX.Element): custom datetime value in message item
-- `renderMessageLocation`: (data: TMessyMessageProps) => JSX.Element;
-- `renderMessageOther`(data: TMessyMessageProps) => JSX.Element: Customize other message types that the library does not yet support
-- `BaseModule`([TBaseModule](#tbasemodule));
+Design reference: [Cal AI – Sending a message in a group](https://mobbin.com/flows/aa385ee8-cc31-4230-95fd-82fd8fde4e12) (one-sided layout, in-pill send button, reply threads), plus the two-sided pattern shared by the "Chatting & Sending Messages" flows on Mobbin. The [example app](example/src/App.tsx) applies it to both layouts.
 
 ## Contributing
 
@@ -255,7 +101,3 @@ See the [contributing guide](CONTRIBUTING.md) to learn how to contribute to the 
 ## License
 
 MIT
-
----
-
-Made with [create-react-native-library](https://github.com/callstack/react-native-builder-bob)

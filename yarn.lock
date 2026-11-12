@@ -2252,40 +2252,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@gorhom/bottom-sheet@npm:5.0.0-alpha.11":
-  version: 5.0.0-alpha.11
-  resolution: "@gorhom/bottom-sheet@npm:5.0.0-alpha.11"
-  dependencies:
-    "@gorhom/portal": 1.0.14
-    invariant: ^2.2.4
-  peerDependencies:
-    "@types/react": "*"
-    "@types/react-native": "*"
-    react: "*"
-    react-native: "*"
-    react-native-gesture-handler: ">=2.16.1"
-    react-native-reanimated: ">=3.10.1"
-  peerDependenciesMeta:
-    "@types/react":
-      optional: true
-    "@types/react-native":
-      optional: true
-  checksum: 63b1bf0308ee4559361ef477624313a19a6d9fcc196a47c88c9ea66f84711b2e4f7c8f872675c176fcd9bb901f5ef2aab002914bed75103c14b92a110191cf41
-  languageName: node
-  linkType: hard
-
-"@gorhom/portal@npm:1.0.14":
-  version: 1.0.14
-  resolution: "@gorhom/portal@npm:1.0.14"
-  dependencies:
-    nanoid: ^3.3.1
-  peerDependencies:
-    react: "*"
-    react-native: "*"
-  checksum: 227bb96a2db854ab29bb9da8d4f3823c7f7448358de459709dd1b78522110da564c9a8734c6bc7d7153ed7c99320e0fb5d60b420c2ebb75ecaf2f0d757f410f9
-  languageName: node
-  linkType: hard
-
 "@hapi/hoek@npm:^9.0.0, @hapi/hoek@npm:^9.3.0":
   version: 9.3.0
   resolution: "@hapi/hoek@npm:9.3.0"
@@ -4198,16 +4164,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vokhuyet/native-hooks@npm:^0.0.2":
-  version: 0.0.2
-  resolution: "@vokhuyet/native-hooks@npm:0.0.2"
-  peerDependencies:
-    react: ">=16.8.0"
-    react-native: ">=0.59"
-  checksum: 58d449e74764276cbc73e14d98aa5acfdd3d1cc56c7a0b87749f62b5fc961a04c84f2e990eae69e29012574bdfab9a0e6d2dde6add01addc687d9282fa158dfa
-  languageName: node
-  linkType: hard
-
 "@vokhuyet/react-native-messy@link:../::locator=react-native-messy-example%40workspace%3Aexample":
   version: 0.0.0-use.local
   resolution: "@vokhuyet/react-native-messy@link:../::locator=react-native-messy-example%40workspace%3Aexample"
@@ -4220,7 +4176,6 @@ __metadata:
   dependencies:
     "@commitlint/config-conventional": ^17.0.2
     "@evilmartians/lefthook": ^1.5.0
-    "@gorhom/bottom-sheet": 5.0.0-alpha.11
     "@react-native/eslint-config": ^0.72.2
     "@release-it/conventional-changelog": ^5.0.0
     "@shopify/flash-list": ^1.7.1
@@ -4228,15 +4183,12 @@ __metadata:
     "@types/jest": ^28.1.2
     "@types/react": ^18.2.61
     "@types/react-native": 0.73.0
-    "@vokhuyet/native-hooks": ^0.0.2
     commitlint: ^17.0.2
     dayjs: ^1.11.10
     del-cli: ^5.0.0
-    emojilib: ^3.0.11
     eslint: ^8.4.1
     eslint-config-prettier: ^8.5.0
     eslint-plugin-prettier: ^4.0.0
-    fbjs: ^3.0.4
     jest: ^28.1.1
     prettier: ^2.0.5
     react: 18.2.0
@@ -4245,28 +4197,22 @@ __metadata:
     react-native-gesture-handler: ^2.20.0
     react-native-image-picker: ^7.1.2
     react-native-keyboard-controller: ^1.13.4
-    react-native-pager-view: ^6.4.1
     react-native-parsed-text: ^0.0.22
     react-native-reanimated: ^3.15.3
-    react-native-tab-view: ^3.5.2
     react-native-video: 6.6.3
     react-native-zoom-reanimated: ^1.4.8
     release-it: ^15.0.0
     typescript: ^5.0.2
     unicode-emoji-json: ^0.6.0
   peerDependencies:
-    "@gorhom/bottom-sheet": "*"
     "@shopify/flash-list": ">=1.6.3"
     dayjs: "*"
-    fbjs: "*"
     react: "*"
     react-native: "*"
     react-native-gesture-handler: "*"
     react-native-image-picker: "*"
     react-native-keyboard-controller: "*"
-    react-native-pager-view: "*"
     react-native-reanimated: "*"
-    react-native-tab-view: "*"
   languageName: unknown
   linkType: soft
 
@@ -4657,7 +4603,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"asap@npm:~2.0.3, asap@npm:~2.0.6":
+"asap@npm:~2.0.6":
   version: 2.0.6
   resolution: "asap@npm:2.0.6"
   checksum: b296c92c4b969e973260e47523207cd5769abd27c245a68c26dc7a0fe8053c55bb04360237cb51cab1df52be939da77150ace99ad331fb7fb13b3423ed73ff3d
@@ -5924,15 +5870,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cross-fetch@npm:^3.1.5":
-  version: 3.1.8
-  resolution: "cross-fetch@npm:3.1.8"
-  dependencies:
-    node-fetch: ^2.6.12
-  checksum: 78f993fa099eaaa041122ab037fe9503ecbbcb9daef234d1d2e0b9230a983f64d645d088c464e21a247b825a08dc444a6e7064adfa93536d3a9454b4745b3632
-  languageName: node
-  linkType: hard
-
 "cross-spawn@npm:^7.0.0, cross-spawn@npm:^7.0.2, cross-spawn@npm:^7.0.3":
   version: 7.0.3
   resolution: "cross-spawn@npm:7.0.3"
@@ -6385,13 +6322,6 @@ __metadata:
   version: 9.2.2
   resolution: "emoji-regex@npm:9.2.2"
   checksum: 8487182da74aabd810ac6d6f1994111dfc0e331b01271ae01ec1eb0ad7b5ecc2bbbbd2f053c05cb55a1ac30449527d819bbfbf0e3de1023db308cbcb47f86601
-  languageName: node
-  linkType: hard
-
-"emojilib@npm:^3.0.11":
-  version: 3.0.11
-  resolution: "emojilib@npm:3.0.11"
-  checksum: 1ac7891e0c70d929f8725ec6daccc00be2ee3addff4177164c1726ce1348c3673be6ec235280a28d21d136ccbaec90eb45b53f9faff1d4c79dc77f4ff7c3f2d5
   languageName: node
   linkType: hard
 
@@ -7145,28 +7075,6 @@ __metadata:
   dependencies:
     bser: 2.1.1
   checksum: b15a124cef28916fe07b400eb87cbc73ca082c142abf7ca8e8de6af43eca79ca7bd13eb4d4d48240b3bd3136eaac40d16e42d6edf87a8e5d1dd8070626860c78
-  languageName: node
-  linkType: hard
-
-"fbjs-css-vars@npm:^1.0.0":
-  version: 1.0.2
-  resolution: "fbjs-css-vars@npm:1.0.2"
-  checksum: 72baf6d22c45b75109118b4daecb6c8016d4c83c8c0f23f683f22e9d7c21f32fff6201d288df46eb561e3c7d4bb4489b8ad140b7f56444c453ba407e8bd28511
-  languageName: node
-  linkType: hard
-
-"fbjs@npm:^3.0.4":
-  version: 3.0.5
-  resolution: "fbjs@npm:3.0.5"
-  dependencies:
-    cross-fetch: ^3.1.5
-    fbjs-css-vars: ^1.0.0
-    loose-envify: ^1.0.0
-    object-assign: ^4.1.0
-    promise: ^7.1.1
-    setimmediate: ^1.0.5
-    ua-parser-js: ^1.0.35
-  checksum: e609b5b64686bc96495a5c67728ed9b2710b9b3d695c5759c5f5e47c9483d1c323543ac777a86459e3694efc5712c6ce7212e944feb19752867d699568bb0e54
   languageName: node
   linkType: hard
 
@@ -10638,15 +10546,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nanoid@npm:^3.3.1":
-  version: 3.3.7
-  resolution: "nanoid@npm:3.3.7"
-  bin:
-    nanoid: bin/nanoid.cjs
-  checksum: d36c427e530713e4ac6567d488b489a36582ef89da1d6d4e3b87eded11eb10d7042a877958c6f104929809b2ab0bafa17652b076cdf84324aa75b30b722204f2
-  languageName: node
-  linkType: hard
-
 "natural-compare-lite@npm:^1.4.0":
   version: 1.4.0
   resolution: "natural-compare-lite@npm:1.4.0"
@@ -10732,7 +10631,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"node-fetch@npm:^2.2.0, node-fetch@npm:^2.6.0, node-fetch@npm:^2.6.12, node-fetch@npm:^2.6.7":
+"node-fetch@npm:^2.2.0, node-fetch@npm:^2.6.0, node-fetch@npm:^2.6.7":
   version: 2.7.0
   resolution: "node-fetch@npm:2.7.0"
   dependencies:
@@ -10875,7 +10774,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"object-assign@npm:^4.1.0, object-assign@npm:^4.1.1":
+"object-assign@npm:^4.1.1":
   version: 4.1.1
   resolution: "object-assign@npm:4.1.1"
   checksum: fcc6e4ea8c7fe48abfbb552578b1c53e0d194086e2e6bbbf59e0a536381a292f39943c6e9628af05b5528aa5e3318bb30d6b2e53cadaf5b8fe9e12c4b69af23f
@@ -11574,15 +11473,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"promise@npm:^7.1.1":
-  version: 7.3.1
-  resolution: "promise@npm:7.3.1"
-  dependencies:
-    asap: ~2.0.3
-  checksum: 475bb069130179fbd27ed2ab45f26d8862376a137a57314cf53310bdd85cc986a826fd585829be97ebc0aaf10e9d8e68be1bfe5a4a0364144b1f9eedfa940cf1
-  languageName: node
-  linkType: hard
-
 "promise@npm:^8.3.0":
   version: 8.3.0
   resolution: "promise@npm:8.3.0"
@@ -11852,7 +11742,6 @@ __metadata:
     "@babel/core": ^7.20.0
     "@babel/preset-env": ^7.20.0
     "@babel/runtime": ^7.20.0
-    "@gorhom/bottom-sheet": 5.0.0-alpha.11
     "@react-native/babel-preset": 0.73.19
     "@react-native/metro-config": 0.73.3
     "@react-native/typescript-config": 0.73.1
@@ -11865,36 +11754,11 @@ __metadata:
     react-native-gesture-handler: ^2.20.0
     react-native-image-picker: ^7.1.2
     react-native-keyboard-controller: ^1.10.3
-    react-native-mmkv-storage: ^0.10.3
-    react-native-pager-view: ^6.4.1
     react-native-permissions: ^4.1.5
     react-native-reanimated: ^3.15.3
-    react-native-tab-view: ^3.5.2
-    react-native-turbo-image: ^1.19.1
     react-native-video: ^6.6.3
   languageName: unknown
   linkType: soft
-
-"react-native-mmkv-storage@npm:^0.10.3":
-  version: 0.10.3
-  resolution: "react-native-mmkv-storage@npm:0.10.3"
-  peerDependencies:
-    react-native: "*"
-  bin:
-    mmkv-link: autolink/postlink/run.js
-  checksum: ca0774e9e835101f15b8ee3f196e7618fb4536ace1797d3d7139c43a126e12734c4b487b16fdca02af90dfabd1c19b1480124c4db06d519df83ff908cc4978b3
-  languageName: node
-  linkType: hard
-
-"react-native-pager-view@npm:^6.4.1":
-  version: 6.4.1
-  resolution: "react-native-pager-view@npm:6.4.1"
-  peerDependencies:
-    react: "*"
-    react-native: "*"
-  checksum: 558f08efccf748eed91a2a88be4f90e49e2b63a28c1b9db5de9711eb324a75e9565a3dbf92c523a623a2c7d5a7e0d8a0db88599bc85d33158544a7d0e724319e
-  languageName: node
-  linkType: hard
 
 "react-native-parsed-text@npm:^0.0.22":
   version: 0.0.22
@@ -11942,29 +11806,6 @@ __metadata:
     react: "*"
     react-native: "*"
   checksum: 573186a493c06286a5d7f048e8d15422b02e098e666abe3756a806a7a674f5598f4289e58faae894c231597d5acbbed4395dbf77e02cef9d8e03518f288ec4f6
-  languageName: node
-  linkType: hard
-
-"react-native-tab-view@npm:^3.5.2":
-  version: 3.5.2
-  resolution: "react-native-tab-view@npm:3.5.2"
-  dependencies:
-    use-latest-callback: ^0.1.5
-  peerDependencies:
-    react: "*"
-    react-native: "*"
-    react-native-pager-view: "*"
-  checksum: bd287e5543881aa662ee55418a3bd5dacb25033425a9fcb0fff21c3a3b96f956af1a77cd9bab4e7a8e94590080a5d8e3cb99cfa8613b19bf6da24bfc9b4942d4
-  languageName: node
-  linkType: hard
-
-"react-native-turbo-image@npm:^1.19.1":
-  version: 1.19.1
-  resolution: "react-native-turbo-image@npm:1.19.1"
-  peerDependencies:
-    react: "*"
-    react-native: "*"
-  checksum: 66777dd7f173b3ebfae4e12a37ecccf83a88bc7530e6a663571062996b5721ea602dcdc0045cb15ee408e0f875334b8f6660641a241fd551bc56411653b61aa5
   languageName: node
   linkType: hard
 
@@ -12849,13 +12690,6 @@ __metadata:
     functions-have-names: ^1.2.3
     has-property-descriptors: ^1.0.2
   checksum: d6229a71527fd0404399fc6227e0ff0652800362510822a291925c9d7b48a1ca1a468b11b281471c34cd5a2da0db4f5d7ff315a61d26655e77f6e971e6d0c80f
-  languageName: node
-  linkType: hard
-
-"setimmediate@npm:^1.0.5":
-  version: 1.0.5
-  resolution: "setimmediate@npm:1.0.5"
-  checksum: c9a6f2c5b51a2dabdc0247db9c46460152ffc62ee139f3157440bd48e7c59425093f42719ac1d7931f054f153e2d26cf37dfeb8da17a794a58198a2705e527fd
   languageName: node
   linkType: hard
 
@@ -13847,13 +13681,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ua-parser-js@npm:^1.0.35":
-  version: 1.0.37
-  resolution: "ua-parser-js@npm:1.0.37"
-  checksum: 4d481c720d523366d7762dc8a46a1b58967d979aacf786f9ceceb1cd767de069f64a4bdffb63956294f1c0696eb465ddb950f28ba90571709e33521b4bd75e07
-  languageName: node
-  linkType: hard
-
 "uglify-js@npm:^3.1.4":
   version: 3.17.4
   resolution: "uglify-js@npm:3.17.4"
@@ -14052,15 +13879,6 @@ __metadata:
   version: 5.0.0
   resolution: "url-join@npm:5.0.0"
   checksum: 5921384a8ad4395b49ce4b50aa26efbc429cebe0bc8b3660ad693dd12fd859747b5369be0443e60e53a7850b2bc9d7d0687bcb94386662b40e743596bbf38101
-  languageName: node
-  linkType: hard
-
-"use-latest-callback@npm:^0.1.5":
-  version: 0.1.9
-  resolution: "use-latest-callback@npm:0.1.9"
-  peerDependencies:
-    react: ">=16.8"
-  checksum: 620969d85763b65aca5f9b601c31eb476a8f7602cfccfb3c0f9dc60ff3b863e04dd64360ada255e15606771513de33b25e4631607d702605b26630f61381b3d4
   languageName: node
   linkType: hard
 

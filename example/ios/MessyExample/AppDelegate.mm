@@ -29,3 +29,21 @@
 }
 
 @end
+
+// iOS 27 requires the UIScene lifecycle; RN 0.73 builds its window in
+// didFinishLaunching, so the scene just adopts that window.
+@interface SceneDelegate : UIResponder <UIWindowSceneDelegate>
+@property (nonatomic, strong) UIWindow *window;
+@end
+
+@implementation SceneDelegate
+
+- (void)scene:(UIScene *)scene willConnectToSession:(UISceneSession *)session options:(UISceneConnectionOptions *)connectionOptions
+{
+  AppDelegate *app = (AppDelegate *)UIApplication.sharedApplication.delegate;
+  self.window = app.window;
+  self.window.windowScene = (UIWindowScene *)scene;
+  [self.window makeKeyAndVisible];
+}
+
+@end

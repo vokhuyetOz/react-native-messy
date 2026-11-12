@@ -10,7 +10,8 @@
 
   node_require('react-native/scripts/react_native_pods.rb')
  node_require('react-native-permissions/scripts/setup.rb')
-platform :ios, min_ios_version_supported
+# newer Xcode dropped the Swift compat libs needed below iOS 15.4
+platform :ios, '16.0'
 prepare_react_native_project!
 
 
@@ -82,5 +83,10 @@ target 'MessyExample' do
       config[:reactNativePath],
       :mac_catalyst_enabled => false
     )
+    installer.pods_project.targets.each do |target|
+      target.build_configurations.each do |c|
+        c.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '16.0'
+      end
+    end
   end
 end
