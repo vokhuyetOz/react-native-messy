@@ -1,6 +1,6 @@
 {
   "name": "@vokhuyet/react-native-messy",
-  "version": "0.2.10",
+  "version": "0.3.0",
   "description": "Customizable chat UI for React Native",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
