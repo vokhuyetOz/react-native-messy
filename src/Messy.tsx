@@ -36,6 +36,7 @@ import {
   DefaultAvatar,
   DefaultBubble,
   DefaultDaySeparator,
+  DefaultMessageReply,
   DefaultMessageStatus,
   DefaultReactions,
   DefaultSenderName,
@@ -55,6 +56,7 @@ import {
 } from './components/composer/ComposerContext';
 import {
   DefaultComposer,
+  DefaultReplyPreview,
   DefaultSendButton,
 } from './components/composer/Composer';
 import { DefaultComposerActions } from './components/composer/Attachments';
@@ -86,6 +88,8 @@ export const defaultComponents: TMessyComponents = {
   MessageStatus: DefaultMessageStatus,
   ThreadSummary: DefaultThreadSummary,
   Reactions: DefaultReactions,
+  MessageReply: DefaultMessageReply,
+  ReplyPreview: DefaultReplyPreview,
   ReactionPicker: DefaultReactionPicker,
   MediaViewer: DefaultMediaViewer,
   Composer: DefaultComposer,

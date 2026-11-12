@@ -13,7 +13,9 @@ export { buildItems } from './core/grouping';
 export {
   DEFAULT_REACTIONS,
   DEFAULT_TEXTS,
+  displayName,
   groupReactions,
+  previewText,
 } from './core/helpers';
 
 // default slots, exported so they can be wrapped instead of rewritten
@@ -22,6 +24,7 @@ export {
   DefaultAvatar,
   DefaultBubble,
   DefaultDaySeparator,
+  DefaultMessageReply,
   DefaultMessageStatus,
   DefaultReactions,
   DefaultSenderName,
@@ -38,6 +41,7 @@ export {
 export {
   ComposerIconButton,
   DefaultComposer,
+  DefaultReplyPreview,
   DefaultSendButton,
 } from './components/composer/Composer';
 export {

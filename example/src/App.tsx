@@ -228,6 +228,7 @@ function ChatExample() {
         theme={dark ? darkTheme : calAiLike}
         components={components}
         showSenderName
+        swipeToReply
         composerProps={{ bottomInset: BOTTOM_INSET }}
         cache={cache}
         onSend={(message) => {

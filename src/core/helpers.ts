@@ -16,6 +16,11 @@ export const DEFAULT_TEXTS: TMessyTexts = {
   failed: 'Not delivered',
   reply: 'Reply',
   replies: 'Replies',
+  replyingTo: 'Replying to',
+  you: 'You',
+  photo: 'Photo',
+  video: 'Video',
+  location: 'Location',
 };
 
 export const DEFAULT_REACTIONS: TReactionItem[] = [
@@ -61,4 +66,29 @@ export function groupReactions(reactions: TMessyMessageReaction[] = []) {
     map.set(r.reaction.key, entry);
   }
   return [...map.values()];
+}
+
+/** One-line summary of a message, for reply quotes. */
+export function previewText(m: TMessyMessage, texts: TMessyTexts) {
+  if (m.text) {
+    return m.text;
+  }
+  if (isImageMessage(m)) {
+    return texts.photo;
+  }
+  if (isVideoMessage(m)) {
+    return texts.video;
+  }
+  return m.location ? m.location.name || texts.location : '';
+}
+
+/** "You" for the current user, otherwise the user name. */
+export function displayName(
+  user: TUser | undefined,
+  me: TUser | undefined,
+  texts: TMessyTexts
+) {
+  return user?.id != null && user.id === me?.id
+    ? texts.you
+    : user?.userName ?? '';
 }

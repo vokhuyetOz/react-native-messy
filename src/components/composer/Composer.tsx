@@ -17,7 +17,11 @@ import Animated, {
 import { useReanimatedKeyboardAnimation } from 'react-native-keyboard-controller';
 
 import { useMessy } from '../../context';
-import type { TMessySendButtonProps } from '../../types';
+import { displayName, previewText } from '../../core/helpers';
+import type {
+  TMessyReplyPreviewProps,
+  TMessySendButtonProps,
+} from '../../types';
 import { MImage, MText } from '../primitives';
 import {
   PANEL_ANIMATION_MS,
@@ -111,6 +115,63 @@ export function DefaultSendButton({
   );
 }
 
+export function DefaultReplyPreview({
+  message,
+  onClose,
+}: TMessyReplyPreviewProps) {
+  const { theme, texts, props } = useMessy();
+  const small = {
+    fontSize: theme.font.name,
+    color: theme.colors.textSecondary,
+  };
+  return (
+    <View
+      style={{
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingLeft: theme.spacing.md,
+        paddingTop: theme.spacing.sm,
+        borderTopWidth: StyleSheet.hairlineWidth,
+        borderTopColor: theme.colors.border,
+      }}
+    >
+      <View
+        style={{
+          width: 3,
+          alignSelf: 'stretch',
+          borderRadius: 2,
+          backgroundColor: theme.colors.primary,
+        }}
+      />
+      <View style={{ flex: 1, marginLeft: theme.spacing.sm }}>
+        <MText numberOfLines={1} style={small}>
+          {texts.replyingTo}{' '}
+          <MText style={{ fontWeight: '600', color: theme.colors.text }}>
+            {displayName(message.user, props.user, texts)}
+          </MText>
+        </MText>
+        <MText numberOfLines={1} style={small}>
+          {previewText(message, texts)}
+        </MText>
+      </View>
+      <Pressable
+        onPress={onClose}
+        hitSlop={8}
+        accessibilityRole="button"
+        accessibilityLabel="Cancel reply"
+        style={({ pressed }) => ({
+          paddingHorizontal: theme.spacing.md,
+          opacity: pressed ? 0.5 : 1,
+        })}
+      >
+        <MText style={{ fontSize: 16, color: theme.colors.textSecondary }}>
+          {'\u2715'}
+        </MText>
+      </Pressable>
+    </View>
+  );
+}
+
 /** Space under the composer: follows the keyboard, or hosts the open panel. */
 function KeyboardArea({
   panel,
@@ -156,7 +217,7 @@ function KeyboardArea({
 export function DefaultComposer() {
   const { theme, texts, components: C, props } = useMessy();
   const composer = useMessyComposer();
-  const { text, panel } = composer;
+  const { text, panel, replyTo } = composer;
   const options = props.composerProps ?? {};
   const { inputProps } = options;
   const disabled = !!options.disabled;
@@ -165,6 +226,12 @@ export function DefaultComposer() {
 
   return (
     <View style={{ backgroundColor: theme.colors.background }}>
+      {replyTo && (
+        <C.ReplyPreview
+          message={replyTo}
+          onClose={() => composer.setReplyTo(null)}
+        />
+      )}
       <View
         style={{
           flexDirection: 'row',

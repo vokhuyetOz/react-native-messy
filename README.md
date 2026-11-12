@@ -93,7 +93,7 @@ Tokens: `colors` (`background`, `surface`, `text`, `textSecondary`, `border`, `p
 Text labels can be translated with `texts`:
 
 ```tsx
-<Messy texts={{ placeholder: 'Nhắn tin', today: 'Hôm nay', yesterday: 'Hôm qua', sent: 'Đã gửi', seen: 'Đã xem', reply: 'trả lời', replies: 'trả lời' }} />
+<Messy texts={{ placeholder: 'Nhắn tin', today: 'Hôm nay', yesterday: 'Hôm qua', sent: 'Đã gửi', seen: 'Đã xem', reply: 'trả lời', replies: 'trả lời', replyingTo: 'Đang trả lời', you: 'Bạn', photo: 'Ảnh', video: 'Video', location: 'Vị trí' }} />
 ```
 
 ## Replacing parts (slots)
@@ -129,6 +129,8 @@ const components = { Bubble, Avatar: MyAvatar, Image: FastImage };
 | `MessageStatus` | `TMessyMessageSlotProps` | "Delivered" or seen-by avatars under your latest message |
 | `ThreadSummary` | `TMessyMessageSlotProps` | "2 Replies ›" row for messages with `replies` |
 | `Reactions` | `TMessyMessageSlotProps` | reaction chips under a bubble |
+| `MessageReply` | `TMessyMessageSlotProps` | quote of `message.replyTo` at the top of the bubble |
+| `ReplyPreview` | `{ message, onClose }` | "Replying to" bar above the input |
 | `ReactionPicker` | `TMessyReactionPickerProps` | the long-press popup |
 | `MediaViewer` | `{ items, initialIndex, onClose }` | the full-screen viewer |
 | `Composer` | – | the whole input bar |
@@ -145,7 +147,7 @@ const components = { Bubble, Avatar: MyAvatar, Image: FastImage };
 
 - `useMessyTheme()`, `useMessyComponents()`, `useMessy()`: the theme, slots, props and actions (`openMediaViewer`, `scrollToEnd`)
 - `useMessyComposer()`: `text`, `panel` and the composer actions
-- `useMessyComposerActions()`: the actions only (`send`, `setText`, `insertText`, `focus`, `dismiss`, `openPanel`, `closePanel`, `togglePanel`). It does not re-render while the user types
+- `useMessyComposerActions()`: the actions only (`send`, `setText`, `insertText`, `focus`, `dismiss`, `openPanel`, `closePanel`, `togglePanel`, `setReplyTo`). It does not re-render while the user types
 
 Open your own picker where the keyboard is, the same way the emoji panel opens:
 
@@ -178,6 +180,7 @@ ref.current?.setText('Hi'); // also focus(), scrollToEnd()
 | `loading` | shows the `Loading` slot in place of the list |
 | `onPressMessage(message)` / `onLongPressMessage(message)` | message taps. A long press also opens the reaction picker when `reactions` is set |
 | `onPressReplies(message)` | tap on the "N Replies" row, e.g. to open a thread screen |
+| `swipeToReply` | swipe a message toward the middle of the screen to reply. The next sent message gets `replyTo` set. Needs `GestureHandlerRootView` around the app. Call `setReplyTo(message)` from `useMessyComposerActions()` to start a reply from your own menu |
 | `reactions` | `{ data?: TReactionItem[], onPress?: ({ message, reaction }) => void }` |
 | `composerProps` | `{ disabled, hideEmoji, hideActions, inputProps, bottomInset }` |
 | `listProps` | passed through to FlashList (`onEndReached` for loading older messages, `ListFooterComponent`, ...) |
@@ -205,6 +208,7 @@ clientId?: string;
 category?: string;
 reactions?: { id?; user: TUser; reaction: { key; value } }[];
 replies?: { count: number; users?: TUser[] };  // shows "2 Replies ›"
+replyTo?: TMessyMessage;                  // quoted message (set by swipe to reply)
 ```
 
 ## Migrating from 0.x

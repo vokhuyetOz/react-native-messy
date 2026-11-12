@@ -62,6 +62,8 @@ export type TMessyMessage = {
   reactions?: TMessyMessageReaction[];
   /** thread summary shown under the message ("2 Replies ›") */
   replies?: { count: number; users?: TUser[] };
+  /** message this one answers; shown as a quote in the bubble */
+  replyTo?: TMessyMessage;
 };
 
 /* --------------------------------------------------------------- layout */
@@ -123,6 +125,11 @@ export type TMessyReactionPickerProps = Readonly<{
   onClose: () => void;
 }>;
 
+export type TMessyReplyPreviewProps = Readonly<{
+  message: TMessyMessage;
+  onClose: () => void;
+}>;
+
 export type TMessySendButtonProps = Readonly<{
   disabled: boolean;
   onPress: () => void;
@@ -152,6 +159,10 @@ export type TMessyComponents = {
   /** "2 Replies ›" row for messages with `replies` */
   ThreadSummary: ComponentType<TMessyMessageSlotProps>;
   Reactions: ComponentType<TMessyMessageSlotProps>;
+  /** quote of `message.replyTo` at the top of the bubble */
+  MessageReply: ComponentType<TMessyMessageSlotProps>;
+  /** "Replying to" bar above the composer input */
+  ReplyPreview: ComponentType<TMessyReplyPreviewProps>;
   ReactionPicker: ComponentType<TMessyReactionPickerProps>;
   MediaViewer: ComponentType<TMessyMediaViewerProps>;
   Composer: ComponentType<{}>;
@@ -178,6 +189,11 @@ export type TMessyTexts = {
   failed: string;
   reply: string;
   replies: string;
+  replyingTo: string;
+  you: string;
+  photo: string;
+  video: string;
+  location: string;
 };
 
 export type TMessyMediaSize = { width: number; height: number };
@@ -234,6 +250,11 @@ export type TMessyProps = Readonly<{
   onLongPressMessage?: (message: TMessyMessage) => void;
   /** tap on the "N Replies" row */
   onPressReplies?: (message: TMessyMessage) => void;
+  /**
+   * Swipe a message toward the middle to reply to it. Needs a
+   * `GestureHandlerRootView` around the app. Default false
+   */
+  swipeToReply?: boolean;
   /** enables long-press reaction picker and reaction chips */
   reactions?: TMessyReactionConfig;
   composerProps?: TMessyComposerProps;

@@ -33,14 +33,21 @@ export type TMessyComposerActions = Readonly<{
   togglePanel: (key: string, node: ReactNode) => void;
   inputRef: RefObject<TextInput>;
   setSelection: (start: number) => void;
+  /** quotes `message` in the next send; null cancels */
+  setReplyTo: (message: TMessyMessage | null) => void;
 }>;
 
 type TComposerState = Readonly<{
   text: string;
   panel: TMessyComposerPanel | null;
+  replyTo: TMessyMessage | null;
 }>;
 
-const StateContext = createContext<TComposerState>({ text: '', panel: null });
+const StateContext = createContext<TComposerState>({
+  text: '',
+  panel: null,
+  replyTo: null,
+});
 const ActionsContext = createContext<TMessyComposerActions | null>(null);
 
 export function ComposerProvider({
@@ -53,11 +60,13 @@ export function ComposerProvider({
   const messy = useMessy();
   const [text, setTextState] = useState('');
   const [panel, setPanel] = useState<TMessyComposerPanel | null>(null);
+  const [replyTo, setReplyToState] = useState<TMessyMessage | null>(null);
   const inputRef = useRef<TextInput>(null);
   // actions are stable; they read the latest values from here
-  const latest = useRef({ text, panel, messy, cursor: 0 });
+  const latest = useRef({ text, panel, replyTo, messy, cursor: 0 });
   latest.current.text = text;
   latest.current.panel = panel;
+  latest.current.replyTo = replyTo;
   latest.current.messy = messy;
 
   const actions = useMemo<TMessyComposerActions>(() => {
@@ -84,7 +93,7 @@ export function ComposerProvider({
         latest.current.cursor = at + value.length;
       },
       send: (partial) => {
-        const { messy: m, text: current } = latest.current;
+        const { messy: m, text: current, replyTo: quoted } = latest.current;
         if (!partial && !current.trim()) {
           return;
         }
@@ -96,11 +105,14 @@ export function ComposerProvider({
           status: 'sending',
           createdTime,
           user: m.props.user,
+          ...(quoted ? { replyTo: quoted } : null),
           ...(partial ?? { text: current.trim() }),
         });
         if (!partial) {
           setText('');
         }
+        latest.current.replyTo = null;
+        setReplyToState(null);
         m.scrollToEnd();
       },
       focus: () => {
@@ -112,6 +124,10 @@ export function ComposerProvider({
         Keyboard.dismiss();
         closePanel();
         return wasOpen;
+      },
+      setReplyTo: (message) => {
+        latest.current.replyTo = message;
+        setReplyToState(message);
       },
       openPanel,
       closePanel,
@@ -127,7 +143,10 @@ export function ComposerProvider({
   }, []);
   actionsRef.current = actions;
 
-  const state = useMemo(() => ({ text, panel }), [text, panel]);
+  const state = useMemo(
+    () => ({ text, panel, replyTo }),
+    [text, panel, replyTo]
+  );
   return (
     <ActionsContext.Provider value={actions}>
       <StateContext.Provider value={state}>{children}</StateContext.Provider>

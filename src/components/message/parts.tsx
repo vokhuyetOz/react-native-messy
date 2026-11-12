@@ -1,12 +1,14 @@
 import React from 'react';
-import { Pressable, View, type ViewStyle } from 'react-native';
+import { Pressable, StyleSheet, View, type ViewStyle } from 'react-native';
 import dayjs from 'dayjs';
 
 import { useMessy } from '../../context';
 import {
+  displayName,
   groupReactions,
   isImageMessage,
   isVideoMessage,
+  previewText,
 } from '../../core/helpers';
 import type {
   TMessyAvatarProps,
@@ -367,5 +369,65 @@ export function DefaultThreadSummary({ message }: TMessyMessageSlotProps) {
         ›
       </MText>
     </Pressable>
+  );
+}
+
+export function DefaultMessageReply({
+  message,
+  isOwn,
+  layout,
+}: TMessyMessageSlotProps) {
+  const { theme, texts, props } = useMessy();
+  const quoted = message.replyTo;
+  if (!quoted) {
+    return null;
+  }
+  const bubble = layout === 'bubble';
+  const color = !bubble
+    ? theme.colors.text
+    : isOwn
+    ? theme.colors.ownText
+    : theme.colors.otherText;
+  return (
+    <View
+      style={{
+        flexDirection: 'row',
+        margin: bubble ? theme.spacing.xs : 0,
+        marginBottom: bubble ? 0 : theme.spacing.xs,
+        padding: theme.spacing.sm,
+        borderRadius: theme.radius.chip,
+        overflow: 'hidden',
+      }}
+    >
+      {/* tint derived from the text color so it works on any bubble color */}
+      <View
+        style={[
+          StyleSheet.absoluteFill,
+          { backgroundColor: color, opacity: 0.08 },
+        ]}
+      />
+      <View
+        style={{
+          width: 3,
+          borderRadius: 2,
+          marginRight: theme.spacing.sm,
+          backgroundColor: bubble && isOwn ? color : theme.colors.primary,
+        }}
+      />
+      <View style={{ flexShrink: 1 }}>
+        <MText
+          numberOfLines={1}
+          style={{ color, fontSize: theme.font.name, fontWeight: '600' }}
+        >
+          {displayName(quoted.user, props.user, texts)}
+        </MText>
+        <MText
+          numberOfLines={1}
+          style={{ color, opacity: 0.75, fontSize: theme.font.name }}
+        >
+          {previewText(quoted, texts)}
+        </MText>
+      </View>
+    </View>
   );
 }
